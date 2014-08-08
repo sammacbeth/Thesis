@@ -14,7 +14,10 @@
 % 1. Configure classicthesis for your needs here, e.g., remove "drafting" below 
 % in order to deactivate the time-stamp on the pages
 % ****************************************************************************************************
-\PassOptionsToPackage{drafting,eulerchapternumbers,beramono,eulermath,pdfspacing,listings}{classicthesis}										
+\PassOptionsToPackage{eulerchapternumbers,listings,drafting,%
+				 pdfspacing,%floatperchapter,%linedheaders,%
+				 subfig,beramono,eulermath,parts,
+				 dottedtoc}{classicthesis}
 % ********************************************************************
 % Available options for classicthesis.sty 
 % (see ClassicThesis.pdf for more information):
@@ -39,11 +42,11 @@
 % ****************************************************************************************************
 \newcommand{\myTitle}{Self-Organising Management of Information and Knowledge\xspace}
 \newcommand{\mySubtitle}{blah blah blah\xspace}
-\newcommand{\myDegree}{PhD\xspace}
+\newcommand{\myDegree}{\xspace}
 \newcommand{\myName}{Sam Macbeth\xspace}
 \newcommand{\myProf}{Put name here\xspace}
 \newcommand{\myOtherProf}{Put name here\xspace}
-\newcommand{\mySupervisor}{Dr. Jeremy Pitt\xspace}
+\newcommand{\mySupervisor}{Put name here\xspace}
 \newcommand{\myFaculty}{Put data here\xspace}
 \newcommand{\myDepartment}{Department of Electrical \& Electronic Engineering\xspace}
 \newcommand{\myUni}{Imperial College London\xspace}
@@ -70,7 +73,7 @@
 % ******************************************************************** 
 % Packages with options that might require adjustments
 % ******************************************************************** 
-\PassOptionsToPackage{utf8}{inputenc}	% latin9 (ISO-8859-9) = latin1+"Euro sign"
+\PassOptionsToPackage{latin9}{inputenc}	% latin9 (ISO-8859-9) = latin1+"Euro sign"
  \usepackage{inputenc}				
 
 %\PassOptionsToPackage{ngerman,american}{babel}   % change this to your language(s)
@@ -78,7 +81,7 @@
 %\PassOptionsToPackage{spanish,es-lcroman}{babel}
  \usepackage{babel}					
 
-\PassOptionsToPackage{}{natbib}
+%\PassOptionsToPackage{square,numbers}{natbib}
  \usepackage{natbib}				
 
 \PassOptionsToPackage{fleqn}{amsmath}		% math environments and more by the AMS 

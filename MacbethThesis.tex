@@ -1,10 +1,11 @@
-\documentclass[ oneside%twoside,openright,
-				titlepage,numbers=noenddot,headinclude,%1headlines,% letterpaper a4paper
-				footinclude=true,cleardoublepage=empty,abstractoff, % <--- obsolete, remove (todo)
-				BCOR=5mm,paper=a4,fontsize=11pt,%11pt,a4paper,%
-				english%
-				]{scrreprt}
+\documentclass[ oneside,openright,titlepage,numbers=noenddot,headinclude,%1headlines,% letterpaper a4paper
+                footinclude=true,cleardoublepage=empty,abstractoff, % <--- obsolete, remove (todo)
+                BCOR=5mm,paper=a4,fontsize=11.5pt,%11pt,a4paper,%
+                ngerman,american,%
+                ]{scrreprt}
 \input{classicthesis-config}
+\usepackage[left=1.5in,right=1.5in,top=1.5in,bottom=1.5in]{geometry}
+\usepackage{setspace}
 
 %********************************************************************
 % Hyphenation
@@ -12,9 +13,10 @@
 %\hyphenation{put special hyphenation here}
 
 \begin{document}
-\frenchspacing
+%\frenchspacing
 \raggedbottom
-\selectlanguage{english} % american ngerman
+\onehalfspacing
+\selectlanguage{american} % american ngerman
 %\renewcommand*{\bibname}{new name}
 %\setbibpreamble{}
 \pagenumbering{arabic}
@@ -35,11 +37,13 @@
 %********************************************************************
 % Mainmatter
 %*******************************************************
-%%\setcounter{page}{90}
+%\pagenumbering{arabic}
+%\setcounter{page}{90}
 % use \cleardoublepage here to avoid problems with pdfbookmark
 \cleardoublepage
 \part{Main}
 \include{Chapters/01_Intro}
+\include{Chapters/KC}
 \cleardoublepage
 %\include{multiToC} % <--- just debug stuff, ignore for your documents
 % ********************************************************************
@@ -47,13 +51,13 @@
 %*******************************************************
 \appendix
 \cleardoublepage
-\part{Appendix}
+%\part{Appendix}
 %\include{Chapters/Chapter0A}
 %********************************************************************
 % Other Stuff in the Back
 %*******************************************************
 \cleardoublepage\include{FrontBackmatter/Bibliography}
 %\cleardoublepage\include{FrontBackmatter/Colophon}
-\cleardoublepage\include{FrontBackmatter/Declaration}
+%\cleardoublepage\include{FrontBackmatter/Declaration}
 \end{document}
 % ********************************************************************
