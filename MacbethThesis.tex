@@ -1,11 +1,12 @@
 \documentclass[ oneside,openright,titlepage,numbers=noenddot,headinclude,%1headlines,% letterpaper a4paper
                 footinclude=true,cleardoublepage=empty,abstractoff, % <--- obsolete, remove (todo)
-                BCOR=5mm,paper=a4,fontsize=11.5pt,%11pt,a4paper,%
+                BCOR=5mm,paper=a4,fontsize=11pt,%11pt,a4paper,%
                 english,%
                 ]{scrreprt}
 \input{classicthesis-config}
 \usepackage[left=1.5in,right=1.5in,top=1.5in,bottom=1.5in]{geometry}
 \usepackage{setspace}
+\usepackage{lettrine}
 
 %********************************************************************
 % Hyphenation
@@ -41,9 +42,14 @@
 %\setcounter{page}{90}
 % use \cleardoublepage here to avoid problems with pdfbookmark
 \cleardoublepage
-\part{Main}
+%\part{Main}
 \include{Chapters/01_Intro}
+%\include{Chapters/Background}
 \include{Chapters/KC}
+\chapter{Principled Operationalisation using Presage2}
+\chapter{A Rule-Engine for Electronic Institutions}
+\include{Chapters/KC_Simulations}
+\chapter{Summary \& Conclusions}
 \cleardoublepage
 %\include{multiToC} % <--- just debug stuff, ignore for your documents
 % ********************************************************************
@@ -52,6 +58,7 @@
 \appendix
 \cleardoublepage
 %\part{Appendix}
+\chapter{Presage2 User Manual}
 %\include{Chapters/Chapter0A}
 %********************************************************************
 % Other Stuff in the Back
