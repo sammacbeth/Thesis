@@ -1,6 +1,7 @@
-\chapter{Principled Operationalisation using Presage2}
+\acresetall
+\chapter{Principled Operationalisation using Presage2}\label{ch:presage}
 
-\lettrine[lines=3]{P}{rincipled} Operationalisation is the process of transforming a symbolic or formal representation of a system (often using some kind of calculus) into a computer model which can then run a model of the system in question~\citep{Jones2013}. This process varies greatly in difficulty depending on the complexity of the system to be modelled and the requirements of the computer model. Models can range from small prolog programs~\citep{Pitt2005a} to significant software engineering undertakings~\citep{Timm,Oguara2005}.
+\lettrine[lines=3]{P}{rincipled} Operationalisation is the process of transforming a symbolic or formal representation of a system (often written in some kind of calculus) into a computer model of the system in question~\citep{Jones2013}. This process varies greatly in difficulty depending on the complexity of the system to be modelled and the requirements of the computer model. Models can range from small prolog programs~\citep{Pitt2005a} to significant software engineering undertakings~\citep{Timm,Oguara2005}.
 
 \ac{ABM} and \ac{MABS} are approaches to modelling and simulating complex systems as multi-agent systems~\citep{Macal2010,Moss2001}.
 This is a form of micro-simulation, where by modelling low-level interactions from the `ground up' we can observe macro level behaviours such as self-organisation, self-adaptation and so on.
@@ -8,11 +9,11 @@ Simulation models are therefore composed of an environment or arena which models
 \citet{Axelrod1997} identifies the usefulness of \ac{MABS} as a means to understand social systems. 
 This approach fits naturally to the principled operationalisation phase of the \ac{SIC} methodology, as we are observing desirable macro level performance in social systems (which are multi-agent in nature), and aiming to reproduce this performance in a socio-technical system. 
 
-It should be noted that principled operationalisation, \ac{ABM} and \ac{MABS} do not aim to create an exact model of a social or socio-technical system, particularly in regards to human behaviour. Both the \ac{SIC} methodology and \ac{MABS} methods stress the appropriate use of abstraction and/or compartmentalisation~\citep{Edmonds2001} in order to simplify the model while being able to draw valid conclusions from the model's behaviour.
+It should be noted that principled operationalisation, \ac{ABM} and \ac{MABS} do not aim to create an exact model of a social or socio-technical system, particularly in regards to human behaviour. Both the \ac{SIC} methodology and \ac{MABS} methods stress the appropriate use of abstraction and/or compartmentalisation in order to simplify the model while being able to draw valid conclusions from the model's behaviour~\citep{Edmonds2001}.
 
-Work in \ac{ABM} and \ac{MABS} has led to creation of many software packages and platforms to ease the development of simulation testbeds~\citep{CynthiaNikolaiandGregoryMadey2009}. These aim to reduce the engineering effort required to implement agent models, providing reusable components, user-interface based design and/or prescriptive frameworks. In particular, they aim to ensure validity while maintaining usability and extendibility~\citep{Axelrod1997}.
+Work in \ac{ABM} and \ac{MABS} has led to creation of many software packages and platforms to ease the development of simulation testbeds~\citep{CynthiaNikolaiandGregoryMadey2009}. These aim to reduce the engineering effort required to implement agent models, providing reusable components, user-interface based design and/or prescriptive frameworks. In particular, they aim to ensure simulation validity while maintaining usability and extendibility~\citep{Axelrod1997}.
 
-In this chapter we derive a set of requirements for a general-purpose software platform for simulation of socio-technical systems, which is suitable for principled operationalisation. We then review a selection of existing platforms with respect to these requirements, concluding that building upon our existing Presage platform~\citep{Neville:2009,Pitt2011} best meets our needs. Finally we present the result of this work, Presage2~\citep{Macbeth2014}. % TODO
+In this chapter we derive a set of requirements for a general-purpose software platform for simulation of socio-technical systems, which is suitable for principled operationalisation. We then review a selection of existing platforms with respect to these requirements, concluding that building upon our existing Presage platform~\citep{Neville:2009} best meets our needs. Finally we present the result of this work, Presage2~\citep{Macbeth2014}. % TODO
 
 %\section{Requirements}
 %
@@ -59,17 +60,17 @@ From~\citet{CynthiaNikolaiandGregoryMadey2009} we take generial criteria which a
 \item Tutorials/Documentation available---Presence of tutorials and documentation to allow one to train oneself to use the platform correctly and proficiently.
 \end{itemize}
 
-\citet{Tobias2004} provides several useful criteria specific for the modelling requirements of socio-technical systems:
+\citet{Tobias2004} provides several useful general criteria and criteria specific for the modelling requirements of socio-technical systems:
 
 \begin{itemize}
-\item Support for modeling---\ac{GUI} or other tools for reducing programming work and visualising output.
+\item Support for modelling---\ac{GUI} or other tools for reducing programming work and visualising output.
 \item Support for experimentation---Tools for generation of simulations and data recording.
 \item Large number of complex agents---The ability of the platform to efficiency run complex agents to intensive reasoning.
 \item Inter-agent communication---The possibility of sending messages between agents, and for communication network topologies to be simulated.
 \item Generating agent populations---Automatic generation of agent populations from input parameters or data.
 \item Generating networks---Automatic generation of networks based on various characteristics.
 \item Management of spatial arrangements---Ability to simulation situated agents.
-\item Dynamically changing model structure---Can the model change during simulation execution.
+\item Dynamically changing model structure---Whether the model can be changed during simulation execution.
 \end{itemize}
 
 We also add a final criterion specific to the principled operationalisation process:
@@ -83,8 +84,8 @@ We will now review four software platforms with respect to the criteria we ident
 \begin{itemize}
 \item Netlogo~\citep{Wilensky1999a}---This is a \ac{GUI}-driven modelling environment for simulating natural and social phenomena, aimed at ease of use for non-programmers. It uses a custom programming language for the specification of the environment and agent behaviours.
 %\item JADE~\citep{Bellifemine2003}---This is a middleware for multi-agent system deployment which can also be used for simulation. It uses an agent model tied very closely to the FIPA agent communication specification\footnote{http://www.fipa.org}, and lacks support for modelling of the agents' environment.
-\item Repast~\citep{Collier2009}---This is a platform created at the University of Chicago which was originally based on the SWARM platform~\citep{Minar1996}.
-\item MASON~\citep{Luke2005}---This is a newer, discrete event, platform written in Java.
+\item Repast~\citep{Collier2009}---This is a familty of platforms created at the University of Chicago, originally based on the SWARM platform~\citep{Minar1996}. For this review we will look at their Java-based platform, Repast Simphony, which has superseded their other tools.
+\item MASON~\citep{Luke2005}---This is a newer, discrete event, platform developed at George Mason University written in Java, and focusing on simulation execution speed.
 \item Presage~\citep{Neville:2009}---This platform is a recent development, and therefore does not appear in reviews. It was developed specifically for simulation of social networks and dynamics but has found use in an array of other \ac{MABS} applications~\citep{Pitt2011,Carr2012} and features a strong animation and visualisation component.
 \end{itemize}
 
@@ -92,24 +93,26 @@ We will now review four software platforms with respect to the criteria we ident
 
 \autoref{tab:platformreview} shows the platforms rated according to the criteria we selected from \citet{CynthiaNikolaiandGregoryMadey2009} and \citet{Castle2006}. We will now discuss the remaining criteria:
 
-\begin{table}
+\begin{table}[!h]
+\begin{minipage}{1\textwidth}
 	\myfloatalign
+	\caption{Evaluation of simulation platform according to review criteria}\label{tab:platformreview}
 	\begin{tabularx}{\textwidth}{X|p{0.12\textwidth}p{0.12\textwidth}p{0.12\textwidth}p{0.12\textwidth}}
 	Criterion & Netlogo & Repast & Mason & Presage \\ \midrule
 	Programming Language & Netlogo & Java & Java & Java \\
-	Software License & Closed source & BSD & Academic Free & Closed source \\
+	Software License & Closed source & BSD\footnote{Berkeley Software Distribution licence: A permissive free software licence. Not compatible with the \ac{GPL}} & AFL\footnote{Academic Free License: A permissive free software licence. Not compatible with the \ac{GPL}} & Closed source \\
 	Required programming experience & Basic & Strong & Strong & Strong \\
 	Integrated graphics & Yes & Yes & None & Some \\
 	Tutorials / Documentation & Yes & Yes & Yes & No \\
 	\end{tabularx}
-	\caption{Evaluation of simulation platform according to review criteria}\label{tab:platformreview}
+\end{minipage}
 \end{table}
 
 \subsubsection*{Support for modelling}
 
 This is the extent to which the platform speeds up common modelling tasks, for example by providing simple \ac{GUI}-based design and/or simple visualisation tools.
 
-Being primarily \ac{GUI}-based, and including environment and graphing visualisation as standard, Netlogo performs well in this criterion. Similarly Repast has some \ac{GUI} tools, but still requires the majority of functionality to be implemented in code. The remaining platforms do provide helper classes for common tasks, but these still require configuration with code.
+Being primarily \ac{GUI}-based, and including environment and graphing visualisation as standard, Netlogo performs well in this criterion. Similarly Repast has some \ac{GUI} tools, but still requires the majority of functionality to be implemented in code. The remaining platforms do provide helper classes for common tasks, but these still require implementation with code.
 
 \subsubsection*{Support for experimentation}
 
@@ -119,9 +122,12 @@ This is how well the platform supports experimentation over multiple simulations
 
 None of the platforms impose a hard constraint on the number of agents in a simulation, though depending on the efficiency of the software, practical limits will be reached when either computational resources are exhausted, or the simulation takes too long to run.
 
-Netlogo's simulation times have been shown to scale more with the size of the environment state to be modelled, while Repast and MASON scales with the number of agents~\citet{Railsback2006}.  However the agent models tested were fairly basic. More complex agent architectures are likely to be impossible in Repast. MASON is designed with the intention of accommodating complex agents by being fast and lightweight. Similarly Presage has been demonstrated simulating complex agents~\citet{Pitt2011}.
+Netlogo's simulation times have been shown to scale more with the size of the environment state to be modelled, while Repast and MASON scales with the number of agents~\citep{Railsback2006}.  However the agent models tested were fairly basic. More complex agent architectures are likely to be impossible in Repast. MASON is designed with the intention of accommodating complex agents by being fast and lightweight. Similarly Presage has been demonstrated simulating complex agents~\citep{Pitt2011}.
 
-All of the platforms run their main simulation in a single thread. MASON allows for some parallelisation within a simulation step, which the users must add themselves. Repast comes has a separate C++ platform for high performance computing clusters, but this is separate from the Java platform. This means that simulation performance is limited on modern, multi-core processors.
+All but one of the platforms run their main simulation in a single thread. Repast uses a multi-threaded discrete-event scheduler to run some events in parallel, however this performance boost is only available to certain background tasks, and not appropriate for agent execution. MASON also allows for some parallelisation within a simulation step, which the users must add themselves. Thus these simulators have limited capabilities to exploit modern, multi-core processors.
+
+There is, however, more options for scaling simulations to distributed architectures. The Repast developers also distribute a C++ platform for \ac{HPC} clusters~\citep{Collier2013}, but this is separate from the Java platform. There have also been several attempts to provide an automatic scaling of normal Repast models to \ac{HPC} clusters~\citep{Minson2008,Cicirelli2011}.
+However, this work has yet to lead to the availability of easy scaling of models for these platforms, generally imposing some model limitations and requiring additional programming care in order to achieve a distributed simulation.
 
 \subsubsection*{Inter-agent communication}
 
@@ -153,9 +159,9 @@ From this review we see that the platforms considered here differ little in term
 
 Repast performs the best over the evaluated criteria, however its limitations in agent communication are problematic when dealing with complex, social agents. MASON is provides a more stripped down alternative, which is fast, but requires that most advanced functionality be written from scratch. Being the least mature of the reviewed platforms, Presage lacks in some areas, particular documentation and user-friendliness. Its origins in the simulation of social networks shows in its competence in agent communication---an important aspect of socio-technical systems. 
 
-A major drawback, which all but Presage suffer from, is their permissive handling of state. These platforms treat shared state as a public resource, allowing reads and writes from all agents. While it is a reasonable assumption in most modelling scenarios that agents will use this access correctly, there are problems from both modelling and verification perspectives. We believe that, when modelling, it is preferable to separate the agent logic from the logic updating environment state: The agent logic decides what action to take, and the environment decides the outcome of that action. The architectures of Netlogo, Repast and MASON put these two processes together, such that in order to take an action the agent must update the environment itself. Presage uses separate \emph{action handlers} which process actions from agents in a uniform and consistent way. This ensures that the environment is the same for all agents, that agents are portable between different environments, that agents can not know the consequences of actions they perform, and that faulty agent code won't break a simulation.
+A major drawback, which all but Presage suffer from, is their permissive handling of state. These platforms treat shared state as a public resource, allowing reads and writes from all agents, with no limited accessibility. While it is a reasonable assumption in most modelling scenarios that agents will use this access correctly, there are problems from both modelling and verification perspectives. We believe that, when modelling, it is preferable to separate the agent logic from the logic updating environment state: The agent logic decides what action to take, and the environment decides the outcome of that action. The architectures of Netlogo, Repast and MASON put these two processes together, such that in order to take an action the agent must update the environment itself. Presage uses separate \emph{action handlers} which process actions from agents in a uniform and consistent way. This ensures that the environment is the same for all agents, that agents are portable between different environments, that agents can not know the consequences of actions they perform, and that faulty agent code won't break a simulation.
 
-It is for this reason that we decide to build on the promising  architecture of Presage and address its shortcomings in a new version, Presage2. We describe the design and implementation of this platform in the next section.
+It is for this reason that we decide to build on the promising  framework of Presage and address its shortcomings in a new version, Presage2. We describe the design and implementation of this platform in the next section.
 
 %The core of a multi-agent simulation is a fairly straightforward control process. There is some representation of the environment state and of the state of agents in the environment. 
 
@@ -164,6 +170,64 @@ It is for this reason that we decide to build on the promising  architecture of 
 % discrete time vs event vs continuous
 
 \section{Presage2 Platform}
+
+In the previous section we outlined the need for a simulation platform for principled operationalisation, and, through a review of existing platforms, identified that the Presage framework was best suited to the task. In this section we describe the framework of Presage2, an evolution of the original Presage, and its implementation as a Java library.
+
+\subsection{Framework Description}
+
+The Presage2 framework is a result of an iterative improve to that of the original Presage framework. We build on the same concepts in order to achieve the desired feature-set.
+
+At its core, the framework uses a discrete-time driven simulation loop. This is similar to the discrete-event models used in platforms such as MASON and Repast, except that every agent is given the opportunity to submit actions at each discrete time-step. This establishes a minimum unit of time within the simulation which is equal for all agents. This means that the simulation cannot optimise periods when agents want to wait several time-steps with no action, which is possible with discrete-event simulators, however in practice this performance hit is negligible as, firstly, most agents have reactive components which require constant monitoring of the environment state, and secondly, a waiting agent can simply terminate immediately when queried for actions by the simulator, wasting very little resources. The advantage of time-driven over event-driven simulation is that the former is easier to parallelise~\citep{Ferscha1995}.
+
+Beyond the discrete-time driven constraint, the framework does not specify how agents should be implemented, or what architecture they should use. There are many possible architectures which can be used for agents to define their \emph{agent function}. The platform simply queries for the result of this function each time-step. To support operating at multiple levels of granularity, and to handle cases when agents are able to perform multiple actions at once (for example a speech act could be performed at the same time as a physical action), we allow multiple actions per agent per time-step.
+
+The state of the environment and observable state of agents (i.e. state which can be perceived by other agents), collectively referred to as \emph{shared state}, is updated each time-step by the \emph{state transformer} function. This takes the current state and set of agent's actions, and creates the next state. This state change may be \emph{non-deterministic} with the addition of randomness. State changes may also be applied independently of an action. Note, however that the state change is transactional---all changes for one time-step are applied at once. This makes the environment \emph{static} for agents, and means that the result of an action is not observable until the following time-step. 
+
+While the \emph{shared state} of the simulation can be made entirely \emph{accessible} to agents, in most practical systems agents will not have full observability or omniscience. Each agent instead has a partial view into the shared state. This may be simply a subset, or it could provide modified values to simulate lossy or faulty sensors. Thus we can model arbitrary levels of accessibility for each agent in the simulation.
+
+This state model implicitly enables inter-agent communication of arbitrary data between agents. A message action can simply create a state value which is only accessible to the intended receiver agent. This action may also fail randomly, if the agents are physical situated too far from each other, or due to any other deterministic or non-deterministic relating to the environment state. Therefore we can model agent communication networks of arbitrary complexity.
+
+%With the described framework we can formalise a modelled system following the abstract architecture specified in \citet{Wooldridge2002}.
+
+With the described framework we can formalise a modelled system as a four tuple:
+
+\begin{equation*}
+\mathcal{M}_{t}=\left\langle \mathcal{A},\epsilon,\tau,\phi \right\rangle _{t}
+\end{equation*}
+
+Where $\epsilon$ is the environment state, $\mathcal{A}$ is the set of agents, $\tau$ is the state transformer function and $\phi$ is the state observability function. Each
+agent $a\in\mathcal{A}$ has internal state $s_{a,t}\cup s_{a,t}^{\prime}$,
+where $s_{a,t}$ is public and $s_{a,t}^{\prime}$ is private, and
+an agent function $f_{a}$. This function maps the agent's state and his observation of the environment and agents' public states (calculated with the state observability function $\phi$) to a private
+state for the next time-step, $s_{a,t+1}^{\prime}$ and a set of actions
+$H{}_{a,t}$:
+
+\begin{align*}
+f_{a}:\; s_{a,t}^{\prime} \times \phi(a, \epsilon_{t}, S_{t}^{\mathcal{A}}&) \rightarrow\; H_{a,t}\times s_{a,t+1}^{\prime}\\
+S_{t}^{\mathcal{A}}&:=\bigcup_{a\in\mathcal{A}_{t}}s_{a,t}
+\end{align*}
+
+The state transformer function $\tau$ defines how the set of all
+agents' actions $\mathcal{H}_{t}$ for a time-step map the current
+environment and agents' states to new values for the next timestep:
+
+\begin{align*}
+\tau:\;\mathcal{H}_{t}&\times\epsilon_{t}\times S_{t}^{\mathcal{A}}\;\rightarrow\;\epsilon_{t+1}\times S_{t+1}^{\mathcal{A}} \\
+\mathcal{H}{}_{t}&:=\bigcup_{a\in\mathcal{A}_{t}}H_{a,t}
+\end{align*}
+
+Using this syntax we can define a \emph{run} for an agent, as per \citet{Wooldridge2002}:
+
+\begin{equation*}
+\phi(a, \epsilon_{0}, S_{0}^{\mathcal{A}}) \xrightarrow{H_{a,0}} \phi(a, \epsilon_{1}, S_{1}^{\mathcal{A}}) \xrightarrow{H_{a,1}}  \ldots \xrightarrow{H_{a,u-1}} \phi(a, \epsilon_{u}, S_{u}^{\mathcal{A}})
+\end{equation*}
+
+and a run at the global simulation level:
+\begin{equation*}
+(e_0, S_{0}^{\mathcal{A}}) \xrightarrow{\mathcal{H}_{a,0}} (e_1, S_{1}^{\mathcal{A}}) \xrightarrow{\mathcal{H}_{a,1}} \ldots \xrightarrow{\mathcal{H}_{a,u-1}} (e_u, S_{u}^{\mathcal{A}})
+\end{equation*}
+
+\subsection{Platform Implementation}
 
 % Architecture - design decisions
 
