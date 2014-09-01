@@ -279,3 +279,31 @@
 %\usepackage{lmodern} % <-- no osf support :-(
 %\usepackage[urw-garamond]{mathdesign} <-- no osf support :-(
 % ****************************************************************************************************
+
+%% EC shortcuts
+\newcommand{\true}{\mathit{true}}
+\newcommand{\false}{\mathit{false}}
+\newcommand{\bool}{$\mathit{Boolean}$}
+\newcommand{\integer}{$\mathit{Integer}$}
+\newcommand{\m}[1]{\mathit{#1}}
+\newcommand{\B}[1]{\mathbf{#1}}
+\newcommand{\Obj}{\mathit{Obj}}
+\newcommand{\Role}{\mathit{Role}}
+\newcommand{\provision}{\mathit{provision}}
+\newcommand{\appropriate}{\mathit{appropriate}}
+\newcommand{\roleof}{\mathit{role\_of}}
+\newcommand{\pad}{\,\,}
+\newcommand{\initiates}{\pad \mathsf{initiates} \pad}
+\newcommand{\holdsAt}{\pad \mathsf{holdsAt} \pad}
+
+\DeclareMathOperator{\val}{=}  % for p=v atoms
+\DeclareMathOperator{\notval}{\neq}  % for p=v atoms
+
+% possessive cite macro
+\def\citeapos#1{\citeauthor{#1}'s (\citeyear{#1})}
+\def\possessivecite#1{\citeauthor{#1}'s (\citeyear{#1})}
+% convert harvard to natbib
+\def\citeasnoun#1{\citet{#1}}
+
+\usepackage{multirow}
+\usepackage{rotating}
