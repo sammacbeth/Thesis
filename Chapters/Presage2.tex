@@ -24,7 +24,7 @@ In this chapter we derive a set of requirements for a general-purpose software p
 %\item Inter-agent communication
 %\end{itemize}
 
-\section{Review of Software Platforms for Agent-based Simulation}
+\section{Review of Software Platforms for Agent-based Simulation}\label{sec:p2:review}
 
 There are many software tools and platforms available for the simulation of agent societies: A comprehensive survey by \citet{CynthiaNikolaiandGregoryMadey2009} includes 53 different toolkits. In this section we discuss the state of the art of \ac{MABS} toolkits and software platforms.
 
@@ -768,9 +768,11 @@ been modelled and simulated using Presage2.
 The LPG' game is a variant of a linear public good game, first defined in
 \citet{Pitt2012c}. It has been used to explore the issue of non-compliance in
 resource appropriation, and later to demonstrate a method of fairly allocating
-resources based on Nicholas Rescher's theory of Distributive Justice~\citep{Pitt2014}.
-The game was implemented using Presage2, utilising the rule-engine to specify
-the game rules~\citep{Macbeth2012}.
+resources based on Nicholas Rescher's theory of Distributive
+Justice~\citep{Pitt2014}. The game was implemented using Presage2, utilising
+the rule-engine to specify the game rules~\citep{Macbeth2012}.
+
+
 
 % TODO visualisation screenshot
 
@@ -808,7 +810,70 @@ of Institutionalised Paxos consensus~\citep{Sanderson2012} using Drools.
 
 \subsection{Meet the Meter}
 
-\section{Presage2 Evaluation}
+\section{Presage2 Evaluation \& Conclusion}
+
+Having described the Presage2 platform and its usage, we return to our
+evaluative criteria from \autoref{sec:p2:review} in order to evaluate how
+well Presage2 performs as a platform for Principled Operationalisation of socio-
+technical systems.
+
+\autoref{tab:presagereview} shows Presage2 evaluated according to the basic
+criteria. Like the other Java-based simulation platforms, we require strong
+programming skills. However, the introduction of rule-based components allows
+for these parts to be easier to understand for non-programmers than standard
+Java code. So far the platform has not given significant focus to integration of
+graphing and visualisation options, instead taking a data-driven approach and
+letting users choose their preferred data-visualisation tool. Finally, tutorials
+and documentation are readily available from the Presage2 webpage\footnote{http
+://www.presage2.info}.
+
+\begin{table}[h]
+\begin{minipage}{1\textwidth}
+	\myfloatalign
+	\caption{Evaluation of Presage2 according to review criteria}\label{tab:presagereview}
+	\begin{tabularx}{\textwidth}{X|X}
+	Criterion & Presage2 \\ \midrule
+	Programming Language & Java \\
+	Software License & LGPL\footnote{Lesser General Public License: \ac{GPL}
+	compatible licence for software libraries.} \\
+	Required programming experience & Strong \\
+	Integrated graphics & Some \\
+	Tutorials / Documentation & Yes \\
+	\end{tabularx}
+\end{minipage}
+\end{table}
+
+Presage2 has limited \ac{GUI} tools, thus support for modelling remains limited.
+The tools that it does have mainly support experimentation, with a \ac{GUI} for
+management of simulation runs, automated simulation generation, distributed
+experiment execution, and detailed data recording.
+
+Large numbers of complex agents can be run due to the simulator's exploitation
+of multi-threaded execution, and the agent agnostic approach allowing for users
+to implement complex agents in simulations. These agents can also be
+automatically generated from input parameters as part of the initial state of
+the simulation.
+
+The Presage2 state engine enables simulation of situated agents,
+automatically generated and dynamic networks, and dynamically changing models.
+Furthermore, these features and modular, and separated from agent
+implementations.
+
+Therefore, we believe that the Presage2 platform is not only an improvement over
+the original Presage platform, but has several significant features which
+distinguish it as a tool for Principled operationalisation over the platforms we
+have reviewed in \autoref{sec:p2:review}. The remaining outstanding issue, with
+respect to our criteria, is that of graphical modelling support.
+
+The use of the platform over a range of projects has shown its effectiveness
+as a simulation and modelling tool. The focus of the current applications on
+situations with a strong rule or governance mechanic is largely due to the
+uptake of the platform. It has been adopted in this domain due to the ease of
+working with rule-based specifications and implementing adaptive and self-
+organising agents. However, we have shown in this chapter that the platform's
+framework is generic and extendible. Thus, we expect an increase in application
+domains for which Presage2 is used as it gains traction.
+
 
 
 %A single time-step consists of running the state observability function to determine the data available for each agent, running each agent function, then running the state transformer function with the aggregated agent actions. This specifies a simple and easy to parallelise simulation loop. The shared state is constant until the final step, thus there are no issues with mutable state or shared memory management. We can further optimise by decomposing the state transformer function into three components:
