@@ -511,6 +511,18 @@ managing multiple conversations with large numbers of agents simultaneously.
 
 \subsubsection*{Social Capital}
 
+\citet{Petruzzi2014} have developed a framework for social capital in agent-
+based systems, based on the model of social capital proposed by
+\citet{ostromahn2003}. This framework, shown in \autoref{fig:scf}, is
+implemented for Presage2 as an agent module, allowing agents to use it to
+reason about social capital.
+
+\begin{figure}[htb]
+\caption[Social Capital Module]{Social Capital Module~\citep{Petruzzi2014}}
+\label{fig:scf}
+\includegraphics[width=\linewidth]{gfx/SCF2}
+\end{figure}
+
 \subsection{Rule Engine}
 
 Rule- and logic-based specifications are a popular tool in artificial
@@ -761,7 +773,8 @@ being used to add new simulations manually.
 \section{Presage2 Showcase}
 
 In this section we provide a short summary of a range of applications which have
-been modelled and simulated using Presage2.
+been modelled and simulated using Presage2.\marginpar{Prose, subsection or
+paragraph?}
 
 \subsection{The LPG' Game}
 
@@ -772,7 +785,8 @@ resources based on Nicholas Rescher's theory of Distributive
 Justice~\citep{Pitt2014}. The game was implemented using Presage2, utilising
 the rule-engine to specify the game rules~\citep{Macbeth2012}.
 
-
+This implementation of the LPG' game has been integrated with an Autonomous
+Power Management system to apply Distributive Justice to the power grid~\citep{Kohler2014}.
 
 % TODO visualisation screenshot
 
@@ -791,11 +805,16 @@ of changes they will propose.
 This work models a market for exchange of energy allocations in a SmartGrid,
 utilising Social capital to encourage cooperation~\citep{Petruzzi2013}.
 
+\subsection{Cooperation Game}
+
+The social capital framework used in the previous application has also been
+tested in a simple cooperation game~\citep{Petruzzi2014}.
+
 \subsection{Self-Organising Resource Allocation}
 
 Here, an endogenous common-pool resource was modelled, and rules were
-implemented to test each of \possessivecite{Ostrom1990} principles for self-
-governing institutions~\citep{Schaumeier2013}. Again Drools was used for
+implemented to test each of \possessivecite{Ostrom1990} principles for
+self-governing institutions~\citep{Schaumeier2013}. Again Drools was used for
 environmental rules.
 
 \subsection{Adaptive Mechanisms for dynamic road fleets}
@@ -806,9 +825,19 @@ of Institutionalised Paxos consensus~\citep{Sanderson2012} using Drools.
 
 \subsection{The Kyoto Protocol}
 
-\citep{Macbeth2014}.
+The platform has been used to model the carbon emissions as a common-pool
+resource, and exploring the effect of the Kyoto Protocol on these
+emissions~\citep{Macbeth2014}. This work provides an example case of policy-
+based modelling with Presage2.
 
-\subsection{Meet the Meter}
+\subsection{Social Mpower}
+
+The Social Mpower game is a Serious game to inform, raise awareness and motivate
+consumers of energy efficiency~\citep{Bourazeri2014}. Presage2 is used as a
+background simulation component of the game, communicating with a graphical game
+frontend, which sends actions triggered by both humans playing the game and
+computational agents within the game.
+% TODO cite PRIMA later.
 
 \section{Presage2 Evaluation \& Conclusion}
 
@@ -864,6 +893,21 @@ the original Presage platform, but has several significant features which
 distinguish it as a tool for Principled operationalisation over the platforms we
 have reviewed in \autoref{sec:p2:review}. The remaining outstanding issue, with
 respect to our criteria, is that of graphical modelling support.
+
+Such graphic modelling support is a topic of future platform development. We are
+confident that graphical support can be added to the platform without
+sacrificing the current functionality and performance, and without the resultant
+graphical tool being too limited for generation of complex models. In
+particular, three properties of Presage2 will aid this. Firstly, the platform's
+modularity allows for design by composition. An environment can be built by
+simply combining a set of modules and linking simulation parameters to module
+parameters. Secondly, the Java language's introspective and self generation
+capabilities will enable automatic code generation from graphical models.
+Therefore the graphical tool will simply act as a compiler to generate Presage2
+models, and no functionality is lost. Finally, through the Eclipse IDE\footnote{
+http://eclipse.org}, Java has significant support for interactive graphical
+tools for code generation. We envisage that by leveraging these features we can
+bring graphical model development to Presage2.
 
 The use of the platform over a range of projects has shown its effectiveness
 as a simulation and modelling tool. The focus of the current applications on
