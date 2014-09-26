@@ -1,0 +1,94 @@
+%!TEX root =../MacbethThesis.tex
+\chapter{A Rule-Engine for Electronic Institutions}\label{ch:droolseinst}
+
+\lettrine[lines=3]{E}lectronic Institutions are a useful tool for implementing
+governance in agent-based systems~\citep{Esteva2001}. Institutions are defined
+as sets of rules which define what is permitted and forbidden within a given
+context~\citep{Ostrom1990}. Institutions are also built with the capability to
+change themselves, giving self-adaptive properties~\citep{North1990}. The
+implementation of electronic institutions, therefore, has focused on the use of
+rule-engines and action languages~\citep{Artikis2012a,Arcos2005,Garcia-Camino2009}.
+
+When specifying an electronic institution we are defining rules within some
+arena which determine who has \emph{institutionalised power}, \emph{permission}
+and \emph{obligation} to perform certain actions~\citep{Jones1996}. In an open
+system any agent could perform any action (within its physical capabilities). An
+electronic institution used in the context is able to distinguish between
+actions which should and should not cause a change in institutional state, and
+actions which are allowed and forbidden.
+
+A useful institution will also make agents aware of when they have the power,
+permission or obligation to do an action. This aids in the planning of actions,
+so that agents do not waste energy with ineffectual actions, or worse, forbidden
+actions which may lead to sanctions. For example, most governments will notify
+their citizens of the time window in which going to ones local polling station
+and marking a cross on a piece of paper will count as an election vote. Outside
+of this time window this action is, at best, a waste of time, and, at worst,
+breaking and entering.
+
+Thus, an implementation of an electronic institution should be an executable
+specification which, firstly, holds some state of the institution, though which
+powers, permissions and obligations can be deduced. Secondly, defines how
+actions may change the state of the institution at a given time, and, finally,
+allows agents to query whether they are empowered, permitted or obliged to perform
+any given action.
+
+Furthermore, in human organisations, certain useful procedures have been
+formalised and specified in such a way that they can be reused in institutions
+as a tool for certain tasks. For example, \ac{RONR}~\citep{Robert2011} is a
+specification of a parliamentary authority for organisations. Organisations
+can take this specification and update their institutional rules accordingly
+to incorporate this robust protocol. The aim of electronic institutions is to
+provide such tools for open, agent-based systems, and work has been done on
+specifying various protocols, include the aforementioned
+\ac{RONR}~\citep{Pitt2005a}, floor control
+protocols~\citep{Artikis2004,Artikis2009b}, monitoring and sanctioning
+procedures~\citep{Pitt2012c}, argumentation~\citep{Artikis2003} and auctions~
+\citep{Rodriguez1997}.
+
+We are concerned with how to implement electronic institutions for both
+simulated applications and real-time system monitoring. This implementation
+should therefore be fast-enough for real-time systems, expressive enough such
+that complex rules can be implemented, readable such that the behaviour is
+apparent from the specification, and, modular such that institutions can be
+built up from the composition of smaller modules.
+
+In this chapter we investigate the specification and execution of electronic
+institutions. We review languages for specification of institutional rules.
+Taking the Event Calculus as an example, we assess its use for the execution of
+Robert's Rules of Order. We go on to show how performance can be drastically
+improved using a naive rule-based implementation of the Event Calculus. Finally,
+we argue that a Business rule engines have the necessary features to implement
+electronic institutions, and show how Event Calculus specifications can be
+translated to the JBoss Drools rule engine, using the \ac{RONR} example. 
+
+\section{Executable Specification of Electronic Institutions}
+
+
+
+\section{The Event Calculus}
+
+\section{JBoss Drools}
+
+EC: 
+Combination of protocols (but slow)~\citep{Carr2012}. 
+Floor control~
+Provision and appropriation systems~\citep{Pitt2012}. 
+Voting protocols~\citep{Pitt2005a}. 
+Institutionalised consensus~\citep{Sanderson2012}. 
+Resource sharing~\citep{Artikis2005}.
+Monitoring and sanctioning~\citep{Pitt2012c}. 
+
+Argumentation Protocol (in C+)~\citep{Artikis2003}.
+
+Norms as rules with JESS~\citep{Garcia-Camino2005}.
+
+Constraints~\citep{Aldewereld2007}.
+
+% Comparison EC to C+ Artikis2009 specifying norm-governed comp socieities
+
+% Languages:
+% InstAL
+% C+ Giunchiglia2004
+% EC
+% AMELI
