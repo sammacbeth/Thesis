@@ -2,7 +2,7 @@
 \acresetall
 \chapter{Principled Operationalisation using Presage2}\label{ch:presage}
 
-\lettrine[lines=3]{P}{rincipled} Operationalisation is the process of transforming a symbolic or formal representation of a system (often written in some kind of calculus) into a computer model of the system in question~\citep{Jones2013}. This process varies greatly in difficulty depending on the complexity of the system to be modelled and the requirements of the computer model. Models can range from small prolog programs~\citep{Pitt2005a} to significant software engineering undertakings~\citep{Timm,Oguara2005}.
+\lettrine[lines=3]{P}{rincipled} Operationalisation is the process of transforming a symbolic or formal representation of a system (often written in some kind of calculus) into a computer model of the system in question~\citep{Jones2013}. This process varies greatly in difficulty depending on the complexity of the system to be modelled and the requirements of the computer model. \marginpar{Should be citing something different here.} Models can range from small prolog programs~\citep{Pitt2005a} to significant software engineering undertakings~\citep{Timm2005,Oguara2005}.
 
 \ac{ABM} and \ac{MABS} are approaches to modelling and simulating complex systems as multi-agent systems~\citep{Macal2010,Moss2001}.
 This is a form of micro-simulation, where by modelling low-level interactions from the `ground up' we can observe macro level behaviours such as self-organisation, self-adaptation and so on.
@@ -50,7 +50,7 @@ From~\citet{CynthiaNikolaiandGregoryMadey2009} we take generial criteria which a
 
 \begin{itemize}
 \item Programming Language---The programming language required to use a platform has an affect on user uptake, quality of available development tools, code readability and succinctness, and ease of debugging~\citep{Railsback2006}. Use of custom programming languages my appear to limit the possible models which can be implemented on the platform, while general-purpose languages such as Java have known capabilities. These languages also come with a rich array of development suites to choose from to ease the development process.
-\item Software License---Open source licenses are preferable as they allow the platform's code to be scrutinised, allowing both users and reviewers to verify that simulation output will be correct.
+\item Software License---Open source licenses are preferable as they allow the platform's code to be scrutinised, allowing both users and reviewers to verify that simulation output will be correct~\citep{Polhill2007}.
 \end{itemize}
 
 \citet{Castle2006} identifies criteria for ease-of-use:
@@ -158,7 +158,14 @@ None of the platforms feature Declarative rule-engines as core features, however
 
 From this review we see that the platforms considered here differ little in terms of features. The platforms all follow a similar pattern of `framework and library'~\citep{Railsback2006}, in which a framework for designing an \ac{ABM} is proposed and the platform is an implementation of this framework. Netlogo differs from the other platforms in its attempt to make model implementation simple for non-programmers, while trying to remain powerful enough for complex use-cases. The others require knowledge of Java in order to use. 
 
-Repast performs the best over the evaluated criteria, however its limitations in agent communication are problematic when dealing with complex, social agents. MASON is provides a more stripped down alternative, which is fast, but requires that most advanced functionality be written from scratch. Being the least mature of the reviewed platforms, Presage lacks in some areas, particular documentation and user-friendliness. Its origins in the simulation of social networks shows in its competence in agent communication---an important aspect of socio-technical systems. 
+Repast performs the best over the evaluated criteria, however its lack of
+explicit agent communication is problematic when dealing with complex, social
+agents. MASON provides a more stripped down alternative, which is fast, but
+requires that most advanced functionality be written from scratch. Being the
+least mature of the reviewed platforms, Presage lacks in some areas,
+particular documentation and user-friendliness. Its origins in the simulation
+of social networks shows in its competence in agent communication---an
+important aspect of socio-technical systems.
 
 A major drawback, which all but Presage suffer from, is their permissive handling of state. These platforms treat shared state as a public resource, allowing reads and writes from all agents, with no limited accessibility. While it is a reasonable assumption in most modelling scenarios that agents will use this access correctly, there are problems from both modelling and verification perspectives. We believe that, when modelling, it is preferable to separate the agent logic from the logic updating environment state: The agent logic decides what action to take, and the environment decides the outcome of that action. The architectures of Netlogo, Repast and MASON put these two processes together, such that in order to take an action the agent must update the environment itself. Presage uses separate \emph{action handlers} which process actions from agents in a uniform and consistent way. This ensures that the environment is the same for all agents, that agents are portable between different environments, that agents can not know the consequences of actions they perform, and that faulty agent code won't break a simulation.
 
@@ -175,14 +182,16 @@ It is for this reason that we decide to build on the promising  framework of Pre
 In the previous section we outlined the need for a simulation platform for
 principled operationalisation, and, through a review of existing platforms,
 identified that the Presage framework was best suited to the task. In this
-section we describe the framework of Presage2, an evolution of the original
-Presage, and its implementation as a Java library.
+section we, firstly, describe the framework of Presage2, an evolution of the
+original Presage, secondly, describe its implementation as a Java library,
+and, finally, evaluate it with respect to the criteria in the previous
+section.
 
 \subsection{Framework Description}
 
 The Presage2 framework is a result of an iterative improvement to that of the
-original Presage framework. We build on the same concepts in order to achieve
-the desired feature-set.
+original Presage framework~\citep{Neville:2009}. We build on the same concepts
+in order to achieve the desired feature-set.
 
 At its core, the framework uses a discrete-time driven simulation loop. This
 is similar to the discrete-event models used in platforms such as MASON and
@@ -210,21 +219,23 @@ per agent per time-step.
 
 The state of the environment and observable state of agents (i.e. state which
 can be perceived by other agents), collectively referred to as \emph{shared
-state}, is updated each time-step by the \emph{state transformer} function.
-This takes the current state and set of agent's actions, and creates the next
-state. This state change may be \emph{non-deterministic} with the addition of
-randomness. State changes may also be applied independently of an action.
-Note, however that the state change is transactional---all changes for one
-time-step are applied atomically. This makes the environment \emph{static} for
-agents, and means that the result of an action is not observable until the
-following time-step.
+state}, is updated each time-step by a function we call a \emph{state
+transformer} function. This takes the current state and set of agent's
+actions as input, and creates the next state. This state change may be 
+\emph{non-deterministic} with the addition of randomness. State changes may 
+also be applied independently of an action. Note, however that the state change 
+is transactional---all changes for one time-step are applied atomically. This
+makes the environment \emph{static} for agents, and means that the result of
+an action is not observable until the following time-step. Furthermore, it allows 
+for deterministic state transitions, even when the execution order of agents 
+cannot be guaranteed.
 
 While the \emph{shared state} of the simulation can be made entirely
 \emph{accessible} to agents, in most practical systems agents will not have
 full observability or omniscience. Each agent instead has a partial view into
-the shared state. This may be simply a subset, or it could provide modified
-values to simulate lossy or faulty sensors. Thus we can model arbitrary levels
-of accessibility for each agent in the simulation.
+the shared state. This may be simply a subset thereof, or it could provide
+modified values to simulate lossy or faulty sensors. Thus we can model
+arbitrary levels of accessibility for each agent in the simulation.
 
 This state model implicitly enables inter-agent communication of arbitrary
 data between agents. A message action can simply create a state value which is
@@ -298,7 +309,7 @@ example for persistent effects on agents (momentum or current), or periodic
 (either random or triggered) events.  As we do not constrain the agent
 architecture, the agent function is not decomposed. Through specification of
 these sets of components one can define arbitrarily complex environments.
-Furthermore, components can be bundled together into `modules' to provide
+Furthermore, components can be bundled together into `modules' which provide
 specific functionality.
 
 The state of the environment, and public state of agents (\emph{shared state})
@@ -310,7 +321,7 @@ The aggregated state changes are then all executed in a single transaction.
 Thus it is impossible for agents to read a future state of the system.
 
 As we have stated, \emph{environment services} provide high-level access to
-the environment state. By this we mean the service can provide a more rich
+the environment state. By this, we mean the service can provide a more rich
 representation of the raw state data. This could be, for example, searching
 the state of neighbouring cells in an environment and returning a list of
 nearby agents. The service can also simulate partial observability of the
@@ -374,7 +385,7 @@ do {
 } while(checkFinishCondition() == false);
 \end{lstlisting}
 
-The platform as a whole consist of several components, as shown in
+The platform as a whole consists of several components, as shown in
 \autoref{fig:presage2block}. We have already described the state engine, and
 the simulation loop which is part of the core simulator. We will now introduce
 the remaining components which bring an array of different features to the
@@ -501,7 +512,7 @@ wants to simulate an ad-hoc network but without having to write a specific
 forwarding algorithm we can create a constraint in the global controller to
 simulate how optimal forwarding would perform.
 
-On top of this low level messaging we have build support for defining
+On top of this low level messaging we have built support for defining
 messaging protocols as finite state machines. The user can specify
 states and transitions, where moving to a state triggers a custom
 action for the agent, and transitions are governed by composite rules
@@ -514,7 +525,7 @@ managing multiple conversations with large numbers of agents simultaneously.
 \citet{Petruzzi2014} have developed a framework for social capital in agent-
 based systems, based on the model of social capital proposed by
 \citet{ostromahn2003}. This framework, shown in \autoref{fig:scf}, is
-implemented for Presage2 as an agent module, allowing agents to use it to
+implemented for Presage2 as an agent module, allowing agents using it to
 reason about social capital.
 
 \begin{figure}[htb]
@@ -595,7 +606,7 @@ end
 Verification and Validation are important considerations when developing
 software for scientific research. Verification is the process of checking if a
 system is working as intended, while validation checks whether the system is
-the correct system at all~\citep{Wallace1989}. Specifically in the \ac{ABM}
+the correct system for the task~\citep{Wallace1989}. Specifically in the \ac{ABM}
 domain, validation concerns whether the model is the correct one, and
 verification covers whether the model is implemented
 correctly~\citep{Ormerod2009}. From the perspective of a software tool for
@@ -627,12 +638,12 @@ implementations~\citep{Sudeikat2007a}.
 
 Run-time monitoring is the analysis of the state of parts of an executing
 program to detect invalid states. This can be achieved by logging within a
-Java program. Furhter information can be provided by exceptions, which provide
-traces to the occurance of an error. Presage2 provides detailed logging through
-the log4j\footnote{http://logging.apache.org/log4j} library, and also includes diagnostic simulation messages in the log
+Java program. Further information can be provided by exceptions, which provide
+traces to the occurrence of an error. Presage2 provides detailed logging through
+the log4j library\footnote{http://logging.apache.org/log4j}, and also includes diagnostic simulation messages in the log
 to allow one to ascertain when log messages are triggered in the simulation.
 Furthermore, exceptions are caught and logged by the simulator, which will
-provide information about expected and unexpected errors occuring during a
+provide information about expected and unexpected errors occurring during a
 simulation.
 
 Static analysis is error checking without code execution. Part of this can be
@@ -648,7 +659,7 @@ regards to this kind of verification.
 
 Model checking and theorem proving are more formal and stringent methods for
 checking an algorithm and its implementation. Generally, these methods require
-further consideration at design time about how to integrate such methods. Model
+further consideration at design time about their integration. Model
 checkers attempt to search all paths and states of a system to find property
 violations. This requires finite and deterministic state, and a separate model
 to describe the system to be checked. Therefore significant extra work is
@@ -737,8 +748,8 @@ simulation management and visualisation tool.
 The usage of Presage2 for modelling and simulation can be expressed as a two
 part process, as shown in \autoref{fig:presage2process}. In the design and
 implementation phase decisions are made about the model and agent
-implementations. A simulation specification is then created, combining user-
-implemented modules with modules from the Presage2 library in order to define
+implementations. A simulation specification is then created, combining 
+user-implemented modules with modules from the Presage2 library in order to define
 an environment, agents, and a mapping of parameters to initial state and
 configuration. Following this, experimentation and evaluation can be performed
 by providing parameter sets with a database configuration in order to generate
@@ -748,18 +759,19 @@ to fix problems and achieve a desired outcome. This process is enabled by
 support for automated experiment generation and execution.
 
 \begin{figure}
+\centering
 \caption{Presage2 simulation process diagram}\label{fig:presage2process}
-\includegraphics[width=\linewidth]{gfx/presage2/simulation_process}
+\includegraphics[width=0.8\linewidth]{gfx/presage2/simulation_process}
 \end{figure}
 
 We provide an \ac{API} for the specification of a set of values for each
-parameter in the simulation. The tool can then automatically generate the set of
-all parameter permutations from this, and create an experimental schedule from
-this. The tool is also able to include a specified number of repeats for each
-parameter set. Experimental schedules can then be run in batch by the batch
-executor tool. This tool can be configured to exploit multiple machines running
-experiments across a local area network, including using \ac{HPC} facilities
-where available.
+parameter in the simulation. The tool can then automatically generate the set
+of all parameter permutations, and create an experimental schedule from this
+specification. The tool is also able to include a specified number of repeats
+for each parameter set. Experimental schedules can then be run in batch by the
+batch executor tool. This tool can be configured to exploit multiple machines
+running experiments across a local area network, including using \ac{HPC}
+facilities where available.
 
 These simulation schedules can be managed through a web interface provided with
 the platform. \autoref{fig:webuimanage} shows a screenshot of this interface
@@ -797,8 +809,8 @@ the game is to successfully propose new rules, or modifications to existing
 rules. A version of this game was implemented with Presage2, using Drools for
 rule execution, to test if agents can successfully reason about dynamic and
 mutable rule-sets~\citep{Holland2013}. This implementation includes agents who
-are about to perform sub-simulations with the rule-set to determine the effect
-of changes they will propose.
+are able to perform sub-simulations with the rule-set to determine the effect
+of changes they intend to propose.
 
 \subsection{Electricity Exchange for SmartGrids}
 
@@ -843,8 +855,8 @@ computational agents within the game.
 
 Having described the Presage2 platform and its usage, we return to our
 evaluative criteria from \autoref{sec:p2:review} in order to evaluate how
-well Presage2 performs as a platform for Principled Operationalisation of socio-
-technical systems.
+well Presage2 performs as a platform for Principled Operationalisation of 
+socio-technical systems.
 
 \autoref{tab:presagereview} shows Presage2 evaluated according to the basic
 criteria. Like the other Java-based simulation platforms, we require strong
@@ -883,9 +895,9 @@ to implement complex agents in simulations. These agents can also be
 automatically generated from input parameters as part of the initial state of
 the simulation.
 
-The Presage2 state engine enables simulation of situated agents,
-automatically generated and dynamic networks, and dynamically changing models.
-Furthermore, these features and modular, and separated from agent
+The Presage2 state engine enables simulation of situated agents;
+automatically generated, dynamic networks; and dynamically changing models.
+Furthermore, these features are modular, and separated from agent
 implementations.
 
 Therefore, we believe that the Presage2 platform is not only an improvement over
