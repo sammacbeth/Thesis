@@ -81,7 +81,7 @@
 %\PassOptionsToPackage{spanish,es-lcroman}{babel}
  \usepackage{babel}					
 
-%\PassOptionsToPackage{square,numbers}{natbib}
+\PassOptionsToPackage{round}{natbib}
  \usepackage{natbib}				
 
 \PassOptionsToPackage{fleqn}{amsmath}		% math environments and more by the AMS 
@@ -122,23 +122,55 @@
 % ****************************************************************************************************
 \usepackage{listings} 
 %\lstset{emph={trueIndex,root},emphstyle=\color{BlueViolet}}%\underbar} % for special keywords
-\lstset{language=[LaTeX]Tex,%C++,
-    keywordstyle=\color{RoyalBlue},%\bfseries,
-    basicstyle=\small\ttfamily,
-    %identifierstyle=\color{NavyBlue},
-    commentstyle=\color{Green}\ttfamily,
-    stringstyle=\rmfamily,
-    numbers=none,%left,%
-    numberstyle=\scriptsize,%\tiny
-    stepnumber=5,
-    numbersep=8pt,
-    showstringspaces=false,
-    breaklines=true,
-    frameround=ftff,
-    frame=single,
-    belowcaptionskip=.75\baselineskip
-    %frame=L
-} 
+\lstset{
+     keywordstyle=\color{RoyalBlue},%\bfseries,
+     basicstyle=\small\ttfamily,
+     %identifierstyle=\color{NavyBlue},
+     commentstyle=\color{Green}\ttfamily,
+     stringstyle=\rmfamily,
+     numbers=none,%left,%
+     numberstyle=\scriptsize,%\tiny
+     stepnumber=5,
+     numbersep=8pt,
+     showstringspaces=false,
+     breaklines=true,
+     frameround=ftff,
+     frame=single,
+     belowcaptionskip=.75\baselineskip
+%     %frame=L
+}
+
+% Listing environments
+\lstnewenvironment{prolog}[1][]
+	{\lstset{language=Prolog,float=*,tabsize=4,#1}}
+	{}
+\lstnewenvironment{prologinline}
+	{\lstset{language=Prolog,frame=leftline,tabsize=4}}
+	{}
+\lstnewenvironment{java}[1][]
+	{\lstset{language=Java,float=*,tabsize=4,#1}}
+	{}
+
+\lstnewenvironment{drools}[1][]
+	{\lstset{
+		morekeywords={rule,when,then,end},
+		morestring=[b]",
+		morecomment=[l]{//},
+		float=*,
+		tabsize=4,
+		#1}
+	}
+	{}
+\lstnewenvironment{droolsinline}[1][]
+	{\lstset{
+		morekeywords={rule,when,then,end,new},
+		morestring=[b]",
+		morecomment=[l]{//},
+		tabsize=4,
+		frame=leftline,
+		#1}
+	}
+	{}
 % ****************************************************************************************************    		   
 
 

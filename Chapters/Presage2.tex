@@ -2,7 +2,7 @@
 \acresetall
 \chapter{Principled Operationalisation using Presage2}\label{ch:presage}
 
-\lettrine[lines=3]{P}{rincipled} Operationalisation is the process of transforming a symbolic or formal representation of a system (often written in some kind of calculus) into a computer model of the system in question~\citep{Jones2013}. This process varies greatly in difficulty depending on the complexity of the system to be modelled and the requirements of the computer model. \marginpar{Should be citing something different here.} Models can range from small prolog programs~\citep{Pitt2005a} to significant software engineering undertakings~\citep{Timm2005,Oguara2005}.
+\lettrine[lines=3]{P}{rincipled} Operationalisation is the process of transforming a symbolic or formal representation of a system (often written in some kind of calculus) into a computer model of the system in question~\citep{Jones2013}. This process varies greatly in difficulty depending on the complexity of the system to be modelled and the requirements of the computer model. \marginpar{Should be citing something different here?} Models can range from small prolog programs~\citep{Pitt2005a} to significant software engineering undertakings~\citep{Timm2005}.
 
 \ac{ABM} and \ac{MABS} are approaches to modelling and simulating complex systems as multi-agent systems~\citep{Macal2010,Moss2001}.
 This is a form of micro-simulation, where by modelling low-level interactions from the `ground up' we can observe macro level behaviours such as self-organisation, self-adaptation and so on.
@@ -352,6 +352,36 @@ change is submitted to the state engine. Note the state is not actually
 changed until the engine is instructed to commit changes at the end of the
 time-step.
 
+An example of how this would be implemented in an agent is shown in
+\autoref{alg:agentimpl}. The \texttt{AbstractParticipant} base class provides
+a useful base for the implementation of agents in Presage2. For example,
+fields in the agent class of type \texttt{State} provide a dynamic binding to
+an agent's state, via the appropriate environment service, and the
+\texttt{act} function submits agent actions to the environment. The
+\texttt{@Step} annotation designates which function(s) in the class are agent
+functions. In this case, the agent function reads the agent's current
+location, then constructs a move action to a target location and submits it to
+the environment.
+
+\begin{java}[caption={Presage2 agent implementation},label=alg:agentimpl]
+class Agent extends AbstractParticipant {
+	public State<Location> location;
+
+	Agent(String name, Location initial) {
+		super(name);
+		this.location = new State<Location>("location", initial);
+	}
+
+	@Step
+	public void step(int t) {
+		Location loc = location.get();
+		// calculate move to get to target from current
+		Move m = getMove(loc, target);
+		this.act(m);
+	}
+}
+\end{java}
+
 The final component required to implement the Presage2 framework is a
 simulation loop to execute these functions correctly. The use of a immutable
 shared state during a time-step simplifies this process, as state cannot be
@@ -372,7 +402,7 @@ is transparent to the model implementer.
 
 \autoref{alg:simloop} shows this simulation loop. Note object types and function names have been changed for illustrative purposes.
 
-\begin{lstlisting}[caption={Presage2 multi-threaded simulation loop},label=alg:simloop,language=Java,float=tbh]
+\begin{java}[caption={Presage2 multi-threaded simulation loop},label=alg:simloop]
 do {
 	for(Agent a : agents) {
 		threadpool.submit(a);
@@ -383,7 +413,7 @@ do {
 	threadpool.waitUntilComplete();
 	stateEngine.commit();
 } while(checkFinishCondition() == false);
-\end{lstlisting}
+\end{java}
 
 The platform as a whole consists of several components, as shown in
 \autoref{fig:presage2block}. We have already described the state engine, and
@@ -426,10 +456,34 @@ these will also be automatically loaded.
 % These classes will then be constructed automatically by the platform, providing 
 
 Thus, an environment can be defined by declaring the set of classes which will
-be action handlers, environment functions and environment services. This can be
-done at runtime, and so be responsive to parameter changes. Simulation
+be action handlers, environment functions and environment services. This can
+be done at runtime, and so be responsive to parameter changes. Simulation
 parameters are also bound, enabling them to be injected at any point they are
-needed.
+needed. \autoref{alg:simspec} shows an example simulation specification in
+Presage2. The \texttt{bind} and \texttt{agents} parameters are defined via
+java annotations, and modules are used to define the environment and add
+agents to it.
+
+\begin{java}[caption={Specification of a simulation and parameters in Presage2},label=alg:simspec]
+public class MySimulation extends RunnableSimulation {
+	@Parameter
+	public int size;
+
+	@Parameter(optional=true)
+	public int agents = 1;
+
+	public void initialiseScenario(Scenario scenario) {
+		addModule(Area.Bind.area2D(size, size));
+		addModule(new AbstractEnvironmentModule()
+			.addActionHandler(MoveHandler.class)
+			.addParticipantEnvironmentService(ParticipantLocationService.class));
+
+		for (int i = 0; i < agents; i++) {
+			scenario.addAgent(new Agent(...));
+		}
+	}
+}
+\end{java}
 
 The Presage2 platform allows for a simulation to specify a series of simulation
 parameters. These are named variables which should be specified when executing a
@@ -587,7 +641,7 @@ defines the consequence when a tuple matching the condition is found. In this
 case the agent's location is updated and the action removed (to prevent
 subsequent matches of the same rule).
 
-\begin{lstlisting}[caption={Drools rule example.},label=lst:ruleexample,float=tbph]
+\begin{drools}[caption={Drools rule example.},label=lst:ruleexample]
 rule "Move agent"
     when
         $m : Move($a : agent, $dx : dx, $y : dy)
@@ -599,7 +653,7 @@ rule "Move agent"
         }
         retract($m);
 end
-\end{lstlisting}
+\end{drools}
 
 \subsection{Verification \& Validation}
 
@@ -788,68 +842,60 @@ In this section we provide a short summary of a range of applications which have
 been modelled and simulated using Presage2.\marginpar{Prose, subsection or
 paragraph?}
 
-\subsection{The LPG' Game}
+Several applications have used Presage2 to model iterated games. In these
+applications Presage2's time-driven model helps in particular to synchronise
+each game round. Other applications model more concrete scenarios, such as
+road networks, to apply agent-based modelling techniques to them. The final
+set of applications have linked Presage2 to other tools, to provide on-demand
+modelling for serious games or decision making:
 
-The LPG' game is a variant of a linear public good game, first defined in
-\citet{Pitt2012c}. It has been used to explore the issue of non-compliance in
-resource appropriation, and later to demonstrate a method of fairly allocating
-resources based on Nicholas Rescher's theory of Distributive
+\begin{itemize}
+\item The LPG' game is a variant of a linear public good game, and was first defined
+in \citet{Pitt2012c}. It has been used to explore the issue of non-compliance
+in resource appropriation, and later to demonstrate a method of fairly
+allocating resources based on Nicholas Rescher's theory of Distributive
 Justice~\citep{Pitt2014}. The game was implemented using Presage2, utilising
 the rule-engine to specify the game rules~\citep{Macbeth2012}.
 
 This implementation of the LPG' game has been integrated with an Autonomous
 Power Management system to apply Distributive Justice to the power grid~\citep{Kohler2014}.
 
-% TODO visualisation screenshot
+\item The Game of Nomic, proposed by \citet{Suber1990}, is a rule amendment game.
+The aim of the game is to successfully propose new rules, or modifications to
+existing rules. A version of this game was implemented with Presage2, using
+Drools for rule execution, to test if agents can successfully reason about
+dynamic and mutable rule-sets~\citep{Holland2013}. This implementation
+includes agents who are able to perform sub-simulations with the rule-set to
+determine the effect of changes they intend to propose.
 
-\subsection{The Game of Nomic}
+\item \citet{Petruzzi2014} test their social capital framework with a simple
+cooperation game, implemented with Presage2.
 
-This game, proposed by \citet{Suber1990}, is a rule amendment game. The aim of
-the game is to successfully propose new rules, or modifications to existing
-rules. A version of this game was implemented with Presage2, using Drools for
-rule execution, to test if agents can successfully reason about dynamic and
-mutable rule-sets~\citep{Holland2013}. This implementation includes agents who
-are able to perform sub-simulations with the rule-set to determine the effect
-of changes they intend to propose.
+\item \citet{Petruzzi2013} models a market for exchange of energy allocations
+in a SmartGrid, utilising Social capital to encourage cooperation.
 
-\subsection{Electricity Exchange for SmartGrids}
+\item \citet{Schaumeier2013} models an endogenous common-pool resource, with
+rules implemented to test each of \possessivecite{Ostrom1990} principles
+for self-governing institutions. Again Drools was used for environmental
+rules.
 
-This work models a market for exchange of energy allocations in a SmartGrid,
-utilising Social capital to encourage cooperation~\citep{Petruzzi2013}.
+\item \citet{Sanderson2013} modelled fleets of self-driving cars, using
+multiple self-adaptive mechanisms to optimise their behaviour. This work
+included an implementation of Institutionalised Paxos
+consensus~\citep{Sanderson2012} using Drools.
 
-\subsection{Cooperation Game}
+\item The Presage2 platform has been used to model the carbon emissions as a
+common-pool resource, and exploring the effect of the Kyoto Protocol on these
+emissions~\citep{Macbeth2014}. This work provides an example case of 
+policy-based modelling with Presage2.
 
-The social capital framework used in the previous application has also been
-tested in a simple cooperation game~\citep{Petruzzi2014}.
-
-\subsection{Self-Organising Resource Allocation}
-
-Here, an endogenous common-pool resource was modelled, and rules were
-implemented to test each of \possessivecite{Ostrom1990} principles for
-self-governing institutions~\citep{Schaumeier2013}. Again Drools was used for
-environmental rules.
-
-\subsection{Adaptive Mechanisms for dynamic road fleets}
-
-\citet{Sanderson2013} modelled fleets of cars, using multiple self-adaptive
-mechanisms to optimise their behaviour. This work included an implementation
-of Institutionalised Paxos consensus~\citep{Sanderson2012} using Drools.
-
-\subsection{The Kyoto Protocol}
-
-The platform has been used to model the carbon emissions as a common-pool
-resource, and exploring the effect of the Kyoto Protocol on these
-emissions~\citep{Macbeth2014}. This work provides an example case of policy-
-based modelling with Presage2.
-
-\subsection{Social Mpower}
-
-The Social Mpower game is a Serious game to inform, raise awareness and motivate
+\item The Social Mpower game is a Serious game to inform, raise awareness and motivate
 consumers of energy efficiency~\citep{Bourazeri2014}. Presage2 is used as a
 background simulation component of the game, communicating with a graphical game
 frontend, which sends actions triggered by both humans playing the game and
 computational agents within the game.
 % TODO cite PRIMA later.
+\end{itemize}
 
 \section{Presage2 Evaluation \& Conclusion}
 
