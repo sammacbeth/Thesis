@@ -1,0 +1,166 @@
+%!TEX root =../MacbethThesis.tex
+
+\chapter{Event Calculus Benchmarking}
+
+\section{RONR Implementation in Prolog}\label{sec:ronrcode}
+
+\begin{prologinline}[caption=Implementation of RONR in Prolog]
+:- dynamic
+    happens/2.
+
+/****************************************
+ * SYNTAX OF ACTIONS                    *
+ *                                      *
+ * open_session(Agent, Session)         *
+ * close_session(Agent, Session)        *
+ * propose(Agent, Motion)               *
+ * second(Agent, Motion)                *
+ * open_ballot(Agent, Motion)           *
+ * close_ballot(Agent, Motion)          *
+ * vote(Agent, Motion, aye)             *
+ * vote(Agent, Motion, nay)             *
+ * declare(Agent, Motion, carried)      *
+ * declare(Agent, Motion, not_carried)  *
+ ***************************************/                          
+
+/************
+ * SESSIONS *
+ ***********/
+initiates( open_session(C,S), sitting(S)=true, T ) :-
+	holdsAt( pow(C, open_session(C,S))=true, T ).
+
+initiates( open_session(C,S), resolutions=([],[]), T ) :-
+	holdsAt( pow(C, open_session(C,S))=true, T ).
+
+initiates( close_session(C,S), sitting(_)=false, T ) :-
+	holdsAt( pow(C, close_session(C,S))=true, T ).
+
+/********************
+ * STATE of MOTIONS *
+ *******************/
+
+% -----      pAgent       sAgent       chair      chair      chair
+% -----     propose       second   open_ballot close_ballot declare
+% ----- (null) --> proposed --> seconded --> voting --> voted --> {carried | not_carried}
+
+initiates( propose(A,M), status(M)=proposed, T ) :-
+	holdsAt( pow(A, propose(A,M))=true, T ).
+
+initiates( second(B,M), status(M)=seconded, T ) :-
+	holdsAt( pow(B, second(B,M))=true, T ).
+
+initiates( open_ballot(C,M), status(M)=voting(T), T ) :-
+	holdsAt( pow(C, open_ballot(C,M))=true, T ).
+
+initiates( close_ballot(C,M), status(M)=voted, T ) :-
+	holdsAt( pow(C, close_ballot(C,M))=true, T ).
+
+initiates( declare(C,M,carried), status(_)=null, T ) :-
+	holdsAt( pow(C, declare(C,M,_))=true, T ).
+
+initiates( declare(C,M,not_carried), status(_)=null, T ) :-
+	holdsAt( pow(C, declare(C,M,_))=true, T ).
+
+initiates( declare(C,M,carried), resolutions=([M|Ms],Ns), T ) :-
+	holdsAt( pow(C, declare(C,M,_))=true, T ),
+	holdsAt( resolutions=(Ms,Ns), T ).
+
+initiates( declare(C,M,not_carried), resolutions=(Ms,[M|Ns]), T ) :-
+	holdsAt( pow(C, declare(C,M,_))=true, T ),
+	holdsAt( resolutions=(Ms,Ns), T ).
+
+/***********************
+ * INSTITUTIONAL POWER *
+ ***********************/
+holdsAt( pow(C, open_session(C,S))=true, T ) :-
+	holdsAt( sitting(S)=false, T ),
+	holdsAt( role_of(C,chair)=true, T ).
+
+holdsAt( pow(A, propose(A,M))=true, T ) :-
+	holdsAt( status(M)=null, T ),
+	holdsAt( role_of(A,proposer)=true, T ).
+
+holdsAt( pow(B, second(B,M))=true, T ) :-
+	holdsAt( status(M)=proposed, T ),
+	holdsAt( role_of(B,seconder)=true, T ).
+
+holdsAt( pow(C, open_ballot(C,M))=true, T ) :-
+	holdsAt( status(M)=seconded, T ),
+	holdsAt( role_of(C,chair)=true, T ).
+
+holdsAt( pow(V, vote(V,M,_))=true, T ) :-
+	holdsAt( status(M)=voting(_), T ),
+	holdsAt( role_of(V,voter)=true, T ),
+	\+ holdsAt( role_of(V,chair)=true, T ),
+	holdsAt( voted(V,M)=nil, T ).
+
+holdsAt( pow(C, close_ballot(C,M))=true, T ) :-
+	holdsAt( status(M)=voting(Te), T ), Te < T,
+	holdsAt( role_of(C,chair)=true, T ).
+
+holdsAt( pow(C, declare(C,M,_))=true, T ) :-
+	holdsAt( status(M)=voted, T ),
+	holdsAt( role_of(C,chair)=true, T ).
+
+holdsAt( pow(C, close_session(C,S))=true, T ) :-
+	holdsAt( sitting(S)=true, T ),
+	holdsAt( role_of(C,chair)=true, T ).
+
+holdsAt( pow(Agent, Action) = false, T ) :-
+	\+ holdsAt( pow(Agent, Action) = true, T ).
+
+/*****************************
+ * ROLE ASSIGNMENT (SORT OF) *
+ ****************************/
+initiates( propose(A,M), role_of(B,seconder)=true, T ) :-
+	holdsAt( pow(A, propose(A,M))=true, T ),
+	holdsAt( qualifies(B,seconder)=true, T ),
+	A \= B.
+
+initiates( second(B1,M), role_of(B2,seconder)=false, T ) :-
+	holdsAt( pow(B1, second(B1,M))=true, T ),
+    holdsAt( qualifies(B2,seconder)=true, T ).
+
+initiates( open_session(C,M), role_of(A,proposer)=true, T ) :-
+	holdsAt( pow(C, open_session(C,M))=true, T ),
+	holdsAt( qualifies(A,proposer)=true, T ).
+
+initiates( close_session(C,M), role_of(A,proposer)=false, T ) :-
+	holdsAt( pow(C, close_session(C,M))=true, T ),
+	holdsAt( qualifies(A,proposer)=true, T ).
+
+/*****************************
+ * VOTING and COUNTING VOTES *
+ ****************************/
+
+% ----- open ballot and initiate votes to (0,0)
+% ----- vote for (F,A) --> (F1,A)
+% ----- vote against (F,A) --> (F,A1)
+% ----- power to vote removed by either act of voting or chair closing the ballot
+
+initiates( open_ballot(C,M), votes(M)=(0,0), T ) :-
+	holdsAt( pow(C, open_ballot(C,M))=true, T ).
+
+initiates( open_ballot(C,M), voted(V,M)=nil, T ) :-
+    holdsAt( pow(C, open_ballot(C,M))=true, T ),
+	holdsAt( role_of(V,voter)=true, T ).
+
+initiates( vote(V,M,aye), votes(M)=(F1,A), T ) :-
+	holdsAt( pow(V, vote(V,M,_))=true, T ),
+	holdsAt( votes(M)=(F,A), T ),
+	F1 is F + 1.
+
+initiates( vote(V,M,aye), voted(V,M)=aye, T ) :-
+	holdsAt( pow(V, vote(V,M,_))=true, T ).
+
+initiates( vote(V,M,nay), votes(M)=(F,A1), T ) :-
+	holdsAt( pow(V, vote(V,M,_))=true, T ),
+	holdsAt( votes(M)=(F,A), T ),
+	A1 is A + 1.
+
+initiates( vote(V,M,nay), voted(V,M)=nay, T ) :-
+	holdsAt( pow(V, vote(V,M,_))=true, T ).
+
+initially( status(_) = null ).
+initially( sitting(_) = false ).
+\end{prologinline}

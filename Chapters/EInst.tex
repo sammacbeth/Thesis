@@ -682,9 +682,39 @@ axioms we observe an improvement in performance of several orders of
 magnitude. Thus we propose that we can achieve a fast and robust deductive
 \ac{EC} engine using a standard rule engine.
 
+There is still ongoing work in implementing faster Prolog \ac{EC}
+specifications, which haven't been tested here. RTEC~\citep{Artikis2012} for
+example has been shown to achieve performance in event recognition tasks
+comparable to that of rule-based approaches, using a rolling time window to
+reduce the length of fluent history to store, and compiling axioms into
+optimised forms. However, this approach requires specifications to be
+translated into a dialect of the \ac{EC}, and additional metadata to be
+specified for events and fluents for the compiler's optimisation algorithm.
+
+The use of time windows has also been proposed by \citet{Carr2010} to speed up
+the \ac{EC}. This method specifies a cut-off time point before which one can
+no longer perform \emph{holdsAt} queries. In doing so the number of relevant
+events can be reduced, and so, more linear scaling can be achieved.
+
 \section{A Rule-Engine Implementation of Event Calculus Specifications}
 
+In the previous section we demonstrated both speed and scaling issues with
+Prolog implementations of the \ac{EC}, and showed that for purely deductive
+reasoning a rule-based approach is significantly faster. While specification
+of an Electronic Institution in \ac{EC} is still worthwhile, particularly for
+verification and the other non-deductive reasoning tasks, for runtime
+deductive reasoning with large number of incoming events we advocate a rule-
+based implementation. Therefore, if we are specifying in \ac{EC}, but
+implementing in a different paradigm we require a robust translation process
+so that we can be confident of maintaining correctness.
 
+In this section we present a method of translating \ac{EC} axioms into a
+declarative rule form, using the language of a \acl{PRS} system, JBoss Drools.
+We also present our implementation of a module library, Drools-EInst, to
+enable the use of specifications translated with this method within a Java
+program, and the current set of modules implemented from various \ac{EC}
+specifications. Finally, we give a runtime performance comparison using the
+same \ac{RONR} example as in the previous section.
 
 \subsection{JBoss Drools}
 
@@ -1175,9 +1205,44 @@ benchmark reduces.
 \includegraphics{gfx/ec/droolsvsrules}
 \end{figure}
 
-\section{Summary \& Conclusion}
+\section{Summary}
 
+In this chapter we have investigated the operationalisation of electronic
+institutions for specification of procedure and institutionalised power in
+open agent systems. Existing methods, based on logics and action languages,
+are rich in reasoning capabilities and expressive, however implementations
+suffer from poor performance and scalability. Therefore, we advocate an
+approach whereby such representations are still used for specification, but
+for operationalisation a translation to production rules is made, allowing for
+significantly faster event processing. We demonstrate this approach by
+describing the translation of \ac{EC} axioms into rules for the Drools rule
+engine, and the implementation of the Drools-EInst library for the processing
+of institutional actions.
 
+This approach is similar to that of \citet{Arcos2005} and
+\citet{Aldewereld2006} in that logic-based specifications are translated into
+faster constraint or rule specifications, however our method maintains a much
+closer correspondence between logic and rule specifications. There is a one-
+to-one correspondence between \ac{EC} axioms and Drools rules, with each
+\ac{EC} query becoming a single Drools condition. We believe this relation is
+apparent when comparing between the specifications.
+
+The cost of this performance improvement from \ac{EC} to Drools is the loss of
+abductive and inductive reasoning over the specification, and the loss of the
+cache of past values of fluents. As the implementation using rules is
+primarily aimed at speeding up deductive at the cost of abduction and
+induction this first loss is expected. The second is mitigated by the fact
+that with Drools we still explicitly store fluents describing historical
+states, and therefore keep history in a more efficient manner.
+
+Currently there are only a small number of modules implemented in the Drools-
+EInst library. We expect this to increase as it is used by more simulations
+and applications. The modularity of the library's design enables it to be used
+for rapid development and prototyping of Electronic Institutions. A user can
+easily test various different module permutations, as well as rich
+configuration options provided by each module itself. Thus, this library can
+be seen as a toolkit for deploying Electronic Institutions into socio-
+technical systems.
 
 % EC: 
 % Combination of protocols (but slow)~\citep{Carr2012}. 
