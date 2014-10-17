@@ -1,27 +1,31 @@
+%!TEX root =../MacbethThesis.tex
 %*******************************************************
 % Titlepage
 %*******************************************************
 \begin{titlepage}
 	% if you want the titlepage to be centered, uncomment and fine-tune the line below (KOMA classes environment)
 	%\begin{addmargin}[-1cm]{-3cm}
+    \begin{textblock*}{80mm}(17.5mm, 17.5mm)%
+      \includegraphics[width=7cm]{gfx/imperial_logo}
+    \end{textblock*} 
     \begin{center}
         \large  
-
         \hfill
+        \vfill\vfill 
 
-        \bigskip
         \begingroup
             \color{Maroon}\spacedallcaps{\myTitle} \\ \bigskip
         \endgroup
         \spacedlowsmallcaps{\myName} \\ 
-        \medskip
+
+        \vfill\vfill
+
+        \textit{Thesis submitted for the degree of Doctor of Philosophy} \\ 
 
         \vfill
-
-        Thesis submitted for the degree of Doctor of Philosophy \\ \bigskip \bigskip
-
-        %\myDegree \\
-        \myDepartment \\ \medskip
+        Supervised by \spacedlowsmallcaps{\myProf}\\ \medskip
+        \myGroup \\
+        \myDepartment \\
         %\myFaculty \\
         \myUni \\ \bigskip
 

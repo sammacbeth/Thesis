@@ -9,3 +9,10 @@
 MacbethThesis.pdf
 *.toc
 *.out
+*.bak
+*_latexmk
+LatexDocs/*
+Paperwork/*
+Reference/*
+*.fls
+*.synctex.gz

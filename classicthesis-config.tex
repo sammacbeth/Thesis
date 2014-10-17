@@ -44,15 +44,13 @@
 \newcommand{\mySubtitle}{blah blah blah\xspace}
 \newcommand{\myDegree}{\xspace}
 \newcommand{\myName}{Sam Macbeth\xspace}
-\newcommand{\myProf}{Put name here\xspace}
-\newcommand{\myOtherProf}{Put name here\xspace}
-\newcommand{\mySupervisor}{Put name here\xspace}
-\newcommand{\myFaculty}{Put data here\xspace}
+\newcommand{\myProf}{Dr. Jeremy Pitt\xspace}
+\newcommand{\myGroup}{Intelligent Systems and Networks Group\xspace}
 \newcommand{\myDepartment}{Department of Electrical \& Electronic Engineering\xspace}
 \newcommand{\myUni}{Imperial College London\xspace}
 \newcommand{\myLocation}{London, UK\xspace}
 \newcommand{\myTime}{August 2014\xspace}
-\newcommand{\myVersion}{version 0.1\xspace}
+\newcommand{\myVersion}{version 0.2\xspace}
 
 % ********************************************************************
 % Setup, finetuning, and useful commands
@@ -156,6 +154,7 @@
 		morekeywords={rule,when,then,end},
 		morestring=[b]",
 		morecomment=[l]{//},
+		morecomment=[s]{/*}{*/},
 		float=*,
 		tabsize=4,
 		#1}
@@ -166,6 +165,7 @@
 		morekeywords={rule,when,then,end,new},
 		morestring=[b]",
 		morecomment=[l]{//},
+		morecomment=[s]{/*}{*/},
 		tabsize=4,
 		frame=leftline,
 		#1}
@@ -225,12 +225,12 @@
     urlcolor=webbrown, linkcolor=RoyalBlue, citecolor=webgreen, %pagecolor=RoyalBlue,%
     %urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,%
     pdftitle={\myTitle},%
-    pdfauthor={\textcopyright\ \myName, \myUni, \myFaculty},%
+    pdfauthor={\textcopyright\ \myName, \myUni},%
     pdfsubject={},%
     pdfkeywords={},%
     pdfcreator={pdfLaTeX},%
     pdfproducer={LaTeX with hyperref and classicthesis}%
-}   
+}
 
 % ********************************************************************
 % Setup autoreferences
@@ -339,3 +339,7 @@
 
 \usepackage{multirow}
 \usepackage{rotating}
+
+% Absolute positioning for images ( notably Imperial College Logo on main page)
+\usepackage[absolute]{textpos}
+\usepackage{epstopdf}
