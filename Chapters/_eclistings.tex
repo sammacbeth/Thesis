@@ -164,3 +164,271 @@ initiates( vote(V,M,nay), voted(V,M)=nay, T ) :-
 initially( status(_) = null ).
 initially( sitting(_) = false ).
 \end{prologinline}
+
+\section{RONR Implementation in Drools}\label{sec:ronrdrools}
+
+\begin{droolsinline}
+/************
+ * SESSIONS *
+ ***********/
+rule "Open Session"
+	when
+		$open : OpenSession($a : actor, $i : inst, $name : name, $t : t, valid == false)
+		Pow(actor == $a, this.matches($open))
+		not( exists( Session(inst == $i, name == $name, sitting == true) ) )
+	then
+		insert(new Session($i,  $name, true));
+		modify($open) {
+			setValid(true);
+		}
+end
+
+rule "Close session"
+	when
+		$close : CloseSession($a : actor, $i : inst, $name : name, $t : t, valid == false)
+		$sesh : Session(inst == $i, name == $name)
+		Pow(actor == $a, this.matches($close))
+	then
+		modify($sesh) {
+			setSitting(false);
+		}
+		modify($close) {
+			setValid(true);
+		}
+end
+
+query getSession(Institution i, String name)
+	Session(inst == i, name == name, session : this)
+end
+
+/********************
+ * STATE of MOTIONS *
+ *******************/
+rule "Propose"
+ 	when
+ 		$prop : Propose($a : actor, $m : motion, valid == false)
+ 		Pow(actor == $a, this.matches($prop))
+ 		not( exists( Motion(session == $m.session, name == $m.name ) ) )
+ 	then
+ 		$m.setStatus(Motion.Status.Proposed);
+ 		insert($m);
+ 		modify($prop) {
+ 			setValid(true);
+ 		}
+end
+ 
+rule "Second"
+	when
+		$sec : Second($a : actor, $m : motion, valid == false)
+		Pow(actor == $a, this.matches($sec))
+	then
+		modify($m) {
+			setStatus(Motion.Status.Seconded);
+		}
+		modify($sec) {
+			setValid(true);
+		}
+end
+
+rule "Open ballot"
+	when
+		$open : OpenBallot($a : actor, $m : motion, valid == false)
+		Pow(actor == $a, this.matches($open))
+	then
+		modify($m) {
+			setStatus(Motion.Status.Voting),
+			setVoting($open.getT());
+		}
+		modify($open) {
+			setValid(true);
+		}
+end
+
+rule "Close ballot"
+	when
+		$close : CloseBallot($a : actor, $m : motion, valid == false)
+		Pow(actor == $a, this.matches($close))
+	then
+		modify($m) {
+			setStatus(Motion.Status.Voted);
+		}
+		modify($close) {
+			setValid(true);
+		}
+end
+
+rule "Declare carried"
+	when
+		$decl : Declare($a : actor, $m : motion, status == Motion.Status.Carried)
+		Pow(actor == $a, this.matches($decl))
+	then
+		modify($m) {
+			setStatus(Motion.Status.Carried);
+		}
+		modify($m.getSession()) {
+			addCarried($m);
+		}
+end
+
+rule "Declare not carried"
+	when
+		$decl : Declare($a : actor, $m : motion, status == Motion.Status.NotCarried)
+		Pow(actor == $a, this.matches($decl))
+	then
+		modify($m) {
+			setStatus(Motion.Status.NotCarried);
+		}
+		modify($m.getSession()) {
+			addNotCarried($m);
+		}
+end
+ 
+query getMotion(Institution i, String sesh, String name)
+ 	Session(inst == i, name == sesh, session : this)
+	Motion(name == name, session == session, motion : this)
+end
+ 
+/***********************
+ * INSTITUTIONAL POWER *
+ ***********************/
+rule "Pow open session"
+	when
+		RoleOf($c : actor, $i : inst, role == "chair")
+	then
+		insertLogical(new Pow($c, new OpenSession($c, $i, null)));
+end
+
+rule "Pow propose motion"
+	when
+		RoleOf($p : actor, $i : inst, role == "proposer")
+		$sesh : Session(inst == $i, sitting == true)
+	then
+		insertLogical(new Pow($p, new Propose($p, new Motion($sesh, null))));
+end
+
+rule "Pow second motion"
+	when
+		RoleOf($p : actor, $i : inst, role == "seconder")
+		$sesh : Session(inst == $i, sitting == true)
+		$m : Motion(session == $sesh, status == Motion.Status.Proposed)
+	then
+		insertLogical(new Pow($p, new Second($p, $m)));
+end
+
+rule "Pow open ballot"
+	when
+		RoleOf($c : actor, $i : inst, role == "chair")
+		$sesh : Session(inst == $i, sitting == true)
+		$m : Motion(session == $sesh, status == Motion.Status.Seconded)
+	then
+		insertLogical(new Pow($c, new OpenBallot($c, $m)));
+end
+
+rule "Pow vote"
+	when
+		RoleOf($a : actor, $i : inst, role == "voter")
+		$sesh : Session(inst == $i, sitting == true)
+		$m : Motion(session == $sesh, status == Motion.Status.Voting)
+		not( RoleOf(actor == $a, inst == $i, role == "chair") )
+		not( Vote(actor == $a, motion == $m, valid == true) )
+	then
+		insertLogical(new Pow($a, new Vote($a, $m, null)));
+end
+
+rule "Pow close ballot"
+	when
+		RoleOf($c : actor, $i : inst, role == "chair")
+		$sesh : Session(inst == $i, sitting == true)
+		T($t : t)
+		$m : Motion(session == $sesh, status == Motion.Status.Voting, voting < $t)
+	then
+		insertLogical(new Pow($c, new CloseBallot($c, $m)));
+end
+
+rule "Pow declare"
+	when
+		RoleOf($c : actor, $i : inst, role == "chair")
+		$sesh : Session(inst == $i, sitting == true)
+		$m : Motion(session == $sesh, status == Motion.Status.Voted)
+	then
+		insertLogical(new Pow($c, new Declare($c, $m, null)));
+end
+
+rule "Pow close session"
+	when
+		RoleOf($c : actor, $i : inst, role == "chair")
+		Session(inst == $i, sitting == true, $name : name)
+	then
+		insertLogical(new Pow($c, new CloseSession($c, $i, $name)));
+end
+
+/*****************************
+ * ROLE ASSIGNMENT (SORT OF) *
+ ****************************/
+
+rule "Assign seconders"
+	when
+		T($t : t)
+		Propose($a : actor, $i : inst, valid == true, t == $t)
+		Qualifies($b : actor, role == "seconder", actor != $a)
+	then
+		insert( new RoleOf($b, $i, "seconder") );
+end
+
+rule "Unassign seconders"
+	when
+		T($t : t)
+		Second($i : inst, valid == true, t == $t)
+		$r : RoleOf(role == "seconder", inst == $i)
+	then
+		retract($r);
+end
+
+rule "Assign proposers"
+	when
+		T($t : t)
+		OpenSession($i : inst, valid == true, t == $t)
+		Qualifies($a : actor, role == "proposer")
+	then
+		insert( new RoleOf($a, $i, "proposer") );
+end
+
+rule "Unassign proposers"
+	when
+		T($t : t)
+		CloseSession($i : inst, valid == true, t == $t)
+		$r : RoleOf(role == "proposer", inst == $i)
+	then
+		retract($r);
+end
+
+/*****************************
+ * VOTING and COUNTING VOTES *
+ ****************************/
+
+rule "Aye Vote"
+	when
+		$v : Vote($a : actor, $i : inst, $m : motion, vote == Vote.Choice.AYE, valid == false)
+		Pow(actor == $a, this.matches($v))
+	then
+		modify($m) {
+			addAye();	
+		}
+		modify($v) {
+			setValid(true);
+		}
+end
+
+rule "Nay Vote"
+	when
+		$v : Vote($a : actor, $i : inst, $m : motion, vote == Vote.Choice.NAY, valid == false)
+		Pow(actor == $a, this.matches($v))
+	then
+		modify($m) {
+			addNay();
+		}
+		modify($v) {
+			setValid(true);
+		}
+end
+\end{droolsinline}
