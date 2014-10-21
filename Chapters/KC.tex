@@ -1,6 +1,336 @@
 %!TEX root =../MacbethThesis.tex
 \acresetall
-\chapter{A Review of governance in Participatory Sensing}\label{ch:kc}
+\chapter{Governance in Participatory Sensing}\label{ch:kc}
+
+In this chapter we review the governance currently used in participatory-
+sensing applications. We firstly look at the participatory-sensing paradigm
+and discuss the involved parties, entities, and their interactions. We then
+take a step back, to investigate how governance can be used to manage data,
+information and knowledge. We introduce Elinor Ostrom's work on managing
+common-pool resources, and the argument, originally given by
+\citet{Ostrom2003}, that the same principles can be extended to information
+and knowledge, a so-called \emph{Knowledge Commons}. We then argue that
+participatory sensing can be seen as such a common-pool resource system, and
+therefore we can utilise Ostrom's theories for sustainable resource
+management. Finally, we review governance in participatory sensing
+applications to determine to what extent the participants are enfranchised and
+treated fairly, and therefore whether the application is likely to be
+sustainable and enduring. These outcomes are compared to that of existing
+Knowledge Commons, which leads us to believe that more fair outcomes can be
+achieved with this approach.
+
+This chapter forms the first step in the \ac{SIC} methodology. Through our
+review we are observing phenomena in participatory sensing and the knowledge
+commons, and beginning to construct a theory about the application of the
+knowledge commons to participatory sensing.
+
+\section{Participatory Sensing}
+
+The proliferation of consumer devices capable of gathering useful sensor data
+about their surroundings has led to a re-evaluation of sensor networks, moving
+from a top-down model, where sensors are \emph{deployed} over an area, to a
+bottom-up one, where users are engaged to contribute to data collection. This
+paradigm shift to a \emph{participatory} sensing approach has the potential to
+enable cheap and efficient collection of data.
+
+Participatory sensing, coined by~\citet{Burke2006}, is a form of
+\emph{crowdsourcing}, where contributions are solicited from a large number of
+individuals to obtain results at a far lower cost than if employees or
+contractors were to be used. In general, participants are willing to
+contribute as they either have some stake in the process or its outcome, or
+they are incentivised, either monetarily or through some other utility
+benefit.
+
+The same process has been named \emph{community} sensing~\citep{Krause2008},
+referring to its community aspect. This `community' can refer to both an
+Internet community of people persuing a similar goal using social tools, and a
+physical community of people in the same town or city who want to gather data
+about a particular phenomenon.
+
+\citeapos{Campbell2008} \emph{people-centric} sensing differentiates
+participatory sensing from what they call \emph{opportunistic} sensing. They
+suggest that participatory sensing is driven by the user, and permission is
+required each time data is to be gathered. To prevent the need for constant
+user intervention they propose that opportunistic sensing---where gathering is
+done automatically in response to the requirements of a remote application---
+is a more effective approach. 
+
+However, this mentality seems to reflect a lack of consideration of the device
+owner's role in the data-gathering process. \citet{BuckinghamShum2012} note
+that there are many costs for a users to consider when choosing whether to
+participate in a sensing campaign, such as energy consumption of their sensing
+device and communication fees. User's are unlikely to give up control over
+their mobile device without limits on what the external application can do, or
+sufficient transparency to guarantee and acceptable usage of resources.
+
+\citet{Burke2006} define a `campaign' model for participatory-sensing
+applications. A participatory-sensing `campaign' describes the process through
+which something to be sensed is identified, users are solicited to gather
+data, and algorithms are developed to derive knowledge from the data. This
+model identifies four general user roles in a campaign:
+
+\begin{enumerate}
+\item \emph{initiators}, who create the campaign and direct its operation;
+\item \emph{gatherers}, who participate in the data gathering as directed;
+\item \emph{evaluators}, who verify and classify gathered data;
+\item \emph{analysts}, who process the data to generate conclusions and knowledge.
+\end{enumerate}
+
+Participatory sensing can be seen be a subset of the `Big Data' trend of
+recent years. Rather than the traditional data mining done in other domains,
+this data is contributed by individuals. The analysis of this data has been
+enabled by advances in large-scale data processing, such that value knowledge
+can be extracted from large datasets. This derived knowledge is the
+\emph{raison d'\^{e}tre} for participatory sensing. It can be used to
+incentivise users to start and/or continue contributing to the campaign, or to
+generate revenue for the initiator of the campaign.
+
+Participatory sensing has so far been deployed in domains ranging from
+measuring of environmental conditions, such as pollution and traffic, to
+personal health and activity monitoring. In these applications the focus has
+generally been on the practical aspects of deploying the campaign: how data is
+gathered; scaling of data collection infrastructure; and development and
+implementation of evaluation and analysis algorithms. Incentivisation of
+gatherers, governance of the campaign, and the effect of the latter on the
+former are not addressed, and are issues we intend to address in this chapter.
+
+The spread of `Big Data' and participatory sensing, as well as the abundance
+of information on the Web, has led to serious privacy concerns with the
+processes of data mining and predictive analytics. There is a balance to be
+found between the benefits of having information available with as little
+restriction as possible, and preventing too much personal information about a
+gatherer being revealed by the available data~\citep{ohara2010}.
+\citet{Shadbolt2012} demonstrates the value of open data and the
+``serendipitous reuse''---value generated from unexpected reuse of information
+---which can be enabled through its availability.
+
+We argue that incentivisation of gatherers can be partly achieved through
+appropriate governance of the participatory-sensing application. Furthermore,
+this governance can empower gatherers, and the other user roles, in the
+application to determine rules which work for their individual privacy
+requirements.
+
+\section{Data and Knowledge as a Commons}\label{sec:commons}
+
+In their book, \citet{Hess2007}, argue that information and knowledge can be
+described as a `Knowledge Commons', and that managing these commons as a common-pool
+resource is key to their sustainability. In this section we address how
+participatory sensing can be seen as such an information and knowledge commons.  We
+give some background on the commons and introduce Ostrom's work on mangaging
+common-pool resources, and describe how the characteristics of information and
+knowledge as resources mean that repositories of them can also be viewed as
+commons, and therefore managed in the same way. % TODO: one more sentence?
+
+%What is a commons (shared resource system) + Hardin tragedy.
+The commons is a term generally used to describe shared resource systems. They are often also called \ac{CPR} systems. These systems are characterised as systems where the ownership of the resource system (land, air etc.) and resource units (trees, radio frequencies, etc.) are shared, public property, or not covered by any property rights; and it is difficult to exclude access to the resource and resource units to others. 
+\citet{Hardin1968} theorised that these properties would inevitably lead to overuse and depletion of the resource, a `Tragedy of the Commons', and that enclosure (via privatisation or centralisation) of the resource system was the only solution.
+%Among the first areas where the commons phenomenon was identified were in fisheries and forestries. In these industries the ownership of the land (or sea) was shared or public property, the resource (fish and trees) were not owned by anyone, and it was difficult to prevent access to the resource by others. 
+
+\subsection{Governing the commons}
+
+Having done extensive field work analysing both cases where this tragedy had been overcome and where it had not, \citet{Ostrom1990} contested that it was in fact possible to sustainably manage these resources as a commons.
+The key to this success was  how the commons were governed and how the individuals involved in the use and maintenance of the commons were engaged in this governance. 
+Ostrom identified eight principles which, when all satisfied, increase the chances of a successful commons~\cite[pp.\ 91-101]{Ostrom1990}:
+\begin{enumerate}
+\item Clearly defined boundaries---``Individuals or households who have rights to withdraw resource units from the \ac{CPR} must be clearly defined, as must the boundaries of the \ac{CPR} itself."
+\item Congruence between appropriation and provision rules and local conditions--- ``Appropriation rules restricting time, place, technology, and/or quantity of resource units are related to local conditions and to provision rules requiring labor, materials, and/or money."
+\item Collective-choice arrangements---``Most individuals affected by the operational rules can participate in modifying the operational rules."
+\item Monitoring---``Monitors, who actively audit \ac{CPR} conditions and appropriator behaviour, are accountable to the appropriators or are the appropriators."
+\item Graduated sanctions---``Appropriators who violate operational rules are likely to be assessed [sic] graduated sanctions (depending on the seriousness and context of the offence) by other appropriators, by officials accountable to these appropriators, or by both."
+\item Conflict-resolution mechanisms---``Appropriators and their officials have rapid access to low-cost local arenas to resolve conflicts among appropriators or between appropriators and officials."
+\item Minimal recognition of rights to organise---``The rights of appropriators to devise their own institutions are not challenged by external governmental authorities."
+\item Nested enterprises---``Appropriation, provision, monitoring, enforcement, conflict resolution, and governance activities are organised in multiple layers of nested enterprises."
+\end{enumerate}
+
+Ostrom later formalised the analysis methodology used as the \ac{IAD} framework~\citep{Ostrom2005}. 
+This framework examines the relevant factors in an institution which manages a commons, allowing the evaluation of institutions with respect to Ostrom's eight principles, and with respect to other institutions which have been analysed in the same way. 
+The framework can also be used for the design of institutions, and we will use the framework in this way later in this article.
+
+Since~\citeapos{Ostrom1990} book many new areas have been recognised as commons. It has been deemed applicable to many shared resource problems: from transport to radio spectrum to the Internet~\citep{Hess2000}. 
+Many have emerged from technological innovations which have either created a new virtual resource, or transformed the properties of a resource such that it is feasible to treat it as a commons. One example is knowledge~\citep{Hess2007}, with open-access publishing as a specific case study. 
+
+%Our understanding of when it is relevant to treat a resource system as a commons can be helped by using a classification based on two attributes of the system~\citep{Ostrom2003}. The first is the subtractability - the extent to which benefits consumed by one individual subtract from those available to others. The second is exclusion - the cost of excluding individuals from the benefits of the system. These properties give us a grid describing four classes of good~\citep{Ostrom2003}
+%\begin{itemize}
+%\item High subtractability; difficult exclusion -- Common-Pool resources
+%\item Low subtractability; difficult exclusion -- Public goods
+%\item High subtractability; easy exclusion -- Private goods
+%\item Low subtractability; easy exclusion -- Roll or club goods
+%\end{itemize}
+%As both of these properties are sliding scales the boundaries between these classes is fuzzy. While most of the work we have looked at has dealt with goods classed as common-pool resources, knowledge and information has low subtractability - 
+
+% 'New commons' Hess 2000 + commons on the web: Digital Information exchange, community~\citep{MayoFusterMorell2011}
+
+\subsection{Data, Information and Knowledge commons}
+
+%Definition of data/information/knowledge
+The shift to treating knowledge as a commons has largely been enabled by the digitalisation of information which has separated the knowledge from the physical format of publication~\citep{Ostrom2003}. 
+In this section we consider data, information and knowledge as resources, and how they are managed. 
+For this discussion we require a definition of these terms within this context.
+Most definitions give a hierarchy where data is just raw values, information is data organised in context, and knowledge is an understanding of meaning of information and how to use it~\citep{Machlup1983,Davenport2000,Shadbolt2013}. For example the tuple $(51,0)$ would be data; adding the context that this tuple corresponds to latitude and longitude transforms it into information; and knowledge would be the ability to provide directions to travel to this location along public roads. It is generally thought that with current technology the creation of knowledge requires human intervention~\citep{Davenport2000}, but data and information can be generated independently by devices. In this work we will use these definitions for data, information and knowledge.
+
+\citet{Ostrom2003} assessed how information and knowledge can be a commons by using a classification of \emph{exclusion} and \emph{subtractability}. 
+Exclusion is a measure of how easy it is to exclude individuals from the benefits of the good, either through physical or legal means. 
+Subtractability (also called rivalry) is a measure of the extent to which the benefits consumed by one individual subtract from the benefits available to others. 
+Combined these give a two dimensional classification of goods (see \autoref{table:goods}) giving four types of good: Public goods, common-pool resources, toll or club goods and private goods.
+
+\begin{table}
+\centering
+\caption[Types of goods]{Types of goods. Source:~\protect\citet{Hess2007}\label{table:goods}}
+\begin{tabular}{c|c|c|c}
+\multicolumn{2}{c|}{} & \multicolumn{2}{c}{SUBTRACTABILITY} \\
+\cline{3-4}
+\multicolumn{2}{c|}{} & \textit{Low} & \textit{High} \\
+\hline
+\multirow{2}{*}{\begin{sideways}EXCLUSION\end{sideways}} & \textit{Difficult} & \parbox{4cm}{\vspace{.3\baselineskip}\textbf{Public goods}\\
+Useful Knowledge\\
+Sunsets} & \parbox{4cm}{\vspace{.3\baselineskip}\textbf{Common-pool resources}\\
+Libraries\\
+Irrigation systems} \\[0.6cm]
+\cline{2-4}
+ & \textit{Easy} & \parbox{4cm}{\vspace{.3\baselineskip}\textbf{Toll or club goods}\\
+ Journal subscriptions\\
+ Day-care centres} & \parbox{4cm}{\vspace{.3\baselineskip}\textbf{Private goods}\\
+ Personal computers\\
+ Doughnuts} \\[0.7cm]
+\end{tabular}
+\end{table}
+
+% Why information as a commons - exclusion undesirable, alienability.
+The shift that has occurred in information and knowledge due to technology is that its distribution has become non-rivalrous~\citep{Ostrom2003,Bollier2007}.
+Previously information and knowledge would have to be put into tangible form, for example a book, to allow others to use it. 
+In this form it has high subtractability: by owning a book you prevent someone else owning that copy of the book, and the supply of books is limited by the publisher. 
+This meant that information and knowledge goods were either common-pool or private goods depending on whether they were distributed by a library (difficult exclusion) or sold (easy exclusion). 
+In digital form, however, these goods can be freely copied for negligible cost. 
+They are infinite and undepletable~\citep{Bollier2007}. 
+Therefore these goods would count as either public goods or club goods.
+
+In the context of information and knowledge as goods, Copyright law enables exclusion to be controlled by the information or knowledge creator. 
+This allows a book to simultaneously be a private good---when purchased by an individual---and part of a common-pool resource---when made available by a library. 
+Digital information has gained the same flexibility, both through the protection of the law, but also through technological means via access control and digital rights management~\citep{Lessig2004}. 
+Wikipedia provides a public knowledge resource, having chosen to not have any exclusion, while Journals use pay-walls to exclude access for those without subscriptions.
+
+\citet{Lessig2004} also shows that copyright law has also been used to artificially change the subtractability of digitalised information and knowledge. 
+For example, some publishers have imposed ebook lending limits on libraries, preventing too many simultaneous withdrawals. 
+This effectively prevents this knowledge from becoming a public good, ensuring that library lending remains a common-pool resource.
+
+Therefore we have a resource which is able to be cast into any of the four goods categories. 
+While information and knowledge should naturally be a public good, technological and legal control allows the properties to be changed in order to create a more beneficial good for the creator. 
+Copyright law generally advocates that creative work should eventually become public goods by falling into the public domain, and that the protected state of work is purely an incentive mechanism~\citep{Samuelson2006}. 
+The argument for this is that, because information and knowledge also aid in the creation of new information and knowledge, having a large public domain will have a cumulative effect and increase overall knowledge as a result. 
+We reach a dilemma where the knowledge creators wish to exert their control to achieve a short term benefit which causes a sub-optimal outcome for all the users of their knowledge, and also their long-term productivity.
+
+%In the past, disseminating the knowledge from a book to two people would require one to receive the book first, then pass it to the other. 
+%The digitalisation of information and knowledge means that now they could both receive a digital copy simultaneously. 
+%They are no longer competing for the book, the knowledge can be shared with negligible cost. 
+%The resource is now, unlike many traditional common-pool resource, infinite and undepletable~\citep{Bollier2007}. 
+%A library has a limited supply of books, and books will become too worn to use after a large number of uses. In digitised form the knowledge will not degrade. 
+%In theory, as the benefits of inforamtion and knowledge are also cumulative then this change should give us a self-reinforcing positive effect as knowledge propagation causes the creation of new knowledge.
+
+% but.... exclusion
+%However, these benefits can be stemmed by the use of exclusion to prevent access to information and knowledge. Theoretically exclusion from knowledge would be difficult as individuals can easily communicate it to others through word of mouth or other means. \citet{Lessig2004} argues that in the digital age, intellectual property law, which used to be narrow in scope, is being used more and more broadly to provide exclusion and artificial rivalry in knowledge. A library lending eBooks often has artificial limits on the number of copies which can be simultaneously checked out; and the publisher reserves the right to remove knowledge ex post, something which was not possible in the past. These laws have been retrofitted to digital information and knowledge in order to allow us to use the new digitised resource in the same way as we did previously. In doing so we are stifling the potential that technology has afforded us.
+
+The premise of the information and knowledge commons is that a method of collective action as seen in past commons literature can be used here in order to tap into the benefits of making information and knowledge more available~\citep{Hess2007,MayoFusterMorell2010,Shadbolt2013}. \citet{Ostrom2007a} analysed the knowledge commons in the same way as physical commons: using the \ac{IAD} framework.
+
+The creation of an institution in order to manage knowledge and information in practical scenarios is certainly non-trivial. 
+There is a problem of supply~\cite[p. 42]{Ostrom1990}---that someone must provide the initial organisational structure and institutional rules---and, as we will see in the next section, there is a fine line between the emergence of centralised or collective governance. 
+Rules which satisfy Ostrom's eight principles are often very specific to the resource characteristics so we don't have a pre-existing `library' of rules available when looking to `supply' an institution with which to manage a new resource. 
+The difficulty of implementing effective collective governance structures is arguably a contributing factor to why in many cases initiators decide to follow Hardin's advice---privatisation seems to be the only way.
+
+\subsection{Application to Participatory Sensing}
+
+Ostrom provides an approach for preventing the tragedy of the commons in social-systems using rules interpreted and acted upon by human actors. 
+In order to use this approach for the kind of large-scale multi-user content-creation applications seen in participatory sensing we need to reconcile this information and knowledge with that of the information and knowledge commons. 
+Furthermore, as we are working in a purely digital domain with high rates of interaction, we should put our institutional rules into digital form too. 
+This will enable both human and computational participants to interact with the rules as well as the capability to handle a greater speed and quantity of actions than a social system could.
+
+Participatory sensing deals with two types of `good': the information gathered
+from sensors, and the evaluative or analytic knowledge to process this
+information, encapsulated in an algorithm. As we saw with the information and
+knowledge commons, classifying these goods in terms of \emph{exclusion} and
+\emph{subtractability} is difficult. We expect low
+\emph{subtractability}---beyond artificial schemes to simulate scarcity,
+digital resources can be trivially shared. As we described, \emph{exclusion}
+can be defined by the application as action control. However, when dealing
+with environmental sensor information exclusion may become impossible, for
+example if multiple gatherers are in the same physical location then they
+cannot exclude each other from generating data about the environment there.
+Therefore, depending on specific circumstances, we classify that the goods in
+participatory sensing are either public or toll goods, but this is a choice
+which can be specified by the institutional rules. % restate after review
+
+We argue that, in order to have \emph{open} participatory sensing, we should manage it as an information and knowledge commons. Three properties of participatory sensing lead to this deduction:
+
+\begin{itemize}
+\item The collected information and knowledge is collected from a large number of independent actors, and therefore no individual can claim an overall stake in the pool.
+\item The value of gathered information is cumulative, in that additional contributions to the pool increase its value.
+\item If access to the pool is open and no incentive to contribute is given, it is likely to suffer from under-provision, a form of free-riding. 
+\end{itemize}
+
+Therefore, we have a dilemma, much like that of the original tragedy of the
+commons. Ostrom's approach to \ac{CPR} problems showed that problems arising
+from shared resource ownership coupled with incentive to free-riding could be
+solved with appropriate governance.
+
+% p-sensing
+% Participatory sensing deals with the creation of sensor networks from user devices~\citep{Burke2006}. 
+% It tasks large numbers of independent individuals to contribute information to a central pool. 
+% This information is then aggregated and analysed to generate new, valuable information and knowledge.
+
+% We can view this pool of information which is generated, as a commons. 
+% It is a collection of information contributed by a large number of independent actors. 
+% The value of the pool is cumulative, in that additional contributions to the pool increase its value.
+% Thus this common-pool resource has the properties required to be considered an information commons.
+
+% Furthermore, we can consider the knowledge required to aggregate and analyse the information pool gathered by sensing. 
+% This can also be seen as a resource which could be shared with others to reduce the data processing burden on an individual, or just to share knowledge for others to improve-upon. 
+% While not currently common in participatory-sensing applications, some platforms do accommodate contributions of analytical algorithms~\citep{Kansal2007}. 
+% Thus, if knowledge is contributed to the participatory-sensing commons then we can also consider it a knowledge commons.
+
+% Therefore, the information and knowledge collected and generated by participatory-sensing applications can be seen as an information and knowledge commons. 
+% This commons can be managed by an institution of human actors.
+% However, in many cases it can be desirable to be able to transfer this task to computational agents. 
+% For example in situations where decisions must be made quickly, frequently and repeatedly, a computational agent is likely to be much better suited to this role---Wikipedia allow the use of \emph{bots}\footnote{http://en.wikipedia.org/wiki/Wikipedia:Bots [Accessed July 2014]} for many such tasks such as detecting and reversing malicious edits and checking for copyright violations.
+% In socio-technical systems there are both human and computational actors, so there needs to be some kind of common interface within which they can interact.
+% Additionally there are purely computational domains where we may benefit from these institutions which aim to balance the needs of multiple, conflicting stakeholder positions.
+% For these domains we use an electronic institution, which can be considered to be a computational analogue of Ostrom's
+%  informal definition of an institution as ``a set of working rules that are used to determine who is eligible to make decisions
+% in some arena, what actions are allowed or constrained, \ldots [and] contain prescriptions that forbid, permit, or require
+% some action or outcome'' \cite[p.\ 51]{Ostrom1990}. The institution is intended to enable agents to interact in order to achieve both individual and collective goals
+% by regulating and constraining their behaviour, voluntarily, according to a set of conventional rules.
+
+% In this context, Ostrom's work dealing with social systems has been translated to electronic institutions, principally by formalising the
+% definition in computational logic and, critically, extending it with the use of institutionalised power \citep{Jones1996} for the formal representation of permitted, forbidden and obliged actions.
+% Effectively, we are axiomatising Ostrom's principles for computational agents~\citep{Pitt2012b} such that agents can understand institutional rules and choose whether or not to abide by them. 
+% These formalisations are a form of algorithmic governance, translating the written rules and protocols from social systems into axioms and algorithms which agents can understand and a computer can execute.
+
+% Therefore, by using electronic institutions for algorithmic governance according to Ostrom's principles for enduring institutions, we can create sustainable organisations and communities around participatory sensing.
+
+% anticommons
+
+% Confusions in commons
+% Exclusion - subtractability table -- sliding scales, e.g. exclusion with cryptography but leaks can occur (google algo vs nsa schemes). Subtractability, overuse of network. [perhaps in sec 4]
+
+% Resource system & flow of resource units: database vs data
+
+% Difference between common-property & open-access
+
+
+%Information as a CPR \citep{Ostrom2003}; Self-Org management of CPRs \citep{Ostrom1990} \& Knowledge commons~\citep{Ostrom2007a}; IAD~\citep{Ostrom2005}; Management of CPR with electronic institutions~\citep{Pitt2011a}. Lessig model.
+
+%tragedy of data commons Yakowitz2011
+
+%\section{Review of Knowledge commons}\label{sec:review}
+
+%In this section we look at social systems which manage information and knowledge. We see that these can be seen as provision and appropriation systems and what aspects of their organisational structure drive their success.
+
+%Wikipedia;OSS;Content creation: Introduction on each; How provision & appropriation; Governance model
+
+%Participatory Sensing: Incentives are needed~cite{Lee2010}
+
+
+
+
+%Schweik2007 - oss model can be used for other 'content'; IAD analysis; copyleft + governance
 
 
 \section{Participatory Sensing and the Knowledge Commons}\label{sec:review}
@@ -167,197 +497,6 @@ This is the motivation for specifying a system which uses a collective governanc
 
 \acresetall
 \chapter{A Commons for Participatory Sensing}\label{sec:iad}
-
-\section{Data and Knowledge as a Commons}\label{sec:commons}
-
-In this section we address how participatory sensing can be seen as an information and knowledge commons. 
-We give some background on the commons and introduce Ostrom's work on mangaging common-pool resources. 
-We describe how the characteristics of information and knowledge as resources mean that repositories of them can also be viewed as commons, and therefore managed in the same way. % TODO: one more sentence?
-
-%What is a commons (shared resource system) + Hardin tragedy.
-The commons is a term generally used to describe shared resource systems. They are often also called \ac{CPR} systems. These systems are characterised as systems where the ownership of the resource system (land, air etc.) and resource units (trees, radio frequencies, etc.) are shared, public property, or not covered by any property rights; and it is difficult to exclude access to the resource and resource units to others. 
-\citet{Hardin1968} theorised that these properties would inevitably lead to overuse and depletion of the resource, a `Tragedy of the Commons', and that enclosure (via privatisation or centralisation) of the resource system was the only solution.
-%Among the first areas where the commons phenomenon was identified were in fisheries and forestries. In these industries the ownership of the land (or sea) was shared or public property, the resource (fish and trees) were not owned by anyone, and it was difficult to prevent access to the resource by others. 
-
-\subsection{Governing the commons}
-
-Having done extensive field work analysing both cases where this tragedy had been overcome and where it had not, \citet{Ostrom1990} contested that it was in fact possible to sustainably manage these resources as a commons.
-The key to this success was  how the commons were governed and how the individuals involved in the use and maintenance of the commons were engaged in this governance. 
-Ostrom identified eight principles which, when all satisfied, increase the chances of a successful commons~\cite[pp.\ 91-101]{Ostrom1990}:
-\begin{enumerate}
-\item Clearly defined boundaries---``Individuals or households who have rights to withdraw resource units from the \ac{CPR} must be clearly defined, as must the boundaries of the \ac{CPR} itself."
-\item Congruence between appropriation and provision rules and local conditions--- ``Appropriation rules restricting time, place, technology, and/or quantity of resource units are related to local conditions and to provision rules requiring labor, materials, and/or money."
-\item Collective-choice arrangements---``Most individuals affected by the operational rules can participate in modifying the operational rules."
-\item Monitoring---``Monitors, who actively audit \ac{CPR} conditions and appropriator behaviour, are accountable to the appropriators or are the appropriators."
-\item Graduated sanctions---``Appropriators who violate operational rules are likely to be assessed [sic] graduated sanctions (depending on the seriousness and context of the offence) by other appropriators, by officials accountable to these appropriators, or by both."
-\item Conflict-resolution mechanisms---``Appropriators and their officials have rapid access to low-cost local arenas to resolve conflicts among appropriators or between appropriators and officials."
-\item Minimal recognition of rights to organise---``The rights of appropriators to devise their own institutions are not challenged by external governmental authorities."
-\item Nested enterprises---``Appropriation, provision, monitoring, enforcement, conflict resolution, and governance activities are organised in multiple layers of nested enterprises."
-\end{enumerate}
-
-Ostrom later formalised the analysis methodology used as the \ac{IAD} framework~\citep{Ostrom2005}. 
-This framework examines the relevant factors in an institution which manages a commons, allowing the evaluation of institutions with respect to Ostrom's eight principles, and with respect to other institutions which have been analysed in the same way. 
-The framework can also be used for the design of institutions, and we will use the framework in this way later in this article.
-
-Since~\citeapos{Ostrom1990} book many new areas have been recognised as commons. It has been deemed applicable to many shared resource problems: from transport to radio spectrum to the Internet~\citep{Hess2000}. 
-Many have emerged from technological innovations which have either created a new virtual resource, or transformed the properties of a resource such that it is feasible to treat it as a commons. One example is knowledge~\citep{Hess2007}, with open-access publishing as a specific case study. 
-
-%Our understanding of when it is relevant to treat a resource system as a commons can be helped by using a classification based on two attributes of the system~\citep{Ostrom2003}. The first is the subtractability - the extent to which benefits consumed by one individual subtract from those available to others. The second is exclusion - the cost of excluding individuals from the benefits of the system. These properties give us a grid describing four classes of good~\citep{Ostrom2003}
-%\begin{itemize}
-%\item High subtractability; difficult exclusion -- Common-Pool resources
-%\item Low subtractability; difficult exclusion -- Public goods
-%\item High subtractability; easy exclusion -- Private goods
-%\item Low subtractability; easy exclusion -- Roll or club goods
-%\end{itemize}
-%As both of these properties are sliding scales the boundaries between these classes is fuzzy. While most of the work we have looked at has dealt with goods classed as common-pool resources, knowledge and information has low subtractability - 
-
-% 'New commons' Hess 2000 + commons on the web: Digital Information exchange, community~\citep{MayoFusterMorell2011}
-
-\subsection{Data, Information and Knowledge commons}
-
-%Definition of data/information/knowledge
-The shift to treating knowledge as a commons has largely been enabled by the digitalisation of information which has separated the knowledge from the physical format of publication~\citep{Ostrom2003}. 
-In this section we consider data, information and knowledge as resources, and how they are managed. 
-For this discussion we require a definition of these terms within this context.
-Most definitions give a hierarchy where data is just raw values, information is data organised in context, and knowledge is an understanding of meaning of information and how to use it~\citep{Machlup1983,Davenport2000,Shadbolt2013}. For example the tuple $(51,0)$ would be data; adding the context that this tuple corresponds to latitude and longitude transforms it into information; and knowledge would be the ability to provide directions to travel to this location along public roads. It is generally thought that with current technology the creation of knowledge requires human intervention~\citep{Davenport2000}, but data and information can be generated independently by devices. In this work we will use these definitions for data, information and knowledge.
-
-\citet{Ostrom2003} assessed how information and knowledge can be a commons by using a classification of \emph{exclusion} and \emph{subtractability}. 
-Exclusion is a measure of how easy it is to exclude individuals from the benefits of the good, either through physical or legal means. 
-Subtractability (also called rivalry) is a measure of the extent to which the benefits consumed by one individual subtract from the benefits available to others. 
-Combined these give a two dimensional classification of goods (see Table~\ref{table:goods}) giving four types of good: Public goods, common-pool resources, toll or club goods and private goods.
-
-\begin{table}
-\centering
-\caption[Types of goods]{Types of goods. Source:~\protect\citet{Hess2007}\label{table:goods}}
-\begin{tabular}{c|c|c|c}
-\multicolumn{2}{c|}{} & \multicolumn{2}{c}{SUBTRACTABILITY} \\
-\cline{3-4}
-\multicolumn{2}{c|}{} & \textit{Low} & \textit{High} \\
-\hline
-\multirow{2}{*}{\begin{sideways}EXCLUSION\end{sideways}} & \textit{Difficult} & \parbox{4cm}{\vspace{.3\baselineskip}\textbf{Public goods}\\
-Useful Knowledge\\
-Sunsets} & \parbox{4cm}{\vspace{.3\baselineskip}\textbf{Common-pool resources}\\
-Libraries\\
-Irrigation systems} \\[0.6cm]
-\cline{2-4}
- & \textit{Easy} & \parbox{4cm}{\vspace{.3\baselineskip}\textbf{Toll or club goods}\\
- Journal subscriptions\\
- Day-care centres} & \parbox{4cm}{\vspace{.3\baselineskip}\textbf{Private goods}\\
- Personal computers\\
- Doughnuts} \\[0.7cm]
-\end{tabular}
-\end{table}
-
-% Why information as a commons - exclusion undesirable, alienability.
-The shift that has occurred in information and knowledge due to technology is that its distribution has become non-rivalrous~\citep{Ostrom2003,Bollier2007}.
-Previously information and knowledge would have to be put into tangible form, for example a book, to allow others to use it. 
-In this form it has high subtractability: by owning a book you prevent someone else owning that copy of the book, and the supply of books is limited by the publisher. 
-This meant that information and knowledge goods were either common-pool or private goods depending on whether they were distributed by a library (difficult exclusion) or sold (easy exclusion). 
-In digital form, however, these goods can be freely copied for negligible cost. 
-They are infinite and undepletable~\citep{Bollier2007}. 
-Therefore these goods would count as either public goods or club goods.
-
-In the context of information and knowledge as goods, Copyright law enables exclusion to be controlled by the information or knowledge creator. 
-This allows a book to simultaneously be a private good---when purchased by an individual---and part of a common-pool resource---when made available by a library. 
-Digital information has gained the same flexibility, both through the protection of the law, but also through technological means via access control and digital rights management~\citep{Lessig2004}. 
-Wikipedia provides a public knowledge resource, having chosen to not have any exclusion, while Journals use pay-walls to exclude access for those without subscriptions.
-
-\citet{Lessig2004} also shows that copyright law has also been used to artificially change the subtractability of digitalised information and knowledge. 
-For example, some publishers have imposed ebook lending limits on libraries, preventing too many simultaneous withdrawals. 
-This effectively prevents this knowledge from becoming a public good, ensuring that library lending remains a common-pool resource.
-
-Therefore we have a resource which is able to be cast into any of the four goods categories. 
-While information and knowledge should naturally be a public good, technological and legal control allows the properties to be changed in order to create a more beneficial good for the creator. 
-Copyright law generally advocates that creative work should eventually become public goods by falling into the public domain, and that the protected state of work is purely an incentive mechanism~\citep{Samuelson2006}. 
-The argument for this is that, because information and knowledge also aid in the creation of new information and knowledge, having a large public domain will have a cumulative effect and increase overall knowledge as a result. 
-We reach a dilemma where the knowledge creators wish to exert their control to achieve a short term benefit which causes a sub-optimal outcome for all the users of their knowledge, and also their long-term productivity.
-
-%In the past, disseminating the knowledge from a book to two people would require one to receive the book first, then pass it to the other. 
-%The digitalisation of information and knowledge means that now they could both receive a digital copy simultaneously. 
-%They are no longer competing for the book, the knowledge can be shared with negligible cost. 
-%The resource is now, unlike many traditional common-pool resource, infinite and undepletable~\citep{Bollier2007}. 
-%A library has a limited supply of books, and books will become too worn to use after a large number of uses. In digitised form the knowledge will not degrade. 
-%In theory, as the benefits of inforamtion and knowledge are also cumulative then this change should give us a self-reinforcing positive effect as knowledge propagation causes the creation of new knowledge.
-
-% but.... exclusion
-%However, these benefits can be stemmed by the use of exclusion to prevent access to information and knowledge. Theoretically exclusion from knowledge would be difficult as individuals can easily communicate it to others through word of mouth or other means. \citet{Lessig2004} argues that in the digital age, intellectual property law, which used to be narrow in scope, is being used more and more broadly to provide exclusion and artificial rivalry in knowledge. A library lending eBooks often has artificial limits on the number of copies which can be simultaneously checked out; and the publisher reserves the right to remove knowledge ex post, something which was not possible in the past. These laws have been retrofitted to digital information and knowledge in order to allow us to use the new digitised resource in the same way as we did previously. In doing so we are stifling the potential that technology has afforded us.
-
-The premise of the information and knowledge commons is that a method of collective action as seen in past commons literature can be used here in order to tap into the benefits of making information and knowledge more available~\citep{Hess2007,MayoFusterMorell2010,Shadbolt2013}. \citet{Ostrom2007a} analysed the knowledge commons in the same way as physical commons: using the \ac{IAD} framework.
-
-The creation of an institution in order to manage knowledge and information in practical scenarios is certainly non-trivial. 
-There is a problem of supply~\cite[p. 42]{Ostrom1990}---that someone must provide the initial organisational structure and institutional rules---and, as we will see in the next section, there is a fine line between the emergence of centralised or collective governance. 
-Rules which satisfy Ostrom's eight principles are often very specific to the resource characteristics so we don't have a pre-existing `library' of rules available when looking to `supply' an institution with which to manage a new resource. 
-The difficulty of implementing effective collective governance structures is arguably a contributing factor to why in many cases initiators decide to follow Hardin's advice---privatisation seems to be the only way.
-
-\subsection{Application to Participatory Sensing}
-
-Ostrom provides an approach for preventing the tragedy of the commons in social-systems using rules interpreted and acted upon by human actors. 
-In order to use this approach for the kind of large-scale multi-user content-creation applications seen in participatory sensing we need to reconcile this information and knowledge with that of the information and knowledge commons. 
-Furthermore, as we are working in a purely digital domain with high rates of interaction, we should put our institutional rules into digital form too. 
-This will enable both human and computational participants to interact with the rules as well as the capability to handle a greater speed and quantity of actions than a social system could.
-
-% p-sensing
-Participatory sensing deals with the creation of sensor networks from user devices~\citep{Burke2006}. 
-It tasks large numbers of independent individuals to contribute information to a central pool. 
-This information is then aggregated and analysed to generate new, valuable information and knowledge.
-
-We can view this pool of information which is generated, as a commons. 
-It is a collection of information contributed by a large number of independent actors. 
-The value of the pool is cumulative, in that additional contributions to the pool increase its value.
-Thus this common-pool resource has the properties required to be considered an information commons~\citep{Bollier2007}.
-
-Furthermore, we can consider the knowledge required to aggregate and analyse the information pool gathered by sensing. 
-This can also be seen as a resource which could be shared with others to reduce the data processing burden on an individual, or just to share knowledge for others to improve-upon. 
-While not currently common in participatory-sensing applications, some platforms do accommodate contributions of analytical algorithms~\citep{Kansal2007}. 
-Thus, if knowledge is contributed to the participatory-sensing commons then we can also consider it a knowledge commons.
-
-Therefore, the information and knowledge collected and generated by participatory-sensing applications can be seen as an information and knowledge commons. 
-This commons can be managed by an institution of human actors.
-However, in many cases it can be desirable to be able to transfer this task to computational agents. 
-For example in situations where decisions must be made quickly, frequently and repeatedly, a computational agent is likely to be much better suited to this role---Wikipedia allow the use of \emph{bots}\footnote{http://en.wikipedia.org/wiki/Wikipedia:Bots [Accessed July 2014]} for many such tasks such as detecting and reversing malicious edits and checking for copyright violations.
-In socio-technical systems there are both human and computational actors, so there needs to be some kind of common interface within which they can interact.
-Additionally there are purely computational domains where we may benefit from these institutions which aim to balance the needs of multiple, conflicting stakeholder positions.
-For these domains we use an electronic institution, which can be considered to be a computational analogue of Ostrom's
- informal definition of an institution as ``a set of working rules that are used to determine who is eligible to make decisions
-in some arena, what actions are allowed or constrained, \ldots [and] contain prescriptions that forbid, permit, or require
-some action or outcome'' \cite[p.\ 51]{Ostrom1990}. The institution is intended to enable agents to interact in order to achieve both individual and collective goals
-by regulating and constraining their behaviour, voluntarily, according to a set of conventional rules.
-
-In this context, Ostrom's work dealing with social systems has been translated to electronic institutions, principally by formalising the
-definition in computational logic and, critically, extending it with the use of institutionalised power \citep{Jones1996} for the formal representation of permitted, forbidden and obliged actions.
-Effectively, we are axiomatising Ostrom's principles for computational agents~\citep{Pitt2012b} such that agents can understand institutional rules and choose whether or not to abide by them. 
-These formalisations are a form of algorithmic governance, translating the written rules and protocols from social systems into axioms and algorithms which agents can understand and a computer can execute.
-
-Therefore, by using electronic institutions for algorithmic governance according to Ostrom's principles for enduring institutions, we can create sustainable organisations and communities around participatory sensing.
-
-% anticommons
-
-% Confusions in commons
-% Exclusion - subtractability table -- sliding scales, e.g. exclusion with cryptography but leaks can occur (google algo vs nsa schemes). Subtractability, overuse of network. [perhaps in sec 4]
-
-% Resource system & flow of resource units: database vs data
-
-% Difference between common-property & open-access
-
-
-%Information as a CPR \citep{Ostrom2003}; Self-Org management of CPRs \citep{Ostrom1990} \& Knowledge commons~\citep{Ostrom2007a}; IAD~\citep{Ostrom2005}; Management of CPR with electronic institutions~\citep{Pitt2011a}. Lessig model.
-
-%tragedy of data commons Yakowitz2011
-
-%\section{Review of Knowledge commons}\label{sec:review}
-
-%In this section we look at social systems which manage information and knowledge. We see that these can be seen as provision and appropriation systems and what aspects of their organisational structure drive their success.
-
-%Wikipedia;OSS;Content creation: Introduction on each; How provision & appropriation; Governance model
-
-%Participatory Sensing: Incentives are needed~cite{Lee2010}
-
-
-
-
-%Schweik2007 - oss model can be used for other 'content'; IAD analysis; copyleft + governance
-
-
 
 %Description of data/information/knowledge divide in participatory sensing
 
