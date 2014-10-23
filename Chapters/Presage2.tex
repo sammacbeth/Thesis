@@ -8,7 +8,7 @@
 This is a form of micro-simulation, where by modelling low-level interactions from the `ground up' we can observe macro level behaviours such as self-organisation, self-adaptation and so on.
 Simulation models are therefore composed of an environment or arena which models the behaviour of a physical or virtual world, and autonomous, intelligent `agents' who interact with this world and other agents. 
 \citet{Axelrod1997} identifies the usefulness of \ac{MABS} as a means to understand social systems. 
-This approach fits naturally to the principled operationalisation phase of the \ac{SIC} methodology, as we are observing desirable macro level performance in social systems (which are multi-agent in nature), and aiming to reproduce this performance in a socio-technical system. 
+This approach fits naturally to the principled operationalisation phase of the \ac{SIC} methodology, as we are observing desirable macro-level performance in social systems (which are multi-agent in nature), and aiming to reproduce this performance in a socio-technical system. 
 
 It should be noted that principled operationalisation, \ac{ABM} and \ac{MABS} do not aim to create an exact model of a social or socio-technical system, particularly in regards to human behaviour. Both the \ac{SIC} methodology and \ac{MABS} methods stress the appropriate use of abstraction and/or compartmentalisation in order to simplify the model while being able to draw valid conclusions from the model's behaviour~\citep{Edmonds2001}.
 
@@ -167,7 +167,22 @@ particular documentation and user-friendliness. Its origins in the simulation
 of social networks shows in its competence in agent communication---an
 important aspect of socio-technical systems.
 
-A major drawback, which all but Presage suffer from, is their permissive handling of state. These platforms treat shared state as a public resource, allowing reads and writes from all agents, with no limited accessibility. While it is a reasonable assumption in most modelling scenarios that agents will use this access correctly, there are problems from both modelling and verification perspectives. We believe that, when modelling, it is preferable to separate the agent logic from the logic updating environment state: The agent logic decides what action to take, and the environment decides the outcome of that action. The architectures of Netlogo, Repast and MASON put these two processes together, such that in order to take an action the agent must update the environment itself. Presage uses separate \emph{action handlers} which process actions from agents in a uniform and consistent way. This ensures that the environment is the same for all agents, that agents are portable between different environments, that agents can not know the consequences of actions they perform, and that faulty agent code won't break a simulation.
+A major drawback, which all but Presage suffer from, is their permissive
+handling of state. These platforms treat shared state as a public resource,
+allowing reads and writes from all agents, with no limited accessibility.
+While it is a reasonable assumption in most modelling scenarios that agents
+will use this access correctly, there are problems from both modelling and
+verification perspectives. We believe that, when modelling, it is preferable
+to separate the agent logic from the logic updating environment state: The
+agent logic decides what action to take, and the environment decides the
+outcome of that action. The architectures of Netlogo, Repast and MASON put
+these two processes together, such that in order to take an action the agent
+must update the environment itself. Presage uses separate \emph{action
+handlers} which process actions from agents in a uniform and consistent way.
+This ensures that the environment is the same for all agents, that agents are
+portable between different environments, that agents can be unknowledgeable
+about the consequences of actions they perform, and that faulty agent code
+won't break a simulation.
 
 It is for this reason that we decide to build on the promising  framework of Presage and address its shortcomings in a new version, Presage2. We describe the design and implementation of this platform in the next section.
 
@@ -203,7 +218,7 @@ wait several time-steps with no action, which is possible with discrete-event
 simulators. However, in practice, this performance hit is negligible as,
 firstly, most agents have reactive components which require constant
 monitoring of the environment state, and secondly, a waiting agent can simply
-terminate immediately when queried for actions by the simulator, wasting very
+return immediately when queried for actions by the simulator, wasting very
 little resources. The advantage of time-driven over event-driven simulation is
 that the former is easier to parallelise~\citep{Ferscha1995}.
 
@@ -240,9 +255,9 @@ arbitrary levels of accessibility for each agent in the simulation.
 This state model implicitly enables inter-agent communication of arbitrary
 data between agents. A message action can simply create a state value which is
 only accessible to the intended receiver agent. This action may also fail
-randomly, if the agents are physical situated too far from each other, or due
-to any other deterministic or non-deterministic factor relating to the environment
-state. Therefore we can model agent communication networks of arbitrary
+randomly, if the agents are physically situated too far from each other, or due
+to any other deterministic or non-deterministic factors relating to the environment
+state. Therefore, we can model agent communication networks of arbitrary
 complexity.
 
 %With the described framework we can formalise a modelled system following the abstract architecture specified in \citet{Wooldridge2002}.
@@ -256,7 +271,7 @@ Where $\epsilon$ is the environment state, $\mathcal{A}$ is the set of agents, $
 agent $a\in\mathcal{A}$ has internal state $s_{a,t}\cup s_{a,t}^{\prime}$,
 where $s_{a,t}$ is public and $s_{a,t}^{\prime}$ is private, and
 an agent function $f_{a}$. This function maps the agent's state and his observation of the environment and agents' public states (calculated with the state observability function $\phi$) to a private
-state for the next time-step, $s_{a,t+1}^{\prime}$ and a set of actions
+state for the next time-step, $s_{a,t+1}^{\prime}$, and a set of actions
 $H{}_{a,t}$:
 \begin{align*}
 f_{a}:\; s_{a,t}^{\prime} \times \phi(a, \epsilon_{t}, S_{t}^{\mathcal{A}}&) \rightarrow\; H_{a,t}\times s_{a,t+1}^{\prime}\\
@@ -429,13 +444,13 @@ platform.
 \subsection{Simulation initialisation}
 
 With the state engine and simulation loop we have the base components to run a
-simulation, however for this to work we first need to initialise all the
+simulation, however for this to work we need to initialise all the
 components required for the simulation. Firstly, we must create all the required
 objects for the environment: action handlers, environment functions and
 environment services; secondly, we must create agents and link them to the
 environment and environment services; and finally, we must create an initial
 shared state of the environment and agents. This process should be easily
-parameterised, as in order to perform experiments, we require that initial state
+parameterised, as in order to perform experiments, we require that the initial state
 can be easily controlled.
 
 The construction of complex objects, with multiple dependencies, in languages
@@ -661,12 +676,13 @@ Verification and Validation are important considerations when developing
 software for scientific research. Verification is the process of checking if a
 system is working as intended, while validation checks whether the system is
 the correct system for the task~\citep{Wallace1989}. Specifically in the \ac{ABM}
-domain, validation concerns whether the model is the correct one, and
+domain,
 verification covers whether the model is implemented
-correctly~\citep{Ormerod2009}. From the perspective of a software tool for
+correctly, and validation concerns whether the model is the correct one~\citep{Ormerod2009}. 
+From the perspective of a software tool for
 simulation we must answer the following questions: How can we verify that the
 software is executing the model correctly, and secondly, what does the tool
-provide to aid verification of validations of models written with it?
+provide to aid verification and validation of models written with it?
 
 The first question requires a verification of our implementation of the Presage2
 framework. Using software testing we are able to guarantee, up to a high level of
@@ -677,6 +693,14 @@ response to these stimuli are then compared to the expected values. These tests
 are combined with an automated build system that will ensure that all tests pass
 each time the platform is compiled. This prevents the introduction of errors
 through later code modifications.
+
+For example, a unit test may check that the vector addition used for computing
+a new agent location given an initial location and movement action is
+returning the correct results given a range of sample inputs. An integration
+test would load an entire simulation and test whether the agent is able to
+move as expected. The former test ensures that individual components are
+implemented correctly, while the latter ensures the components are properly
+composed and interact correctly.
 
 The use of this unit-testing method in the platforms development has a knock-on
 benefit for verification of user-defined models. With the platform's test-suite,
@@ -720,14 +744,14 @@ to describe the system to be checked. Therefore significant extra work is
 required to take this approach.
 
 Thus, the verification of an implemented model should be largely left to the
-model implementer, but we do leave tools to leave all options open. In
+model implementer, but we do have tools to leave all options open. In
 addition, in Presage2 we encourage design practices aimed at increasing the
 robustness and reliability. Modularisation and component re-use attempts to
 prevent individual components becoming overly complex. The Presage2 state
 change framework also prevents non-determinism outside of the modeller's
 control, for example the execution order of agents (which cannot be guaranteed
 in multi-threaded execution) cannot lead to divergent states. Furthermore,
-repeatable non- determinism is provided via the platform's pseudo random
+repeatable randomness is provided via the platform's pseudo random
 number generation tools. Repeatability is an important aspect of
 replicability~\citep{Axelrod1997,Ormerod2009}, so we encourage a best-practice
 that the same input parameters and random seed combine to give identical
@@ -874,7 +898,7 @@ cooperation game, implemented with Presage2.
 \item \citet{Petruzzi2013} models a market for exchange of energy allocations
 in a SmartGrid, utilising Social capital to encourage cooperation.
 
-\item \citet{Schaumeier2013} models an endogenous common-pool resource, with
+\item \citet{Schaumeier2013} models an exogenous common-pool resource, with
 rules implemented to test each of \possessivecite{Ostrom1990} principles
 for self-governing institutions. Again Drools was used for environmental
 rules.
@@ -901,7 +925,7 @@ computational agents within the game.
 
 Having described the Presage2 platform and its usage, we return to our
 evaluative criteria from \autoref{sec:p2:review} in order to evaluate how
-well Presage2 performs as a platform for Principled Operationalisation of 
+well Presage2 performs as a platform for principled operationalisation of 
 socio-technical systems.
 
 \autoref{tab:presagereview} shows Presage2 evaluated according to the basic
@@ -948,7 +972,7 @@ implementations.
 
 Therefore, we believe that the Presage2 platform is not only an improvement over
 the original Presage platform, but has several significant features which
-distinguish it as a tool for Principled operationalisation over the platforms we
+distinguish it as a tool for principled operationalisation over the platforms we
 have reviewed in \autoref{sec:p2:review}. The remaining outstanding issue, with
 respect to our criteria, is that of graphical modelling support.
 
