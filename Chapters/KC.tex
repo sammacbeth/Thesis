@@ -725,7 +725,8 @@ With these rights we can make rules to describe the operational and most of the 
 
 \section{Formal Characterisation}\label{sec:formalchar}
 
-Having analysed participatory sensing as a knowledge commons, we can now begin to formally characterise such a system. \citeasnoun{Pitt2012b} used the Event Calculus~\citep{Kowalski1986} and Institutionalised Power~\citep{Jones1996} to formally characterise a resource-allocation system and address six of \possessivecite{Ostrom1990} eight principles. We follow the same methodology, applying it instead to a provision and appropriation system with multiple resource types.
+Having analysed participatory sensing as a knowledge commons, we can now begin to formally characterise such a system. \citeasnoun{Pitt2012b} used the \ac{EC}~\citep{Kowalski1986} and Institutionalised Power~\citep{Jones1996} to formally characterise a resource-allocation system and address six of \possessivecite{Ostrom1990} eight principles. 
+We follow the same methodology, applying it instead to a provision and appropriation system with multiple resource types.
 
 Figure~\ref{fig:psysex} illustrates the participatory-sensing provision and appropriation system with multiple levels of information and knowledge. 
 The same actions, \emph{provision} and \emph{appropriate}, can be used for several different resource types. 
@@ -748,11 +749,11 @@ We assume that we are able to distinguish between each of these resource types a
 \subsection{The Event Calculus and Institutionalised Power}
 
 For this formalisation we wish to use a language which is able to represent and reason about action, agency, social constraints, and change. 
-We continue with the Event Calculus (EC), as we are extended the specification from \citeasnoun{Pitt2012b}. Additionally, its clarity of exposition and executable specification are useful for this task.
+We continue with the \ac{EC}, as we are extended the specification from \citeasnoun{Pitt2012b}. Additionally, its clarity of exposition and executable specification are useful for this task.
 
-The EC is a logical formalism for representing and reasoning about actions or events and their effects, based on a many-sorted first-order predicate calculus. 
-An EC specification consists of an \emph{action description} which includes axioms that define: action occurrences, using $\mathsf{happensAt}$ predicates; the effects of actions, using $\mathsf{initiates}$ and $\mathsf{terminates}$ predicates; and the values of \emph{fluents}, using $\mathsf{initially}$ and $\mathsf{holdsAt}$ predicates. 
-Table~\ref{table:ec} summarises EC predicates which we use in our specification. 
+The \ac{EC} is a logical formalism for representing and reasoning about actions or events and their effects, based on a many-sorted first-order predicate calculus. 
+An \ac{EC} specification consists of an \emph{action description} which includes axioms that define: action occurrences, using $\mathsf{happensAt}$ predicates; the effects of actions, using $\mathsf{initiates}$ and $\mathsf{terminates}$ predicates; and the values of \emph{fluents}, using $\mathsf{initially}$ and $\mathsf{holdsAt}$ predicates. 
+Table~\ref{table:ec} summarises \ac{EC} predicates which we use in our specification. 
 Variables start with an upper case letter and are assumed to be universally quantified. Note that the underscore `\_' denotes
 the anonymous variable which can stand for (be unified with) any value. 
 Predicates, function symbols and constants start with a lowercase letter. 
@@ -786,7 +787,7 @@ $\mathit{Act} \,\, \mathsf{terminates} \,\, F \val V \,\, \mathsf{at} \,\, T$ & 
 
 In order to represent and reason about permissions and access control within an institution we need a formalisation of \emph{institutionalised power}~\citep{Jones1996}. 
 This term refers to the feature of institutions whereby designated agents, often acting in specific roles, are empowered, obliged or permitted to perform certain actions which in turn may modify certain institutional facts. 
-In EC we formalise these powers as fluents which indicate whether an agent has or had a specific power at a time.
+In \ac{EC} we formalise these powers as fluents which indicate whether an agent has or had a specific power at a time.
 
 \subsection{Addressing Ostrom's principles}
 %
@@ -794,11 +795,12 @@ In EC we formalise these powers as fluents which indicate whether an agent has o
 
 \citeasnoun{Pitt2012b} demonstrated that six of Ostrom's principles could be axiomatised for a resource-allocation problem. There are several differences between this problem and our provision and appropriation system. 
 Therefore, we follow the same methodology but modify the axioms where appropriate. 
-In resource-allocation systems there is a physical resource which is accessed through appropriations, while in our case the agents interact with provisions as well as appropriations. 
-Additionally, resource allocation deals with scarce, highly excludable resources, meaning that  one agent's appropriation excludes another agent from doing the same. 
-In the case of information and knowledge, a key feature which we identified in Section~\ref{sec:commons}, is the lack of scarcity and excludability. 
+Their resource-allocation problem deals with an exogenous resource system, and as such does not deal with \emph{provisions} by agents. With an endogenous provision and appropriation system we must extend the specification to accommodate provision of resources.
+%In resource-allocation systems there is a physical resource which is accessed through appropriations, while in our case the agents interact with provisions as well as appropriations. 
+Furthermore, resource allocation deals with scarce, highly excludable resources, meaning that  one agent's appropriation excludes another agent from doing the same. 
+In the case of information and knowledge, a key feature which we identified in \autoref{sec:commons}, is the lack of scarcity and excludability. 
 
-The formal characterisation consists of a set of actions which agents can perform in the action arena of the participatory-sensing application, a set of fluents which describe the state of the system at discrete time points, and rules which describe how the agents' actions affect the fluents. Through this characterisation we enumerate how certain rules can satisfy some of Ostrom's principles, and may lead to certain outcomes. The rules are sourced from both social systems that we have reviewed and from technical solutions which are available for the virtual domain. Table~\ref{table:agact} lists agent actions, Table~\ref{table:fluents} lists fluents and Table~\ref{table:predicates} lists the
+The formal characterisation consists of a set of actions which agents can perform in the action arena of the participatory-sensing application, a set of fluents which describe the state of the system at discrete time points, and rules which describe how the agents' actions affect the fluents. Through this characterisation we enumerate how certain rules can satisfy some of Ostrom's principles, and may lead to certain outcomes. The rules are sourced from both social systems that we have reviewed and from technical solutions which are available for the virtual domain. \autoref{table:agact} lists agent actions, \autoref{table:fluents} lists fluents and \autoref{table:predicates} lists the
 predicates and function symbols.
 
 \begin{table}
@@ -906,7 +908,7 @@ $\B{obl}(G, \m{assign}(G,A,I,\Role))=\true \holdsAt T \pad \leftarrow$ \\
 \end{tabbing}
 }}
 
-Using roles we can define who will be \emph{empowered}, i.e.\ have the right, to provision and appropriate certain resources, according to Figure~\ref{fig:psysex}.
+Using roles we can define who will be \emph{empowered}, i.e.\ have the right, to provision and appropriate certain resources, according to \autoref{fig:psysex}.
 
 \mbox{\parbox{.95\columnwidth}{
 \begin{tabbing}
@@ -925,7 +927,7 @@ $\B{pow}(A, \provision(A,I,\Obj))=\true \holdsAt T \pad \leftarrow$ \\
 \end{tabbing}
 }}
 
-The axioms for appropriation have the same structure, simply changing the \emph{provision} action to \emph{appropriation} and the role and resource type where applicable. Figure~\ref{fig:psysex} specifies which roles can appropriate each resource type.
+The axioms for appropriation have the same structure, simply changing the \emph{provision} action to \emph{appropriation} and the role and resource type where applicable. \autoref{fig:psysex} specifies which roles can appropriate each resource type.
 
 \subsubsection*{Principle 2: Congruence between appropriation and provision rules and local conditions}
 
@@ -977,7 +979,7 @@ We can use the concepts of learning, self-simulation and self-awareness to provi
 \subsubsection*{Principle 4: Monitoring}
 
 Monitoring can be implemented, provided sufficient auditing capabilities are available~\citep{Pitt2012b}. Wikipedia sets a good example here: all users are able to monitor each other through the edit history, which gives a fine grained breakdown of what has been contributed and by whom. However, this level of transparency may seem too much for some, as full visibility of users actions will come with privacy concerns. 
-In technical systems, this auditing can be done via a log of institutional actions performed by agents. This creates a narrative, like the ones which can be processed with the Event Calculus, and the process of monitoring is simply looking for actions which are performed when the actor did not have the permission to perform that action at the time.
+In technical systems, this auditing can be done via a log of institutional actions performed by agents. This creates a narrative, like the ones which can be processed with the \ac{EC}, and the process of monitoring is simply looking for actions which are performed when the actor did not have the permission to perform that action at the time.
 
 Effective monitoring can occur in several different ways. 
 Firstly, some systems can be designed such that monitoring is a side-effect arising from normal use. 
@@ -991,7 +993,7 @@ In the participatory-sensing scenario our access-control procedures provide prot
 These requirements touch on different concepts and thus need to be handled differently. 
 
 In the case of the quality of provisioned information and knowledge, the actions of \emph{evaluators} can be a form of monitoring. 
-Meta information provisioned by \emph{evaluators} can provide indications of the trustworthiness and accuracy of sensor information, derived information and even other meta information (see Figure~\ref{fig:psysex}). 
+Meta information provisioned by \emph{evaluators} can provide indications of the trustworthiness and accuracy of sensor information, derived information and even other meta information (see \autoref{fig:psysex}). 
 This process is akin to review, rating and trust systems seen in e-commerce and other online applications. Provided that there are \emph{evaluators} provisioning this kind of information in the institution, this is a form of side-effect monitoring. 
 Incentives can also be created to encourage more provision of meta information.
 
@@ -1177,7 +1179,7 @@ Pollution can be countered by trust and reputation systems, or redundancy in the
 
 \item \textbf{Degradation and Depletion}---These outcomes are caused by either the removal of information, or insufficient provision of new information. 
 These relate to the endurance of a system. They will occur either when the system does not react to changing external or internal conditions,  or if the system evolves into a `bad' state, causing participation to be no longer worthwhile for some agents. 
-Lack of reactivity to changing conditions is likely to be caused by a lack of flexibility in the institution, either by not having mechanisms in place for reacting, or such mechanisms being blocked by entrenched interests or inappropriate decision-making processes~\cite{North1990}. 
+Lack of reactivity to changing conditions is likely to be caused by a lack of flexibility in the institution, either by not having mechanisms in place for reacting, or such mechanisms being blocked by entrenched interests or inappropriate decision-making processes~\citep{North1990}. 
 Similarly `bad' states can be caused by malicious groups of agents manipulating the institution for short-term benefit.
 
 \end{itemize}
@@ -1237,37 +1239,45 @@ An observation from other knowledge commons is that consumers often benefit for 
 
 \section{Supply of a Participatory Sensing commons}
 
+\newacro{GSN}{Global Sensor Network}
+\newacro{OMS}{Open Mustard Seed}
+
 The final question we must answer is how we can enable the supply of an institution as we have described for participatory sensing. 
 Our requirements are a platform which can be easily deployed and is capable of providing a technical means to administer the rules-in-use needed to satisfy Ostrom's principles, and therefore create a sustainable institution around the participatory sensing application. 
 We review the suitability of existing platforms for use with our framework, and advocate one which we believe fits our criteria best.
+
 
 There exist several platforms specifically for the deployment of participatory sensing. 
 CarTel~\citep{Hull2006} is a centralised system designed to accommodate heterogeneous sensor data and provides a web-based portal for data access. 
 SenseWeb~\citep{Kansal2007} provides a shared resource for concurrent sensing applications with a centralised coordinator directing information acquisition and aggregation. 
 It enables users demanding information to provide incentives for those who are able to provide it. 
-The Global Sensor Network (GSN)~\citep{Aberer2006} is a peer-to-peer network of sensor nodes which can advertise and respond to queries for data streams across the network. 
+\ac{GSN}~\citep{Aberer2006} is a peer-to-peer network of sensor nodes which can advertise and respond to queries for data streams across the network. 
 G-Sense~\citep{Perez2010} is a platform which uses a hybrid architecture to achieve scalability, using local centralised hubs which collaborate with a global peer-to-peer network. 
 \citeasnoun{Demirbas2010} leverage Twitter as infrastructure for information provision using encoded tweets.
 
 In general, similar to what we found in our review in Section~\ref{sec:review}, these platforms are dealing with a particular technical challenge of participatory sensing. 
 Therefore, these platforms do not specify how rules for membership, provision and appropriation quantities, monitoring and accountability can be implemented. 
-In peer-to-peer platforms such as GSN, individuals may be able to control access to their own data by selectively honouring requests, however there is no governance over-sight to keep consistency and fairness. 
+In peer-to-peer platforms such as \ac{GSN}, individuals may be able to control access to their own data by selectively honouring requests, however there is no governance over-sight to keep consistency and fairness. 
 The use of Twitter as an independent third party infrastructure provider provides a more transparent operation, but sacrifices all control over access to the resource.
 
-Open Mustard Seed\footnote{http://idhypercubed.org [Accessed Feb. 2014]} (OMS) is an open-source project which aims to give users control over their data in the cloud through a technical architecture based on trust and the formation of self-organising groups. 
-A key feature is a rule engine governing access to data on a per-user basis. 
+\ac{OMS}~\citep{Hardjono2014,Hardjono2014a} is an open-source project which aims to give users control over their data in the cloud through a technical architecture based on trust and the formation of self-organising groups. 
+A key feature is a rule engine governing access to data on a per-user basis and explicit recognition of governance as a key factor in the system.
 Such a platform could enable the formation of institutions for participatory sensing with transparency over information access and use, but also with overrides for users. 
-The OMS architecture is peer-to-peer, enabling sharing of facility costs by design, and offering scalability and data privacy. 
-For these reasons we see OMS as an implementation avenue for our framework.
+The \ac{OMS} architecture is peer-to-peer, enabling sharing of facility costs by design, and offering scalability and data privacy. 
+For these reasons we see \ac{OMS} as an implementation avenue for our framework.
 
-\section{Summary and Conclusions}\label{sec:conclude}
+\section{Summary}\label{sec:conclude}
 
-This paper has articulated the usefulness of the participatory-sensing paradigm and the shortfalls arising from the lack of consideration of the impact of governance in current applications in this area. 
-Our approach aims to find a method of democratising the large-scale aggregation of user-generated information, with participatory sensing as an example of this process. As these systems are digital, and often online, using electronic institutions and algorithmic governance enables us to bring both the enforcement of rules, as well as governance determining what the rules are, into one place. It also enables autonomous agents to interact with the governance layer along with human actors. In future work, we envision enabling this interaction through
-serious games and gamification, with an emphasis on the visualisation of the `state' of the common pool and the rule
-(see \citep{Bourazeri12} for an example using SmartMeters with energy as the common pool), and through
-design contractualism, whereby design decisions and governance models are manifested both in the code and in the interface
-\citep{Pitt12}.
+In this chapter we have firstly described a framework for participatory sensing as a provision and appropriation system. We then gave a detailed analysis, using the \ac{IAD}, of this system to determine how it can be managed according as a knowledge commons, according to Ostrom's design principles. We adapted the axiomatisation of these principles, by \citet{Pitt2012b}, to be suitable for provision and appropriation in the knowledge commons. We then evaluated what kind of outcomes we can expect from such a commons in participatory sensing. Finally, we discussed how these electronic institutions may be deployed for participatory-sensing applications.
+
+Our formalisation of institutional rules, specified in \ac{EC}, represents the formal characterisation phase of the \ac{SIC} methodology. Our evaluation thus far has only been hypothetical. In order to produce an objective evaluation we must create a computer model within which we can test these rules. The next two chapters address the technical challenge of this process.
+
+% This paper has articulated the usefulness of the participatory-sensing paradigm and the shortfalls arising from the lack of consideration of the impact of governance in current applications in this area. 
+% Our approach aims to find a method of democratising the large-scale aggregation of user-generated information, with participatory sensing as an example of this process. As these systems are digital, and often online, using electronic institutions and algorithmic governance enables us to bring both the enforcement of rules, as well as governance determining what the rules are, into one place. It also enables autonomous agents to interact with the governance layer along with human actors. In future work, we envision enabling this interaction through
+% serious games and gamification, with an emphasis on the visualisation of the `state' of the common pool and the rule
+% (see \citep{Bourazeri12} for an example using SmartMeters with energy as the common pool), and through
+% design contractualism, whereby design decisions and governance models are manifested both in the code and in the interface
+% \citep{Pitt12}.
 
 % sec 2: participatory sensing is kc
 %We have identified that participatory sensing entails the provision and appropriation of information and knowledge to a central pool by various individuals, and that this characterisation matches that of a knowledge commons~\citep{Hess2007}.  
@@ -1283,23 +1293,23 @@ design contractualism, whereby design decisions and governance models are manife
 %This analysis includes a set of objective evaluative criteria which can be used to access the efficacy of a system and its governance.
 
 
-In summary, have made two main contributions, namely:
-\begin{itemize}
-\item Data clouds in open participatory-sensing applications can be construed as information and knowledge commons and thus characterised by provision and appropriation actions; and
-\item A system for access control (i.e. provision and appropriation) in participatory-sensing applications can be designed according to Ostrom's institutional design principles for self-governing institutions and formally specified in an action language.
-\end{itemize}
-We presented in Section~\ref{sec:commons} the literature on how information and knowledge can be seen as a commons, and, being a system with the purpose of gathering information in order to generate new knowledge, that participatory sensing enables the creation of information and knowledge commons. Following a review of participatory-sensing applications we were able to characterise a generic participatory-sensing application as a provision and appropriation system in Section~\ref{sec:iad}. We then formally defined a framework for the management of an information and knowledge commons in participatory sensing.
+% In summary, have made two main contributions, namely:
+% \begin{itemize}
+% \item Data clouds in open participatory-sensing applications can be construed as information and knowledge commons and thus characterised by provision and appropriation actions; and
+% \item A system for access control (i.e. provision and appropriation) in participatory-sensing applications can be designed according to Ostrom's institutional design principles for self-governing institutions and formally specified in an action language.
+% \end{itemize}
+% We presented in Section~\ref{sec:commons} the literature on how information and knowledge can be seen as a commons, and, being a system with the purpose of gathering information in order to generate new knowledge, that participatory sensing enables the creation of information and knowledge commons. Following a review of participatory-sensing applications we were able to characterise a generic participatory-sensing application as a provision and appropriation system in Section~\ref{sec:iad}. We then formally defined a framework for the management of an information and knowledge commons in participatory sensing.
 
-We have two primary motivations for why such a framework is needed in this domain. 
-Firstly, through our review of participatory sensing in Section~\ref{sec:review}, we identified a lack of governance supplied for applications. Given that participatory sensing is a knowledge commons, appropriate governance, as stressed by \possessivecite{Ostrom1990} work, is important for its successful management. The success of certain knowledge commons such as Wikipedia and Free/Open-Source Software, which have been retrospectively shown to conform to the principles which Ostrom proposed, further reinforces this point. Thus, as information and knowledge is gathered more and more on the Internet, it is important that governance is supplied in order to fairly protect the interests of all involved parties and stakeholders.
+% We have two primary motivations for why such a framework is needed in this domain. 
+% Firstly, through our review of participatory sensing in Section~\ref{sec:review}, we identified a lack of governance supplied for applications. Given that participatory sensing is a knowledge commons, appropriate governance, as stressed by \possessivecite{Ostrom1990} work, is important for its successful management. The success of certain knowledge commons such as Wikipedia and Free/Open-Source Software, which have been retrospectively shown to conform to the principles which Ostrom proposed, further reinforces this point. Thus, as information and knowledge is gathered more and more on the Internet, it is important that governance is supplied in order to fairly protect the interests of all involved parties and stakeholders.
 
-Secondly, the digitisation of information and knowledge has caused a shift in its properties as a good~\citep{Ostrom2003}. However, legal interpretations have not yet been fully updated to this new reality, leading to exploitative and restrictive consequences~\citep{Lessig2004}. We concluded that this gives the knowledge creator complete control over what class of good their knowledge falls in to, and leads to a dilemma where knowledge is enclosed for short-term benefits and a negative long-term outcome.
+% Secondly, the digitisation of information and knowledge has caused a shift in its properties as a good~\citep{Ostrom2003}. However, legal interpretations have not yet been fully updated to this new reality, leading to exploitative and restrictive consequences~\citep{Lessig2004}. We concluded that this gives the knowledge creator complete control over what class of good their knowledge falls in to, and leads to a dilemma where knowledge is enclosed for short-term benefits and a negative long-term outcome.
 
-With the presentation of this framework we are taking the first steps to the supply of institutional governance for managing information and knowledge commons in participatory-sensing applications.
-What remains to do is a quantitative comparison of the different rule permutations which can be instantiated on top of our framework and an objective comparison between centralised and community governance. 
-Our framework is flexible enough to be able to represent a centralised governance as well as the self-organising approach which is required for Ostrom's principles. 
-It is the aim of our future work to answer these questions.
+% With the presentation of this framework we are taking the first steps to the supply of institutional governance for managing information and knowledge commons in participatory-sensing applications.
+% What remains to do is a quantitative comparison of the different rule permutations which can be instantiated on top of our framework and an objective comparison between centralised and community governance. 
+% Our framework is flexible enough to be able to represent a centralised governance as well as the self-organising approach which is required for Ostrom's principles. 
+% It is the aim of our future work to answer these questions.
 
-In conclusion, we have shown that consideration of governance and supply thereof is important in order to achieve the potential of the participatory-sensing paradigm. 
-By drawing on the management of the commons, we can create efficient and empowering institutions around information and knowledge resources, which can exploit the power of open data. 
-Additionally, given increasing concerns over data acquisition and data privacy in the digital age, our general representation of a system for the provision and appropriation of information could have applications beyond those which we have discussed here.
+% In conclusion, we have shown that consideration of governance and supply thereof is important in order to achieve the potential of the participatory-sensing paradigm. 
+% By drawing on the management of the commons, we can create efficient and empowering institutions around information and knowledge resources, which can exploit the power of open data. 
+% Additionally, given increasing concerns over data acquisition and data privacy in the digital age, our general representation of a system for the provision and appropriation of information could have applications beyond those which we have discussed here.
