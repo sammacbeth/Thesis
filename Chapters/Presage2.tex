@@ -2,7 +2,7 @@
 \acresetall
 \chapter{Principled Operationalisation using Presage2}\label{ch:presage}
 
-\lettrine[lines=3]{P}{rincipled} Operationalisation is the process of transforming a symbolic or formal representation of a system (often written in some kind of calculus) into a computer model of the system in question~\citep{Jones2013}. This process varies greatly in difficulty depending on the complexity of the system to be modelled and the requirements of the computer model. \marginpar{Should be citing something different here?} Models can range from small prolog programs~\citep{Pitt2005a} to significant software engineering undertakings~\citep{Timm2005}.
+\lettrine[lines=3]{P}{rincipled} Operationalisation is the process of transforming a symbolic or formal representation of a system (often written in some kind of calculus) into a computer model of the system in question~\citep{Jones2013}. This process varies greatly in difficulty depending on the complexity of the system to be modelled and the requirements of the computer model. Models can range from small prolog programs~\citep{Pitt2005a} to significant software engineering undertakings~\citep{Timm2005}.
 
 \ac{ABM} and \ac{MABS} are approaches to modelling and simulating complex systems as multi-agent systems~\citep{Macal2010,Moss2001}.
 This is a form of micro-simulation, where by modelling low-level interactions from the `ground up' we can observe macro level behaviours such as self-organisation, self-adaptation and so on.
@@ -232,7 +232,7 @@ perform multiple actions at once (for example a communicative action could be
 performed at the same time as a physical action), we allow multiple actions
 per agent per time-step.
 
-The state of the environment and observable state of agents (i.e. state which
+The state of the environment and observable state of agents (\ie state which
 can be perceived by other agents), collectively referred to as \emph{shared
 state}, is updated each time-step by a function we call a \emph{state
 transformer} function. This takes the current state and set of agent's
@@ -351,8 +351,8 @@ replaced with real perception for rapid transition from simulation to
 deployment.
 
 \begin{figure}
-\caption{UML Sequence diagram of interactions with shared state in Presage2}\label{fig:p2envsequence}
 \includegraphics[width=\linewidth]{gfx/presage2/environment_sequence}
+\caption{UML Sequence diagram of interactions with shared state in Presage2}\label{fig:p2envsequence}
 \end{figure}
 
 \autoref{fig:p2envsequence} shows the interactions between environment
@@ -437,8 +437,8 @@ the remaining components which bring an array of different features to the
 platform.
 
 \begin{figure}[tb]
-\caption{Presage2 architectural block diagram}\label{fig:presage2block}
 \includegraphics[width=\linewidth]{gfx/presage2/architecture_block}
+\caption{Presage2 architectural block diagram}\label{fig:presage2block}
 \end{figure}
 
 \subsection{Simulation initialisation}
@@ -838,8 +838,8 @@ support for automated experiment generation and execution.
 
 \begin{figure}
 \centering
-\caption{Presage2 simulation process diagram}\label{fig:presage2process}
 \includegraphics[width=0.8\linewidth]{gfx/presage2/simulation_process}
+\caption{Presage2 simulation process diagram}\label{fig:presage2process}
 \end{figure}
 
 We provide an \ac{API} for the specification of a set of values for each
@@ -856,15 +856,14 @@ the platform. \autoref{fig:webuimanage} shows a screenshot of this interface
 being used to add new simulations manually.
 
 \begin{figure}
-\caption{Simulation Management in Presage2 WebUI}\label{fig:webuimanage}
 \includegraphics[width=\linewidth]{gfx/presage2/webui_manage}
+\caption{Simulation Management in Presage2 WebUI}\label{fig:webuimanage}
 \end{figure}
 
 \section{Presage2 Showcase}
 
 In this section we provide a short summary of a range of applications which have
-been modelled and simulated using Presage2.\marginpar{Prose, subsection or
-paragraph?}
+been modelled and simulated using Presage2.
 
 Several applications have used Presage2 to model iterated games. In these
 applications Presage2's time-driven model helps in particular to synchronise

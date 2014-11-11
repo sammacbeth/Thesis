@@ -129,7 +129,7 @@ Therefore, if we consider an institution as a set of rules governing the
 interactions, and constraints thereon, between humans within a society, then
 we can consider \emph{electronic} institutions as rules governing interactions
 between actors within a computational domain. Note, this does not mean that all
-of the actors are computational agents---socio-technical systems require
+of the actors are computational agents---socio--technical systems require
 institutions which can be applied uniformly to both human and computational
 actors. The distinction between a human and electronic institution is that the
 latter is specified and executed in a computational domain.
@@ -181,7 +181,7 @@ provide, but not part of its definition.
 \citet{North1990} also states that a defining feature of human institutions is
 that they can be changed by the organisations which use them. This
 institutional change allows the organisation to adapt to changing conditions
-and/or optimise inefficiencies (it can also make things worse), and as such,
+and/or optimise inefficiencies (although it can also make things worse), and as such,
 is an important property to translate. \citet{Artikis2012a} extend their
 specification of open agent systems to enable the specification, which
 contains the institutional rules, to change over time as a result of agent's
@@ -192,7 +192,7 @@ rules which specify:
 
 \begin{itemize}
 \item Institutionalised powers, and how they change, over time
-and from actions of agents. 
+and through the actions of agents. 
 \item Permissions, prohibitions and obligations of
 the agents.
 \item How rules can be changed.
@@ -208,13 +208,21 @@ Work on specification of constraints, or norms, for multi-
 agent systems often focuses on the use of logics for specification. Logical
 specifications have the advantage of enabling model checking and formal proofs
 of validity. Logics typically also support deductive, adductive and inductive
-reasoning. Deductive tasks (also called \emph{projection} or
+reasoning:
+
+\begin{itemize}
+\item Deductive tasks (also called \emph{projection} or
 \emph{prediction}) determine ``what is true when'', given ``what happens
-when'' and ``what actions do''. Abductive tasks (also called
+when'' and ``what actions do''. 
+\item Abductive tasks (also called
 \emph{postdiction} or \emph{planning}) determine ``what happens when'', given
-``what actions do'' and ``what is true when''. Finally, inductive tasks
+``what actions do'' and ``what is true when''. 
+\item Inductive tasks
 (\emph{learning} or \emph{theory formation}) determine ``what actions do''
-given ``what is true when'' and ``what happens when''. Action languages are a
+given ``what is true when'' and ``what happens when''. 
+\end{itemize}
+
+Action languages are a
 particularly popular specification language, due to their incorporation of
 state while maintaining logical semantics and satisfiability checking.
 However, we often see performance issues when scaling executable
@@ -664,8 +672,8 @@ Environment to `warm-up' before collecting results. The results are shown in \au
 
 \begin{figure}
 \centering
-\caption{Execution time of RONR using a rule-based EC implementation.}\label{fig:rulec}
 \includegraphics{gfx/ec/rulebased}
+\caption{Execution time of RONR using a rule-based EC implementation.}\label{fig:rulec}
 \end{figure}
 
 
@@ -1156,7 +1164,7 @@ holdsAt( pow(C, open_session(C,S))=true, T ) :-
 \end{prologinline}
 
 This specifies that an agent is empowered to perform the \emph{open\_session}
-action for any session which is \emph{not} sitting (i.e.\ an infinite set of
+action for any session which is \emph{not} sitting (\ie an infinite set of
 actions, minus a finite set of exceptions). In Drools we can only specify that
 the agent is empowered to open \emph{any} session. Therefore, in order to
 maintain this condition, and so that we do not process an action incorrectly,
@@ -1187,7 +1195,7 @@ rule "Open Session"
 end
 \end{drools}
 
-This approach is not ideal, as it could lead to an agent thinking it has power to do something when it does not. However, this is a limitation of the Drools rule language. For situations when this feature is critical, it may be possible to assert a negated power, i.e.\ that the agent explicitly does not have the power to do an action. Using a query, this could be given precedence over the original \emph{Pow}, such that $\mathtt{power(Ag,Act) \leftarrow \mathtt{Pow(Ag,Act)} \land \lnot \mathtt{NotPow(Ag,Act)}}$. However, we have not yet implemented or tested such a feature, and it is left for future work.
+This approach is not ideal, as it could lead to an agent thinking it has power to do something when it does not. However, this is a limitation of the Drools rule language. For situations when this feature is critical, it may be possible to assert a negated power, \ie that the agent explicitly does not have the power to do an action. Using a query, this could be given precedence over the original \emph{Pow}, such that $\mathtt{power(Ag,Act) \leftarrow \mathtt{Pow(Ag,Act)} \land \lnot \mathtt{NotPow(Ag,Act)}}$. However, we have not yet implemented or tested such a feature, and it is left for future work.
 
 \subsection{Drools-EInst}
 
@@ -1230,8 +1238,8 @@ benchmark reduces.
 
 \begin{figure}
 \centering
-\caption{Execution time of RONR using Drools-EInst implementation.}\label{fig:droolsperf}
 \includegraphics{gfx/ec/droolsvsrules}
+\caption{Execution time of RONR using Drools-EInst implementation.}\label{fig:droolsperf}
 \end{figure}
 
 \section{Summary}
