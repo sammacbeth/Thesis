@@ -1,6 +1,6 @@
 %!TEX root =../MacbethThesis.tex
 \acresetall
-\chapter{Simulation of a Knowledge Commons with Presage2}
+\chapter{Simulation of a Knowledge Commons}
 
 In this chapter we create a computer model of participatory sensing and use
 this model to test our theory that by managing information and knowledge as a
@@ -103,7 +103,14 @@ Within this environment there are institutions available which provide
 \emph{policies} via \emph{provision} and \emph{appropriation} actions. Instead
 of generating actions themselves, with their own policy, agents provision
 \emph{(state, action, reward)} tuples, and appropriate a suggested next action
-from an institution. % TODO: figure
+from an institution. 
+The integration of reinforcement learning with a provision and appropriation system is shown in \autoref{fig:reinflearn} % TODO: figure
+
+\begin{figure}
+\centering
+\includegraphics{gfx/reinforcementlearning}
+\caption{Abstract reinforcement framework integrated with a provision and appropriation system (adapted from \citet{Sutton1998}). Observed rewards are provisioned to the system, and the next action to take is appropriated from the system.}\label{fig:reinflearn}
+\end{figure}
 
 This model integrates the reinforcement learning framework with our framework
 for participatory sensing as a provision and appropriation system from
@@ -218,7 +225,7 @@ institution. With these principles, and the requirements of participatory sensin
 \item Clearly defined boundaries---The boundaries of the institution must be defined, not only who can contribute and withdraw resource units, but what resources are managed by the institution.
 \item Provision and appropriation rules---Appropriate rules for the conditions. In this case the incentivisation of particular user roles to encourage contribution is important.
 \item Collective-choice arrangements---That the rules can be modified by those who they affect.
-\item Facility costs---
+\item Simulation of Facility costs---The costs of the institution, so-called \emph{facility} costs, are a significant component of an information and knowledge commons.
 \end{itemize}
 
 The Drools-EInst provision and appropriation system module provides the basis
@@ -369,9 +376,9 @@ something which can be voted on, and how the voting is done in terms of:
 \begin{itemize}
 \item which agent roles are empowered to open and close a ballot on the issue,
 \item which agent roles are empowered to vote in a ballot on the issue,
-\item how votes should be cast (e.g.\ single choice, preference list, rank order),
+\item how votes should be cast (\eg single choice, preference list, rank order),
 \item what the valid choices are,
-\item how the winner is determined from the set of votes (e.g.\ plurality, borda count etc.)
+\item how the winner is determined from the set of votes (\eg plurality, borda count etc.)
 \end{itemize}
 
 The module provides the institutionalised powers based on this specification,
@@ -451,7 +458,104 @@ regarding how these can be changed.
 
 \subsection{Agent Implementation}
 
+The agents in this simulation can be classified into two groups: those who are
+playing the reinforcement learning game, \texttt{PlayerAgent}s, and those who
+are not, \texttt{NonPlayerAgent}s. The former are the \emph{gatherers} and
+\emph{consumers} of information, while the latter constitute any other agent
+who is involved with the institution is some way. These two groups have
+significant overlap in terms of their interactions with the institution,
+therefore we propose a behaviour-driven agent implementation where we define
+agents with a set of behaviours. These behaviours are independent, but may
+read and write shared data to allow for complex behaviours from their
+combination. We describe the behaviours we have implemented and how we compose
+them.
 
+Our agents have two operating modes which are specified when the agent is created:
+
+\begin{itemize}
+\item \emph{Sustainable} or \emph{Compliant}---This mode pursues what is deems to be socially optimal decisions. It aims for sustainable outcomes over individual enrichment. However, this does not mean that the agent will sacrifice all his resources on this goal, he will leave the institution if there is no long-term benefit for himself.
+\item \emph{Profitable} or \emph{Non-compliant}---This mode pursues individually optimal decisions. It aims to choose a dominant individual strategy when possible.
+\end{itemize}
+
+Where applicable we note how a behaviour will be different in each operation mode.
+
+\subsubsection*{Gameplay Behaviour}
+
+This behaviour implements an agent's interaction with the reinforcement
+learning problem. This involves choosing an action and performing it, as well
+as decided whether to measure the utility gained from this action.
+
+The agent may have multiple \texttt{Predictor}s available to use to choose an
+action, including its own one and ones appropriated from institutions. The
+behaviour utilises basic learning to dynamically choose a preferred
+\texttt{Predictor} based on the utility gained using this predictor in the
+past.
+
+All agents also have a behaviour to train a \texttt{Predictor} given the
+\texttt{Measured} artifacts available to them. This maybe only self-measured
+artifacts, or be ones appropriated from a pool.
+
+Lastly, non-compliant \texttt{PlayerAgent}s have a behaviour to determine
+whether to measure the utility of actions or not. This behaviour compares the
+cost of measuring to the reward given by the institution for provision or
+appropriation of this information. If the former is greater then measuring is
+disabled for the afore-mentioned gameplay behaviour.
+
+\subsubsection*{Institutional Behaviours}
+
+The rest of an agent's behaviours involve interaction with the institution.
+For several of these we are only interested in triggering the behaviour when
+the agent is empowered to do a particular action in an institution. For this
+we use a \texttt{PowerReactiveBehaviour}. This behaviour reacts to a
+particular institutionalised power for an agent, enabling the behaviour when
+the agent is empowered, and disabling then they are not. Behaviours extend
+from this class specify the action they require empowerment for, and the
+behaviour for each institution where this power exists.
+
+In addition to this use, we define a number of institutional rules which
+compel agents to perform actions via an obligation. We implement an
+\texttt{InstitutionalBehaviour} which responds to the presence of obligations
+for an agent. The behaviour listens for incoming obligations for an agent and
+performs the action as specified. 
+
+\subsubsection*{Provision and Appropriation}
+
+The provision and appropriation behaviours are the primary institution
+interaction behaviour for all agents. These are implemented as
+\texttt{PowerReactiveBehaviour}s for each artifact type. These behaviours are:
+
+\begin{itemize}
+\item \texttt{ProvisionMeasuredBehaviour}---When $\B{pow}(\m{provision}(A,\_,M)) = \true$ for an agent $A$ and \texttt{Measured} artifact $M$, agent $A$ will provision any measurements to the institution.
+\item \texttt{AppropriatePredictorBehaviour}---When $\B{pow}(\m{appropriate}(A,\_,P)) = \true$ for agent $A$ and \texttt{Predictor} artifact $P$, agent $A$ will \texttt{Request} for any new \texttt{Predictor}s in the pool. Additionally, when this power no longer holds for an institution, any appropriated \texttt{Predictors} from this institution will be removed from the set available to the gameplay behaviour.
+\item \texttt{ProvisionPredictorBehaviour}---When $\B{pow}(\m{provision}(A,\_,P)) = \true$ for an agent $A$ and \texttt{Predictor} artifact $P$, agent $A$ will provision its \texttt{Predictor} to the institution, if it has not done so already.
+\item \texttt{AppropriateMeasuredBehaviour}---When $\B{pow}(\m{appropriate}(A,\_,M)) = \true$ for agent $A$ and \texttt{Measured} artifact $M$, agent $A$ will \texttt{Request} new \texttt{Measured} artifacts to appropriate from the pool. If there is an appropriation fee for this pool he will limit the number of appropriations such that he does not bankrupt himself.
+\item \texttt{PruneMeasuredBehaviour}---When $\B{pow}(\m{remove}(A,\_,M)) = \true$ for agent $A$ and \texttt{Measured} artifact $M$, agent $A$ will \texttt{Prune} old \texttt{Measured} artifacts from the pool. This behaviour aims to keep the number of artifacts in the pool down to avoid incurring high storage costs.
+\end{itemize}
+
+\subsubsection*{Role Management}
+
+The \texttt{RoleManagement} behaviour keeps track of the agent's use of
+institutional roles. If an agent is no longer utilising the benefits of a role
+he can resign in order to avoid incurring costs associated with it. For
+example if a \emph{consumer} has appropriated \texttt{Predictor}s from
+multiple institutions, but is only using one, he can \texttt{Resign}
+membership of the other institutions with no loss of his ability to
+appropriate from the preferred \texttt{Predictor}.
+
+\subsubsection*{Voting}
+
+Finally, agents' \texttt{VoteBehaviour} specifies how they will vote when they are empowered to vote on a ballot. 
+% In self-org or here?
+
+\subsubsection*{Behavioural Composition}
+
+Due to the power reactive nature of most of the institutional behaviours we can include them in all agents, and they will lie dormant if they are not applicable to the roles the agent occupies in the institution. This means that the differences between agents are determined by the allocation of non-institutional behaviours, their operating mode and initial \texttt{Predictor}. We define agents for each of the participatory sensing roles as follows:
+
+\begin{itemize}
+\item \emph{Gatherer}/\emph{consumer} agent: uses Gameplay and predictor training behaviours.
+\item \emph{Analyst} agent: uses predictor training behaviour, and will often have a better \texttt{Predictor} than gatherers.
+\item \emph{Initiator} agent: only institutional behaviours.
+\end{itemize}
 
 \section{Evaluative Criteria}
 
@@ -489,213 +593,482 @@ no longer need, the number of occupied roles is a good measure of participation.
 \item \emph{Equity.} Given that all agents have the potential to achieve the same, we can expect that an equitable system will result in all agents achieving the same utility. Therefore the equity can be measured as the standard deviation of all agents' final utilities. 
 \end{enumerate}
 
-\begin{figure}
-\includegraphics{gfx/kc/static_0.pdf} 
-\caption{No measuring cost.}
-\end{figure}
+\section{Experimental Agenda and Simulation Results}
 
-\begin{figure}
-\includegraphics{gfx/kc/static_1.pdf} 
-\caption{Measuring cost = 0.1.}
-\end{figure}
+We combine the reinforcement learning problem, institution for provision and
+appropriation of artifacts for this problem, and the agent implementations as
+describe to create our computer model of participatory sensing. We now perform
+controlled experimentation with this model in order to answer the question of
+how governance can be provisioned for participatory sensing.
 
-\begin{figure}
-\includegraphics{gfx/kc/static_1_3nc.pdf} 
-\caption{3 NC.}
-\end{figure}
+In \autoref{ch:kc} and \autoref{sec:iad} we saw the problem of supply of
+institutions. This is the difficulty in supplying an effective institution to
+a \ac{CPR} problem. Here we have done much of the work in specifying an
+institution which defines boundaries and provides scope for dynamic
+appropriation and provision rules depending on conditions. However, this is no
+guarantee of a good outcome. In our first round of experiments we investigate
+the specification space of our system to determine whether a trade-off between
+our evaluative criteria can be found, and how the system's equilibrium changes
+under different conditions.
 
-\begin{figure}
-\includegraphics{gfx/kc/static_1_6nc.pdf} 
-\caption{6 NC.}
-\end{figure}
+In the second set of experiments we take this further, and test our hypothesis
+that appropriate enfranchisement of agents can lead to a good outcome,
+according to our evaluative criteria. To do this we exploit the flexibility of
+our institutional specification to deploy centralised, market-based, and
+collective governance in simulation. Through comparison of these three
+paradigms we can draw parallels with our participatory sensing review and the
+problems we outlined there.
 
-\section{Simulation Setup}
+% We model a participatory sensing problem as a reinforcement learning problem (See Sutton \& Barto). Policies are knowledge artifacts, which can be appropriated and used to chose actions. Agents are able to measure directly the reward from an action when performing it. Their aim is to maximise rewards over time by training a better policy. All agents play the same game, so policies and measurements are useful for everyone, and one agent's measurements can be used to train another's policy.
 
-We model a participatory sensing problem as a reinforcement learning problem (See Sutton \& Barto). Policies are knowledge artifacts, which can be appropriated and used to chose actions. Agents are able to measure directly the reward from an action when performing it. Their aim is to maximise rewards over time by training a better policy. All agents play the same game, so policies and measurements are useful for everyone, and one agent's measurements can be used to train another's policy.
-
-As policies will improve with more information, the best strategy for agents will be to pool their information and knowledge together. 
-Therefore, by forming an institution around this information and knowledge, everyone should be able to achieve a better utility overall.
+% As policies will improve with more information, the best strategy for agents will be to pool their information and knowledge together. 
+% Therefore, by forming an institution around this information and knowledge, everyone should be able to achieve a better utility overall.
 
 %The simulation is set up as a symmetric participatory sensing problem. This is a problem where agents are playing a repeated game where, in each round, a strategy played by the agent yields a reward. Agents are able to measure their previous rewards. They aim to maximise their reward over time by learning the best strategy to choose. As all agents are playing the same game this learning can obviously be improved by gathering together this information. Additionally not all agents will have the knowledge or capability to do this learning themselves. 
 
-The institution is constructed as a provision and appropriation system with two pools. One for information as gathered by the learning agents, and the other for knowledge provided by analysts. This problem is symmetric as each group of agents will provision to one pool and appropriate from the other---learning agents provision information and appropriate knowledge and appropriate information and provide knowledge---thus they are also dependant on each other. If the institution is unsatisfactory for one group and they leave it will quickly become unsatisfactory for the others too.
+% The institution is constructed as a provision and appropriation system with two pools. One for information as gathered by the learning agents, and the other for knowledge provided by analysts. This problem is symmetric as each group of agents will provision to one pool and appropriate from the other---learning agents provision information and appropriate knowledge and appropriate information and provide knowledge---thus they are also dependant on each other. If the institution is unsatisfactory for one group and they leave it will quickly become unsatisfactory for the others too.
 
-The utility generated from the learning problem acts as the only external input of value into the system, while paying for facility costs is the only way of value flowing out of the system. All other transactions are endogenous. There is also a possibility, as seen in many real-world participatory sensing systems, of other exogenous rewards from ownership of a data-set, however we do not simulate this.
+% The utility generated from the learning problem acts as the only external input of value into the system, while paying for facility costs is the only way of value flowing out of the system. All other transactions are endogenous. There is also a possibility, as seen in many real-world participatory sensing systems, of other exogenous rewards from ownership of a data-set, however we do not simulate this.
 
-\subsection{Rewarding Knowledge}
+% \subsection{Rewarding Knowledge}
 
-In order to model the additive value of information when combined for learning we use an artificial reward function which gives a utility proportional to the quality of policy used to chose an action. The quality of a policy is defined as the number of information samples over a time window from the current time:
+% In order to model the additive value of information when combined for learning we use an artificial reward function which gives a utility proportional to the quality of policy used to chose an action. The quality of a policy is defined as the number of information samples over a time window from the current time:
 
-A policy is a tuple containing a set of data samples: $P = <S>$. A predictor can recommend an action for an agent: $\mathit{selectAction}(P,t) \rightarrow s_t$. Using this action then yields a reward: $u(s_t) = \sum_t^{t-W} \frac{|S_t|}{W*N}$ where $W$ is a time-window size for which information is useful and $N$ is maximum number of samples possible in one time-step. This function returns a value between 0 and 1.
+% A policy is a tuple containing a set of data samples: $P = <S>$. A predictor can recommend an action for an agent: $\mathit{selectAction}(P,t) \rightarrow s_t$. Using this action then yields a reward: $u(s_t) = \sum_t^{t-W} \frac{|S_t|}{W*N}$ where $W$ is a time-window size for which information is useful and $N$ is maximum number of samples possible in one time-step. This function returns a value between 0 and 1.
 
-\subsection{Agent strategies}
-
-\begin{itemize}
-\item Sustainable
-\item Profitable
-\item Greedy
-\end{itemize}
-
-\section{Experiments}
+%\section{Experiments}
 
 \subsection{The Problem of Supply}\label{sec:supply}
 
-This first set of experiments looks at the problem of provisioning an institution for the problem we have outlined. Despite having a simple game where we can seemingly trivially generate utility, getting together disparate agents to all contribute and keeping it sustainable over the long time requires negotiating several hurdles. 
+In these experiments we investigate how a static institution (one without
+collective-choice to change its parameters during operation) performs
+according to our evaluative criteria. We construct an institution as follows:
 
-We will see these hurdles as we follow the process of building a centralised institution for this problem. This institution has a single agent who acts as a manager for the institution and as complete control over institutional fluents.
-
-The experimental setup is as follows:
 \begin{itemize}
-\item One institution with information and knowledge pools.
-\item 10 gatherer/consumer agents who are members of the institution.
-\item One analyst agent providing knowledge for the institution.
-\item One initiator agent managing the institution.
-\item One independent agent as a control benchmark. This agent has the same knowledge as the analyst, but only uses self-gathered information.
+\item Facility costs shared between \emph{consumer} and \emph{analyst} roles.
+\item Configurable fees to pay providers when their artifacts are appropriated. This fee is paid by the appropriators. These fees remain constant throughout the simulation.
 \end{itemize}
 
-\subsubsection{Facility Cost}
+We configure a population of agents as follows:
 
-Storing information and knowledge, and other infrastructure required for the institution will incur facility costs. We have two profiles to model facility costs:
 \begin{itemize}
-\item High sunk cost --- A high initial sunk cost (for infrastructure acquisition), followed by a lower fixed cost each time-step ($\mathtt{sunk\_cost}=50$, $\mathtt{fixed\_cost}=1$).
-\item High fixed cost --- No initial sunk cost, higher fixed cost ($\mathtt{sunk\_cost}=0$, $\mathtt{fixed\_cost}=2$).
+\item 10 \texttt{PlayerAgent}s in \emph{sustainable} mode and occupying \emph{gatherer} and \emph{consumer} roles. These agents are given no \texttt{Predictor} initially.
+\item One \texttt{NonPlayerAgent} in the \emph{analyst} role. This agent is given a \texttt{Predictor}.
+\item One \texttt{NonPlayerAgent} in the \emph{initiator} and \emph{manager} roles to perform institution administration tasks.
+\item One \texttt{PlayerAgent} with no roles in the institution and with the same \texttt{Predictor} as the analyst. This player acts as a benchmark for independent vs. cooperative play.
 \end{itemize}
 
-We are running simulations over 200 time-steps, so these profiles would correspond to a total incurred cost of 250 and 400 respectively.
+We run parameter sweeps to test investigate how the pool appropriation fees
+affect the evaluative criteria. We test the cost to appropriate an action from
+\texttt{Predictor} in the range $0-1$ in intervals of $0.1$, and the cost to
+appropriate \texttt{Measured} information in the range $0-0.5$ in $0.02$
+intervals. For each parameter set we simulate 200 time-steps. The simulation
+are deterministic, so we do not require repeats.
 
-\begin{figure}
-\includegraphics[width=\linewidth]{gfx/kc/facility1v2.pdf} 
-\caption{Cumulative agent utilities over time in basic centralised institution with high--sunk and high--fixed facility profiles.}\label{fig:facility1}
-\end{figure}
+We also alter environmental conditions, to create different scenarios, as follows:
 
-Figure~\ref{fig:facility1} shows the utilities in this scenario. In both cases the institution runs out of resources to pay for facilities after 50 timesteps, at which point the institution ceases to function. As the in-flow of utility into the system (to prosumers) is separate from where the facility is paid for (by the initiator) then the system cannot endure without the charity of the initiator. Therefore without exogenous income for this agent we require a way for prosumers to contribute to the facility costs.
-
-One method we can use is to have a subscription fee. This is a payment to the institution each timestep which one is occupying a certain role. The level of this fee is determined by the initiator who has the sole power to set its value. 
-
-\begin{figure}
-\includegraphics[width=\linewidth]{gfx/kc/facility2.pdf} 
-\caption{Cumulative agent utilities over time in centralised institution using subscription fees with high--sunk and high--fixed facility profiles.}\label{fig:facility2}
-\end{figure}
-
-Figure~\ref{fig:facility2} shows agent utilities once subscription fees are introduced. The rate dynamically adjusts to ensure that the institution breaks even and that the institution endures. Here we also see the benefit of the institution. Prosumer agents accrue over 7.5 times more than the independent control agent in each case due to having 10 times more data and only small additional overheads.
-
-\subsubsection{Compensating Analysts}
-
-Figures~\ref{fig:facility1}~\&~\ref{fig:facility2} from the previous section both show zero utility gained for the analyst agent. However are having to appropriate information and process it in order to generate the knowledge which they provision. Given that this knowledge enables a large increase in reward for the prosumer agents, analysts may expect some remuneration.
-
-This can be achieved by paying an analyst when knowledge is appropriated. Again the initiator can set the rate for this payment. Table~\ref{tab:analyst1} shows final utilities for agents when a fixed rate of 0.1 per appropriation is set.
-
-\begin{table}
-\centering
-\begin{tabular}{c|c||c|c}
-Facility Profile & Pay Analysts? & Prosumers & Analyst \\ 
-\hline \hline
-High sunk & no & 142 & 0 \\ 
-\hline 
-High sunk & yes & 127 & 157 \\ 
-\hline 
-High fixed & no & 128 & 0 \\ 
-\hline 
-High fixed & yes & 112 & 144 \\ 
-\end{tabular}
-\caption{Compensation of analysts}\label{tab:analyst1}
-\end{table} 
-
-\subsubsection{Compensating Gatherers}
-
-In the previous examples all prosumers always gather information, and always provision it, as there is no cost for them in this process. However in some cases there is likely to be some costs associated with gathering information. In turn this may cause some agents to `free-ride' by not gathering or provisioning information while still receiving the benefits of the institution. Again we can simply introduce a payment for provision or appropriation of this information.
-
-\begin{table}
-\centering
-\begin{tabular}{c|c|c||c|c|c}
-Facility Profile & Pay Gatherers? & No. Greedy & Compliant & Non-compliant & Analyst \\ 
-\hline \hline
-High sunk & no & 2 & 74 & 93 & 157 \\ 
-\hline 
-High sunk & no & 5 & -8 & -1 & -8 \\ 
-\hline
-High sunk & yes & 2 & 91 & 92 & -4 \\ 
-\hline 
-High sunk & yes & 5 & 92 & 91 & -4 \\ 
-\hline  
-High fixed & no & 2 & 61 & 81 & 144 \\ 
-\hline 
-High fixed & no & 5 & -8 & -10 & -2.5 \\ 
-\hline
-High fixed & yes & 2 & 67 & 64 & -4 \\ 
-\hline 
-High fixed & yes & 5 & 64 & 68 & -4 \\ 
-\end{tabular}
-\caption{Compensation of gatherers with measuring cost of 0.1}\label{tab:gatherers1}
-\end{table} 
-
-Table~\ref{tab:gatherers1} shows cumulative utility for compliant and non-compliant prosumers, and analysts when a measuring cost is introduced. Non-compliant prosumers will not generate information to provision if it is not profitable to do so (payment for provision less than measuring cost). The data shows that introducing a payment to gatherers reduces this non-compliant behaviour. However the knock-on effect is that it is more expensive for the analyst to operate, and in fact this agent cannot afford to appropriate all of the available information as before. This results in lower quality knowledge and less total utility generated by the system.
-
-This problem can be prevented by simply increasing the pay to the analyst for appropriations. Figure~\ref{fig:measuringCost} shows the average cumulative utilities for each agent group with three institution configurations:
 \begin{enumerate}
-\item Without payment to gatherers.
-\item With payment to gatherers.
-\item With payment to gatherers and increased payment to analyst.
+\item Measuring cost: $\{0, 0.1\}$,
+\item Facility costs: \emph{flexible} costs, where each provision and appropriation action costs $0.1$; and \emph{fixed} costs, where the facility costs a fixed fee of $2$ per time-step.
+\item Non-compliant agents: the number of the 10 \texttt{PlayerAgent}s who are in \emph{non-compliant} mode.
 \end{enumerate}
-Each configuration is tested with two and five non-compliant prosumers out of the ten total.
+
+\begin{table}
+\centering
+\caption{Conditions for static simulation scenarios.}\label{tab:scenarios}
+\begin{tabular}{c||c|c|c}
+Scenario & Facility cost & Measuring cost & Non-compliant agents \\
+\hline
+1 & flexible & 0 & 0 \\
+2 & flexible & 0.1 & 0 \\
+3 & fixed & 0.1 & 0 \\
+4 & flexible & 0.1 & 3 \\
+\end{tabular}
+\end{table}
+
+For each scenario we normalise the scores from the evaluative criteria
+in order to create an overall score which reflects the quality of a certain
+parameter set. Each criteria is expressed in a range between 0 and 1, where 1
+means that these parameters led to the best score a this criterion in a
+scenario, and a 0 is the worst. \autoref{tab:static0} shows some of the data
+from the first scenario.
+
+\begin{table}
+\centering
+\caption{Evaluation of institution configurations in scenario 1. Shows only best and worst five parameter combinations.}\label{tab:static0}
+\begin{tabular}{r|r||r|c|r|r|r||c}
+Meas. & Pred. & Total Utility & Endures? & Partic. & Efficiency & Equity & Total \\
+\hline
+0.22 & 0.3 & 1287 & Yes. & 100.0\% & 76.4\% & 0.03 & 0.997 \\
+0.32 & 0.4 & 1284 & Yes. & 100.0\% & 76.4\% & 0.03 & 0.996 \\
+0.0 & 0.1 & 1298 & Yes. & 100.0\% & 76.6\% & 0.09 & 0.995 \\
+0.44 & 0.5 & 1289 & Yes. & 100.0\% & 76.5\% & 0.07 & 0.995 \\
+0.12 & 0.2 & 1273 & Yes. & 100.0\% & 76.2\% & 0.02 & 0.995 \\
+\multicolumn{8}{c}{\ldots} \\
+0.16 & 0.0 & -17 & Yes. & 57.0\% & 0.0\% & 2.69 & 0.333 \\
+0.32 & 1.0 & -12 & Yes. & 57.0\% & 0.0\% & 2.7 & 0.332 \\
+0.12 & 0.0 & -14 & Yes. & 57.0\% & 0.0\% & 2.78 & 0.327 \\
+0.1 & 0.0 & -12 & Yes. & 57.0\% & 0.0\% & 2.85 & 0.322 \\
+0.08 & 0.0 & -7 & Yes. & 57.0\% & 0.0\% & 2.98 & 0.313 \\
+\end{tabular}
+\end{table}
+
+Using these normalised metrics we plot heatmaps to determine optimal
+configurations in each scenario. Note that as sustainability follows the same
+trend as participation standards. Also, in a single scenario the facility
+costs are fairly constant, thus total utility becomes the dominant factor in
+this criterion. Therefore we display only participation level, total utility
+and equity in these figures, however the other two criteria are also included
+in the total score, which is also displayed.
+
+\autoref{fig:static0} shows the heatmaps for the first scenario: flexible
+facility costs and no measuring cost. As can be seen also in
+\autoref{tab:static0}, there are several configurations which all give high
+scores. Firstly, the participation level graph shows that there are several
+viable configurations which will keep all agents participating in the
+institution, however comparing to the utility plot we see that several of
+these lead to a less optimal outcome. Equity can be seen to peak at several
+equilibria when the correct balance between \texttt{Measured} and
+\texttt{Predictor} fees is achieved. When the criteria are aggregated into a
+total score, equity seems to be a differentiating factor between the best
+performing configurations, causing those equilibria to be visible in the total
+score too.
 
 \begin{figure}
-\includegraphics[width=\linewidth]{gfx/kc/measuringCost1.pdf} 
-\caption{Average cumulative utilities for Compliant prosumer (C), Non-compliant prosumer (N) and Analyst groups under three institution configurations and with 2 and 5 N agents.}\label{fig:measuringCost}
+\includegraphics{gfx/kc/static_0.pdf} 
+\caption[Comparison of scores between configurations in scenario 1.]{Comparison of scores between configurations in scenario 1. Darker/higher is better.}\label{fig:static0}
 \end{figure}
 
-From the graph we can see that properly compensating the analyst allows for better knowledge to be generated.
+Introducing a measuring cost into the scenario significantly reduces the
+number of enduring configurations, as shown in \autoref{fig:static1}.
+Additionally, the optimal equilibria are slightly shifted compared to in the
+previous scenario.
+
+\begin{figure}
+\includegraphics{gfx/kc/static_1.pdf} 
+\caption[Comparison of scores between configurations in scenario 2.]{Comparison of scores between configurations in scenario 2. Darker/higher is better.}\label{fig:static1}
+\end{figure}
+
+When facility costs are set at a fixed rate, we see that the configurations
+which lead to endurance and high participation are further reduced, shown in
+\autoref{fig:static_highfixed_1}. However, the facilities are only marginally
+dearer overall, as we can see from the efficiency given in
+\autoref{tab:staticfixed1}.
+
+\begin{table}
+\centering
+\caption{Evaluation of simulation performance in scenario 3. Shows only best ten parameter combinations.}\label{tab:staticfixed1}
+\begin{tabular}{r|r||r|c|r|r|r||c}
+Meas. & Pred. & Total Utility & Endures? & Partic. & Efficiency & Equity & Total \\
+\hline
+0.32 & 0.4 & 1095 & Yes. & 100.0\% & 73.3\% & 0.07 & 0.998 \\
+0.44 & 0.5 & 1084 & Yes. & 100.0\% & 73.1\% & 0.03 & 0.997 \\
+0.42 & 0.5 & 1084 & Yes. & 100.0\% & 73.0\% & 0.06 & 0.996 \\
+0.12 & 0.2 & 1085 & Yes. & 100.0\% & 73.1\% & 0.07 & 0.996 \\
+0.0 & 0.1 & 1095 & Yes. & 100.0\% & 73.3\% & 0.12 & 0.995 \\
+0.02 & 0.1 & 1083 & Yes. & 100.0\% & 73.0\% & 0.06 & 0.995 \\
+0.24 & 0.3 & 1077 & Yes. & 100.0\% & 72.9\% & 0.04 & 0.995 \\
+0.4 & 0.5 & 1087 & Yes. & 100.0\% & 73.1\% & 0.11 & 0.994 \\
+0.46 & 0.5 & 1093 & Yes. & 100.0\% & 73.2\% & 0.14 & 0.994 \\
+0.22 & 0.3 & 1078 & Yes. & 100.0\% & 72.9\% & 0.07 & 0.994 \\
+\multicolumn{8}{c}{\ldots} \\
+\end{tabular}
+\end{table}
+
+\begin{figure}
+\includegraphics{gfx/kc/static_highfixed_1.pdf} 
+\caption[Comparison of scores between configurations in scenario 3.]{Comparison of scores between configurations in scenario 3. Darker/higher is better.}\label{fig:static_highfixed_1}
+\end{figure}
+
+Finally, we test the effect of the introduction of non-compliant agents into
+the system. \autoref{fig:static3nc} shows the results for a system with 3 non-
+compliant agents. Here participation levels and utility is reduced when the
+reward for provision of \texttt{Measured} artifacts is less than 0.1. This is
+due to the non-compliant agent behaviour to not measured when the reward is
+less than the cost.
+
+\begin{figure}
+\includegraphics{gfx/kc/static_1_3nc.pdf} 
+\caption[Comparison of scores between configurations in scenario 4 (3 non-compliant agents).]{Comparison of scores between configurations in scenario 4 (3 non-compliant agents). Darker/higher is better.}\label{fig:static3nc}
+\end{figure}
+
+From these experiments we see that, firstly, if the right balance between
+costs and benefits for agents in each role is not achieved, we will not get
+high participation levels. In the case when the \texttt{PlayerAgent}s' costs
+outweigh their rewards they will choose to stop appropriating predictions, and
+then resign their \emph{consumer} role. Similarly, if the cost of
+\texttt{Measured} artifacts is too high, the \emph{analyst} will no longer be
+able to afford to appropriate them all, resulting in a sub-optimal
+\texttt{Predictor}, and lower utility for everyone.
+
+Secondly, many configurations result in a near-optimal utility, however very
+few result in optimal equity. This is because optimal utility can be achieved
+simply by ensuring that all agents provision and appropriate as much as
+possible. This is a looser constraint that for equity, which must balance the
+allocation of utilities between roles. Optimal equity is only achieved when
+the exact balance between fees is achieved to make their utilities converge
+over time.
+
+Thirdly, the nature of facility costs can have a significant effect on the
+sustainability of the institution. We saw that with fixed costs sustainability
+was much more difficult to achieve. At the start of a simulation we find that
+utility is particularly scarce. With flexible institution costs, a reduction
+in institutional transactions, for example when agents cannot afford to
+appropriate, will result in a lower facility cost, giving the leeway required
+to raise enough utility to appropriate in the next time-step. When costs are
+fixed there is the opposite effect, causing struggling institutions to fail.
+This leads to the divergence in utilities shown in
+\autoref{fig:static_highfixed_1}, where configurations either succeed with
+high utility or fail. With dynamic costs we see a larger range of outcomes.
+
+Similarly, non-compliance affects the sustainability of the institution, as
+the introduction of free-riders reduces the efficiency of the institution.
+However, this free-riding can be easily corrected through the use of an
+incentive for the non-compliant agents to contribute. This incentive is also
+non-discriminatory, because compliant agents also receive it, and its cost can
+be easily offset through the cost of appropriating predictions. In
+\autoref{fig:static3nc} we see that once the \texttt{Measured} cost is over
+0.1 the system behaves as with no non-compliance.
+
+Finally, when looking at the difference between successful and unsuccessful simulations, we see that ???
+
+% This first set of experiments looks at the problem of provisioning an institution for the problem we have outlined. Despite having a simple game where we can seemingly trivially generate utility, getting together disparate agents to all contribute and keeping it sustainable over the long time requires negotiating several hurdles. 
+
+% We will see these hurdles as we follow the process of building a centralised institution for this problem. This institution has a single agent who acts as a manager for the institution and as complete control over institutional fluents.
+
+% The experimental setup is as follows:
+% \begin{itemize}
+% \item One institution with information and knowledge pools.
+% \item 10 gatherer/consumer agents who are members of the institution.
+% \item One analyst agent providing knowledge for the institution.
+% \item One initiator agent managing the institution.
+% \item One independent agent as a control benchmark. This agent has the same knowledge as the analyst, but only uses self-gathered information.
+% \end{itemize}
+
+% \subsubsection{Facility Cost}
+
+% Storing information and knowledge, and other infrastructure required for the institution will incur facility costs. We have two profiles to model facility costs:
+% \begin{itemize}
+% \item High sunk cost --- A high initial sunk cost (for infrastructure acquisition), followed by a lower fixed cost each time-step ($\mathtt{sunk\_cost}=50$, $\mathtt{fixed\_cost}=1$).
+% \item High fixed cost --- No initial sunk cost, higher fixed cost ($\mathtt{sunk\_cost}=0$, $\mathtt{fixed\_cost}=2$).
+% \end{itemize}
+
+% We are running simulations over 200 time-steps, so these profiles would correspond to a total incurred cost of 250 and 400 respectively.
+
+% \begin{figure}
+% \includegraphics[width=\linewidth]{gfx/kc/facility1v2.pdf} 
+% \caption{Cumulative agent utilities over time in basic centralised institution with high--sunk and high--fixed facility profiles.}\label{fig:facility1}
+% \end{figure}
+
+% Figure~\ref{fig:facility1} shows the utilities in this scenario. In both cases the institution runs out of resources to pay for facilities after 50 timesteps, at which point the institution ceases to function. As the in-flow of utility into the system (to prosumers) is separate from where the facility is paid for (by the initiator) then the system cannot endure without the charity of the initiator. Therefore without exogenous income for this agent we require a way for prosumers to contribute to the facility costs.
+
+% One method we can use is to have a subscription fee. This is a payment to the institution each timestep which one is occupying a certain role. The level of this fee is determined by the initiator who has the sole power to set its value. 
+
+% \begin{figure}
+% \includegraphics[width=\linewidth]{gfx/kc/facility2.pdf} 
+% \caption{Cumulative agent utilities over time in centralised institution using subscription fees with high--sunk and high--fixed facility profiles.}\label{fig:facility2}
+% \end{figure}
+
+% Figure~\ref{fig:facility2} shows agent utilities once subscription fees are introduced. The rate dynamically adjusts to ensure that the institution breaks even and that the institution endures. Here we also see the benefit of the institution. Prosumer agents accrue over 7.5 times more than the independent control agent in each case due to having 10 times more data and only small additional overheads.
+
+% \subsubsection{Compensating Analysts}
+
+% Figures~\ref{fig:facility1}~\&~\ref{fig:facility2} from the previous section both show zero utility gained for the analyst agent. However are having to appropriate information and process it in order to generate the knowledge which they provision. Given that this knowledge enables a large increase in reward for the prosumer agents, analysts may expect some remuneration.
+
+% This can be achieved by paying an analyst when knowledge is appropriated. Again the initiator can set the rate for this payment. Table~\ref{tab:analyst1} shows final utilities for agents when a fixed rate of 0.1 per appropriation is set.
+
+% \begin{table}
+% \centering
+% \begin{tabular}{c|c||c|c}
+% Facility Profile & Pay Analysts? & Prosumers & Analyst \\ 
+% \hline \hline
+% High sunk & no & 142 & 0 \\ 
+% \hline 
+% High sunk & yes & 127 & 157 \\ 
+% \hline 
+% High fixed & no & 128 & 0 \\ 
+% \hline 
+% High fixed & yes & 112 & 144 \\ 
+% \end{tabular}
+% \caption{Compensation of analysts}\label{tab:analyst1}
+% \end{table} 
+
+% \subsubsection{Compensating Gatherers}
+
+% In the previous examples all prosumers always gather information, and always provision it, as there is no cost for them in this process. However in some cases there is likely to be some costs associated with gathering information. In turn this may cause some agents to `free-ride' by not gathering or provisioning information while still receiving the benefits of the institution. Again we can simply introduce a payment for provision or appropriation of this information.
+
+% \begin{table}
+% \centering
+% \begin{tabular}{c|c|c||c|c|c}
+% Facility Profile & Pay Gatherers? & No. Greedy & Compliant & Non-compliant & Analyst \\ 
+% \hline \hline
+% High sunk & no & 2 & 74 & 93 & 157 \\ 
+% \hline 
+% High sunk & no & 5 & -8 & -1 & -8 \\ 
+% \hline
+% High sunk & yes & 2 & 91 & 92 & -4 \\ 
+% \hline 
+% High sunk & yes & 5 & 92 & 91 & -4 \\ 
+% \hline  
+% High fixed & no & 2 & 61 & 81 & 144 \\ 
+% \hline 
+% High fixed & no & 5 & -8 & -10 & -2.5 \\ 
+% \hline
+% High fixed & yes & 2 & 67 & 64 & -4 \\ 
+% \hline 
+% High fixed & yes & 5 & 64 & 68 & -4 \\ 
+% \end{tabular}
+% \caption{Compensation of gatherers with measuring cost of 0.1}\label{tab:gatherers1}
+% \end{table} 
+
+% Table~\ref{tab:gatherers1} shows cumulative utility for compliant and non-compliant prosumers, and analysts when a measuring cost is introduced. Non-compliant prosumers will not generate information to provision if it is not profitable to do so (payment for provision less than measuring cost). The data shows that introducing a payment to gatherers reduces this non-compliant behaviour. However the knock-on effect is that it is more expensive for the analyst to operate, and in fact this agent cannot afford to appropriate all of the available information as before. This results in lower quality knowledge and less total utility generated by the system.
+
+% This problem can be prevented by simply increasing the pay to the analyst for appropriations. Figure~\ref{fig:measuringCost} shows the average cumulative utilities for each agent group with three institution configurations:
+% \begin{enumerate}
+% \item Without payment to gatherers.
+% \item With payment to gatherers.
+% \item With payment to gatherers and increased payment to analyst.
+% \end{enumerate}
+% Each configuration is tested with two and five non-compliant prosumers out of the ten total.
+
+% \begin{figure}
+% \includegraphics[width=\linewidth]{gfx/kc/measuringCost1.pdf} 
+% \caption{Average cumulative utilities for Compliant prosumer (C), Non-compliant prosumer (N) and Analyst groups under three institution configurations and with 2 and 5 N agents.}\label{fig:measuringCost}
+% \end{figure}
+
+% From the graph we can see that properly compensating the analyst allows for better knowledge to be generated.
 
 \subsection{Self-Organisation}
 
-We have seen in the previous section that we require several mechanisms in place to create an effective institution. Using static examples allows us to test certain situations, however for long-term robustness we require that these fluents, such as subscription fees, and provision and appropriate fees, can be changed over time to react to external and internal conditions. We also require that the agents in the system can do this themselves, without external supervision, so that the system is self-organised.
+We have seen in the previous experiments that we firstly require several
+mechanisms in place to successfully provision an enduring and efficient
+institution, and secondly the optimal configuration of this institution
+depends on several factors, including the cost of measuring utility, the cost
+of facilities, and the compliance level of the agents using the institution.
+In real-world scenarios this factors are unlikely to be static, thus a pre-
+selected equilibrium may become sub-optimal over time. Therefore we require
+that these parameters can be adjusted over time, and can use the institution's
+voting mechanism to do so.
 
-We do this by allowing these fluents to be changed by vote. Periodically agents are permitted to vote on the value of a fluent, and if the vote is decisive, the value is changed. With this method we can define three models of institutional governance:
+We test three different approaches to self-organisation of the institution.
+Firstly, centralisation, where control is concentrated with one individual who
+determines the best course of action on behalf of the other users. Secondly,
+in a market situation agents act individually in their best interests, and the
+balance between supply and demand should result in an optimal equilibrium.
+Finally, we apply Ostrom's third principle and enfranchise all individuals who
+are affected by a rule in its modifications.
+
+We can implement all three of these paradigms through correct configuration of the institution. A centralised institution is created as follows:
+
 \begin{itemize}
-\item Centralised --- A single agent has the power to vote on all issues.
-\item Market --- Those who provision an artifact (i.e. supply) have the power to vote on its price.
-\item Principled --- Following Ostrom's third principle, those affected by an operational rule are permitted to vote on it: Anyone with provision or appropriation rights to a pool can vote on its fees.
+\item Facility costs paid via a subscription charged to \emph{consumers} and \emph{analysts}.
+\item Fees are used to incentivise provision of artifacts as before.
+\item Subscription and appropriation fees are set by the \emph{initiator} only.
 \end{itemize}
 
-\subsection{Centralised}
+Agents can create a market as follows:
 
-With centralised governance the initiator agent has control over subscription, gatherer pay, and analyst pay rates. Figure~\ref{fig:centralised1} shows a combination of:
 \begin{itemize}
-\item Setting subscription rates to cover facility costs.
-\item Setting a fair appropriation fee to compensate analysts.
-\item Setting a reward for provisions when there is a measuring costs to incentivise provisions.
+\item Each \texttt{PlayerAgent} has their own institution with a \texttt{Measured} pool. They are the sole agent occupying the \emph{gatherer} role, and thus the only one able to provision to this pool.
+\item Each \emph{analyst} agent has their own institution with a \texttt{Predictor} pool. They are the sole agent occupying the \emph{analyst} role.
+\item Each \texttt{PlayerAgent} occupies the role of \emph{consumer} in each of the analyst's institutions.
+\item Each \emph{analyst} occupies the role of \emph{analyst} in each of the \texttt{PlayerAgent}'s institutions.
+\item Each agent has individual control over the appropriation rates in their own institution.
 \end{itemize}
 
-\begin{figure}
-\includegraphics[width=\linewidth]{gfx/kc/centralised1.pdf} 
-\caption{Cumulative utility of agent groups over time with centralised governance, and zero and 0.1 measuring cost. Facility profile is high fixed.}\label{fig:centralised1}
-\end{figure}
+This mimics a market as each producer has control over the price of their goods, and all consumers can choose who to purchase from.
 
-\subsubsection{Market}
+Finally, collective governance is achieve with the same configuration as for centralised, except we enfranchise all agents who pay or receive a fee in the vote over its value. Thus we have the following:
 
-To model a basic market scenario we allow artifact suppliers to vote on the appropriation fee for their wares. Facility costs are shared by all agents.
+\begin{itemize}
+\item \emph{consumers} and \emph{analysts} may vote on subscription fees,
+\item \emph{gatherers} and \emph{analysts} may vote on the cost of \texttt{Measured} artifacts,
+\item \emph{consumers} and \emph{analysts} may vote on the cost of \texttt{Predictor} artifacts.
+\end{itemize}
 
-Figure~\ref{fig:market1} shows that the market is less efficient and robust than centralised governance. This is largely due to difficulties in the early stages of the simulation. Both analysts and prosumers are struggling to make a profit, and so raise their prices. This, in turn, means that analysts cannot afford to appropriate all available information, leading to worse knowledge for the prosumers. This effect is even more pronounced when the introduction of measuring costs further increase the scarcity of utility at the start of the simulation.
+In each of these scenarios votes may be called periodically by an empowered
+agent. For these simulations we compel these agents to do so regularly, such
+that he cannot prevent a change by simply not calling any votes. We do this
+with a rule which creates an obligation to open a ballot every ten time-steps.
+This is accompanied by a  rule which ensures that the ballot is also closed in
+a timely manner. These rules are shown in \autoref{lst:periodicballot}.
 
-\begin{figure}
-\includegraphics[width=\linewidth]{gfx/kc/market1.pdf} 
-\caption{Cumulative utility of agent groups over time with a market, and zero and 0.1 measuring cost. Facility profile is high fixed.}\label{fig:market1}
-\end{figure}
+\begin{drools}[label=lst:periodicballot,caption=Rules to force opening and closing of ballots]
+rule "Force periodic vote"
+	when
+		T(t % 10 == 1)
+		$issue : Issue($cfv : cfvRoles, $i : inst)
+		RoleOf($a : actor, inst == $i, $cfv contains role)
+	then
+		OpenBallot act = new OpenBallot($a, $i, $issue);
+		insert( new Obl($a, act) );
+end
+rule "Close opened ballot"
+	when
+		T($t : t)
+		OpenBallot(t < $t, $issue : issue, $i : inst, $a : actor)
+		$b : Ballot( issue == $issue, status == Ballot.Status.OPEN )
+	then
+		CloseBallot act = new CloseBallot($a, $i, $b);
+		insert( new Obl($a, act) );
+end//$
+\end{drools}
 
-\subsubsection{Principled}
+% We have seen in the previous section that we require several mechanisms in place to create an effective institution. Using static examples allows us to test certain situations, however for long-term robustness we require that these fluents, such as subscription fees, and provision and appropriate fees, can be changed over time to react to external and internal conditions. We also require that the agents in the system can do this themselves, without external supervision, so that the system is self-organised.
 
-Under this governance scheme both analysts and prosumers can vote on appropriation rates for artifacts and a subscription fee for the institution. In order to prevent these votes being biased towards group, the ballot is weighted such that each group has an equal weighting across all its voters. Thus the vote represents a compromise across the preferences of the two groups.
+% We do this by allowing these fluents to be changed by vote. Periodically agents are permitted to vote on the value of a fluent, and if the vote is decisive, the value is changed. With this method we can define three models of institutional governance:
+% \begin{itemize}
+% \item Centralised --- A single agent has the power to vote on all issues.
+% \item Market --- Those who provision an artifact (\ie supply) have the power to vote on its price.
+% \item Principled --- Following Ostrom's third principle, those affected by an operational rule are permitted to vote on it: Anyone with provision or appropriation rights to a pool can vote on its fees.
+% \end{itemize}
 
-Figure~\ref{fig:principled1} shows that this governance functions comparably to centralised in compensating agents.
+\subsubsection*{Comparison of paradigms}
 
-\begin{figure}
-\includegraphics[width=\linewidth]{gfx/kc/principled.pdf} 
-\caption{Cumulative utility of agent groups over time with collective governance according to Ostrom's third principle, and zero and 0.1 measuring cost. Facility profile is high fixed.}\label{fig:principled1}
-\end{figure}
+We start by testing these paradigms under the same four scenarios as in the
+previous experiments (described in \autoref{tab:scenarios}). This is to test
+that the organisational configuration is capable of finding an appropriate
+equilibrium under these static conditions.
 
-\subsection{Comparison of institutional paradigms}
 
-We will not compare the three institutional paradigms with respect to the effect that malicious agent strategies can have on the institution.
+
+% With centralised governance the initiator agent has control over subscription, gatherer pay, and analyst pay rates. Figure~\ref{fig:centralised1} shows a combination of:
+% \begin{itemize}
+% \item Setting subscription rates to cover facility costs.
+% \item Setting a fair appropriation fee to compensate analysts.
+% \item Setting a reward for provisions when there is a measuring costs to incentivise provisions.
+% \end{itemize}
+
+% \begin{figure}
+% \includegraphics[width=\linewidth]{gfx/kc/centralised1.pdf} 
+% \caption{Cumulative utility of agent groups over time with centralised governance, and zero and 0.1 measuring cost. Facility profile is high fixed.}\label{fig:centralised1}
+% \end{figure}
+
+% \subsubsection{Market}
+
+% To model a basic market scenario we allow artifact suppliers to vote on the appropriation fee for their wares. Facility costs are shared by all agents.
+
+% Figure~\ref{fig:market1} shows that the market is less efficient and robust than centralised governance. This is largely due to difficulties in the early stages of the simulation. Both analysts and prosumers are struggling to make a profit, and so raise their prices. This, in turn, means that analysts cannot afford to appropriate all available information, leading to worse knowledge for the prosumers. This effect is even more pronounced when the introduction of measuring costs further increase the scarcity of utility at the start of the simulation.
+
+% \begin{figure}
+% \includegraphics[width=\linewidth]{gfx/kc/market1.pdf} 
+% \caption{Cumulative utility of agent groups over time with a market, and zero and 0.1 measuring cost. Facility profile is high fixed.}\label{fig:market1}
+% \end{figure}
+
+% \subsubsection{Principled}
+
+% Under this governance scheme both analysts and prosumers can vote on appropriation rates for artifacts and a subscription fee for the institution. In order to prevent these votes being biased towards group, the ballot is weighted such that each group has an equal weighting across all its voters. Thus the vote represents a compromise across the preferences of the two groups.
+
+% Figure~\ref{fig:principled1} shows that this governance functions comparably to centralised in compensating agents.
+
+% \begin{figure}
+% \includegraphics[width=\linewidth]{gfx/kc/principled.pdf} 
+% \caption{Cumulative utility of agent groups over time with collective governance according to Ostrom's third principle, and zero and 0.1 measuring cost. Facility profile is high fixed.}\label{fig:principled1}
+% \end{figure}
+
+% \subsection{Comparison of institutional paradigms}
+
+% We will not compare the three institutional paradigms with respect to the effect that malicious agent strategies can have on the institution.
 
 \subsubsection{Individual Power}
 
