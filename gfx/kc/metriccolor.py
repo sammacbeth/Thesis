@@ -4,42 +4,8 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-def rank(it):
-    r = 1
-    n = 1
-    last = None
-    for x in it:
-        if x == last:
-            yield r
-        else:
-            r = n
-            yield n
-        n = n + 1
-        last = x
-def proportion(it):
-    best = None
-    for x in it:
-        if best == None:
-            best = x
-        if x > best:
-            yield x / best
-        else:
-            yield x / best
-def rankSimulations(e1, rankFn = rank, ascending=True):
-    rankings = []
-    for a in [('totalut', False), ('endures', False), ('participation', False), ('equity', False)]:
-        sort = e1.sort(a[0], ascending=a[1])
-        rankings.append(pd.DataFrame({a[0]: list(rankFn(sort[a[0]]))}, index=sort.index))
-    #sort = e1.sort('equity', ascending=True)
-    #equity = pd.DataFrame({'equity': list(proportion(sort['equity']))},index=sort.index)
-    #equity['equity'] = max(equity['equity']) - equity['equity']
-    #rankings.append(pd.DataFrame({'equity': list(proportion(equity.sort('equity', ascending=False)['equity']))},index=equity.index))
-    r = pd.concat(rankings, axis=1)
-    #['equity'] = 1 - list(proportion(r.sort('equity').equity))
-    r['totals'] = r.apply(np.mean, axis=1)
-    return r.sort('totals', ascending=ascending)
 def heatmaps(e1):
-    r = rankSimulations(e1, rankFn=proportion, ascending=False)
+    r = utils.rankSimulations(e1, rankFn=utils.proportion, ascending=False)
 
     #figsize(14,10)
     #fig, axes = plt.subplots(1,3)
