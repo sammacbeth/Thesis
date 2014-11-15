@@ -343,3 +343,9 @@
 % Absolute positioning for images ( notably Imperial College Logo on main page)
 \usepackage[absolute]{textpos}
 \usepackage{epstopdf}
+
+%% Algorithms
+\usepackage[boxed]{algorithm2e}
+\newcommand*{\noaddvspace}{\renewcommand*{\addvspace}[1]{}}
+\addtocontents{loa}{\protect\noaddvspace}
+%\renewcommand*{\thealgocf}{Algorithm~\arabic{algocf}}

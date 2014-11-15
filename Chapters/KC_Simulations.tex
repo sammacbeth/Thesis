@@ -10,7 +10,7 @@ common-pool resources we can improve the outcomes for agents in this system.
 We first describe our model of participatory sensing, which approximates a
 participatory sensing campaign as a reinforcement learning problem. This
 approximation allows us to abstract the details of individual campaigns and
-simply reason able where utility is accrued in the system. We then describe
+simply reason about where utility is accrued in the system. We then describe
 the implementation of this system using the Presage2 platform, which we have
 described in \autoref{ch:presage}. We then describe our implementation of the
 provision and appropriation system outlined in \autoref{sec:iad} using the
@@ -544,7 +544,132 @@ appropriate from the preferred \texttt{Predictor}.
 
 \subsubsection*{Voting}
 
-Finally, agents' \texttt{VoteBehaviour} specifies how they will vote when they are empowered to vote on a ballot. 
+Finally, agents' \texttt{VoteBehaviour} specifies how they will vote when they
+are empowered to vote on a ballot. It has modules for each ballot they may
+vote on. Agents are given limited information with which to decide how to
+vote. They do not have information about how other agents are performing, and
+therefore must decide based on purley their own performance and operating mode. The exception to
+this rule is that they can also see the public information of the institution
+in order to judge how to set subscription fees. 
+
+In our institution implemented we gave two issues we may have collective
+choice on, subscription fees and appropriation fees. We have separate voting
+behaviour for each. Both votes are done by preference list, where the
+candidates are possible absolute values for these fees.
+
+Firstly, the subscription fee vote strategy varies based on the agent's
+operating mode, and whether they occupy the role of \emph{initiator} or not:
+
+\begin{itemize}
+\item If the agent is compliant, they look at the current profit margin of the institution and chose a subscription value which will lead to the institution breaking even. Preferences are chosen by calculating a projected balance for the institution in the future, based on current conditions.
+\item If the agent is non-compliant and is in the \emph{initiator} role, they aim to extract a high fee to make the institution profitable while not do high as to make other agents leave their roles.
+\item If the agent is non-compliant and must pay the fee, they vote for the lowest possible fee.
+\end{itemize}
+
+The implementation of these strategies is shown in \autoref{alg:subvote}.
+
+\begin{algorithm}
+	\SetKwFunction{Map}{map}\SetKwFunction{Abs}{abs}
+	\SetKwFunction{Sorted}{sorted}\SetKwFunction{Zip}{zip}
+
+	currentFee $\leftarrow$ Current subscription fee \\
+	profit $\leftarrow$ Current Institution profit \\
+	balance $\leftarrow$ Current Institution balance \\
+	S $\leftarrow$ Set of possible subscription fee choices \\
+	nPayers $\leftarrow$ Number of agents currently obligated to pay this fee \\
+	l $\leftarrow$ Time window over which to make balance estimation \\
+	\BlankLine
+	\Begin{
+	\uIf{profile == SUSTAINABLE}{
+	baseProfit $\leftarrow$ profit - currentFee * nPayers \\
+	\ForEach{f in S}{
+		projections[f] $\leftarrow$ \Abs{balance + l * (baseProfit + f * nPayers)}
+	}
+	preferences $\leftarrow$ List of preferences from $S$, sorted by projections \\
+	}\ElseIf{profile == PROFITABLE}{
+		\uIf{initiator}{
+			targetSub $\leftarrow$ $0.7$ - measuringCost \\
+			\ForEach{f in S}{
+				diffs[f] $\leftarrow$ \Abs{targetSub - f}
+			}
+			preferences $\leftarrow$ List of preferences from $S$, sorted by diffs \\
+		}\ElseIf{payer}{
+			preferences $\leftarrow$ List of preferences from $S$, sorted in ascending order \\
+		}
+	}
+	\Return preferences
+	}
+	\caption{Subscription voting algorithm.}\label{alg:subvote}
+\end{algorithm}
+
+The appropriation fee voting strategy varies based on whether the agent is a
+beneficiary of the fee, or a payer, or if they are an initiator. There are
+also different strategies for sustainable and profitable operating modes.
+Generally, these strategies determine whether to increase, decrease, or keep
+the same subscription fee based on their current profit and a range where they
+deem their profit acceptable:
+
+\begin{itemize}
+\item Profitable beneficiaries chose to increase the fee if their profit is too low;
+\item Sustainable beneficiaries increase or decrease the fee depending on whether they are making too little or too much profit respectively, or keep it the same if it is within this range;
+\item Profitable payers simply vote for the minimum possible fee;
+\item Sustainable payers employ the reciprocal strategy to sustainable beneficiaries and;
+\item Initiators simply select an optimal balance between pool fees (which we determine from the first experiments).
+\end{itemize}
+
+These strategies are shown by \autoref{alg:appfeevote}.
+
+\begin{algorithm}
+	\SetKwFunction{Map}{map}\SetKwFunction{Abs}{abs}
+	\SetKwFunction{Sorted}{sorted}\SetKwFunction{Zip}{zip}
+
+	$c$ $\leftarrow$ Current appropriation fee \\
+	$S$ $\leftarrow$ Set of possible appropriation fee choices \\
+	$b$ $\leftarrow$ Current balance of the agent,
+	$p$ $\leftarrow$ Current profit made by the agent \\
+	\BlankLine
+	\Begin{
+	\uIf{beneficiary of fee}{
+		\Switch{profile}{
+			\Case{PROFITABLE}{
+				\lIf{$p < 0.1$}{$r \leftarrow c + 0.1$}
+				\lElseIf{$p < 1$}{$r \leftarrow c + 0.05$}
+				\lElse{r $\leftarrow$ c}
+				
+			}
+			\Case{SUSTAINABLE}{
+				\lIf{$p < -0.5$ or $b < 0$}{$r \leftarrow c + 0.1$}
+				\lElseIf{$p > 0.8$}{$r \leftarrow c - 0.05$}
+				\lElseIf{$p > 1$}{$r \leftarrow c - 0.1$}
+				\lElseIf{$p < 0.1$}{$r \leftarrow c + 0.05$}
+				\lElse{r $\leftarrow$ c}
+			}
+		}
+	}\ElseIf{payer of fee}{
+		\Switch{profile}{
+			\Case{PROFITABLE}{
+				\Return List of preferences from $S$, sorted in ascending order \\
+			}
+			\Case{SUSTAINABLE}{
+				\lIf{$p < -1$}{$r \leftarrow c - 0.1$}
+				\lElseIf{$p <= 0.1$}{$r \leftarrow c - 0.05$}
+				\lElseIf{$p > 1$}{$r \leftarrow c + 0.05$}
+				\lElseIf{$p > 2$}{$r \leftarrow c + 0.1$}
+				\lElse{r $\leftarrow$ c}}
+		}
+	}\ElseIf{initiator}{
+		\lIf{measuredPool}{$r \leftarrow \m{measuringCost}$}
+		\lElse{$r \leftarrow 0.075 + (9 * \m{measuringCost} / 10)$}
+	}
+	\ForEach{f in S}{
+		$d[f]$ $\leftarrow$ \Abs{r - f}
+	}
+	preferences $\leftarrow$ List of preferences from $S$, sorted by $d$ \\
+	\Return{preferences}
+	}
+	\caption{Appropriation fee voting algorithm.}\label{alg:appfeevote}
+\end{algorithm}
+
 % In self-org or here?
 
 \subsubsection*{Behavioural Composition}
@@ -699,17 +824,17 @@ from the first scenario.
 \begin{tabular}{r|r||r|c|r|r|r||c}
 Meas. & Pred. & Total Utility & Endures? & Partic. & Efficiency & Equity & Total \\
 \hline
-0.22 & 0.3 & 1287 & Yes. & 100.0\% & 76.4\% & 0.03 & 0.997 \\
-0.32 & 0.4 & 1284 & Yes. & 100.0\% & 76.4\% & 0.03 & 0.996 \\
-0.0 & 0.1 & 1298 & Yes. & 100.0\% & 76.6\% & 0.09 & 0.995 \\
-0.44 & 0.5 & 1289 & Yes. & 100.0\% & 76.5\% & 0.07 & 0.995 \\
-0.12 & 0.2 & 1273 & Yes. & 100.0\% & 76.2\% & 0.02 & 0.995 \\
+0.22 & 0.3 & 1287 & Yes. & 100.0\% & 76.4\% & 0.97 & 0.996 \\
+0.12 & 0.2 & 1273 & Yes. & 100.0\% & 76.2\% & 0.97 & 0.994 \\
+0.32 & 0.4 & 1284 & Yes. & 100.0\% & 76.4\% & 0.96 & 0.994 \\
+0.02 & 0.1 & 1265 & Yes. & 100.0\% & 76.1\% & 0.97 & 0.994 \\
+0.42 & 0.5 & 1274 & Yes. & 100.0\% & 76.2\% & 0.95 & 0.990 \\
 \multicolumn{8}{c}{\ldots} \\
-0.16 & 0.0 & -17 & Yes. & 57.0\% & 0.0\% & 2.69 & 0.333 \\
-0.32 & 1.0 & -12 & Yes. & 57.0\% & 0.0\% & 2.7 & 0.332 \\
-0.12 & 0.0 & -14 & Yes. & 57.0\% & 0.0\% & 2.78 & 0.327 \\
-0.1 & 0.0 & -12 & Yes. & 57.0\% & 0.0\% & 2.85 & 0.322 \\
-0.08 & 0.0 & -7 & Yes. & 57.0\% & 0.0\% & 2.98 & 0.313 \\
+0.0 & 0.8 & -44 & Yes. & 13.0\% & 0.0\% & 0.0 & 0.274 \\
+0.0 & 0.7 & -44 & Yes. & 13.0\% & 0.0\% & 0.0 & 0.274 \\
+0.0 & 0.4 & -44 & Yes. & 13.0\% & 0.0\% & 0.0 & 0.274 \\
+0.0 & 0.6 & -45 & Yes. & 13.0\% & 0.0\% & 0.0 & 0.274 \\
+0.0 & 0.5 & -45 & Yes. & 13.0\% & 0.0\% & 0.0 & 0.274 \\
 \end{tabular}
 \end{table}
 
@@ -761,16 +886,16 @@ dearer overall, as we can see from the efficiency given in
 \begin{tabular}{r|r||r|c|r|r|r||c}
 Meas. & Pred. & Total Utility & Endures? & Partic. & Efficiency & Equity & Total \\
 \hline
-0.32 & 0.4 & 1095 & Yes. & 100.0\% & 73.3\% & 0.07 & 0.998 \\
-0.44 & 0.5 & 1084 & Yes. & 100.0\% & 73.1\% & 0.03 & 0.997 \\
-0.42 & 0.5 & 1084 & Yes. & 100.0\% & 73.0\% & 0.06 & 0.996 \\
-0.12 & 0.2 & 1085 & Yes. & 100.0\% & 73.1\% & 0.07 & 0.996 \\
-0.0 & 0.1 & 1095 & Yes. & 100.0\% & 73.3\% & 0.12 & 0.995 \\
-0.02 & 0.1 & 1083 & Yes. & 100.0\% & 73.0\% & 0.06 & 0.995 \\
-0.24 & 0.3 & 1077 & Yes. & 100.0\% & 72.9\% & 0.04 & 0.995 \\
-0.4 & 0.5 & 1087 & Yes. & 100.0\% & 73.1\% & 0.11 & 0.994 \\
-0.46 & 0.5 & 1093 & Yes. & 100.0\% & 73.2\% & 0.14 & 0.994 \\
-0.22 & 0.3 & 1078 & Yes. & 100.0\% & 72.9\% & 0.07 & 0.994 \\
+0.44 & 0.5 & 1084 & Yes. & 100.0\% & 73.1\% & 0.96 & 0.997 \\
+0.34 & 0.4 & 1064 & Yes. & 100.0\% & 72.7\% & 0.97 & 0.993 \\
+0.24 & 0.3 & 1077 & Yes. & 100.0\% & 72.9\% & 0.95 & 0.992 \\
+0.14 & 0.2 & 1063 & Yes. & 100.0\% & 72.7\% & 0.95 & 0.989 \\
+0.04 & 0.1 & 1064 & Yes. & 100.0\% & 72.7\% & 0.94 & 0.987 \\
+0.42 & 0.5 & 1084 & Yes. & 100.0\% & 73.0\% & 0.91 & 0.982 \\
+0.02 & 0.1 & 1083 & Yes. & 100.0\% & 73.0\% & 0.9 & 0.98 \\
+0.32 & 0.4 & 1095 & Yes. & 100.0\% & 73.3\% & 0.89 & 0.979 \\
+0.12 & 0.2 & 1085 & Yes. & 100.0\% & 73.1\% & 0.9 & 0.979 \\
+0.22 & 0.3 & 1078 & Yes. & 100.0\% & 72.9\% & 0.88 & 0.974 \\
 \multicolumn{8}{c}{\ldots} \\
 \end{tabular}
 \end{table}
@@ -986,12 +1111,20 @@ Finally, collective governance is achieve with the same configuration as for cen
 \item \emph{consumers} and \emph{analysts} may vote on the cost of \texttt{Predictor} artifacts.
 \end{itemize}
 
+Note that as populations in each role are uneven, we weight votes in order
+that each group has equal voting power. For example, when there is one analyst
+agent, the weight of his vote is increase such that it is equal to that of all
+of the prosumers combined. This prevents his choice being drowned out by the
+majority role.
+
 In each of these scenarios votes may be called periodically by an empowered
 agent. For these simulations we compel these agents to do so regularly, such
 that he cannot prevent a change by simply not calling any votes. We do this
 with a rule which creates an obligation to open a ballot every ten time-steps.
 This is accompanied by a  rule which ensures that the ballot is also closed in
 a timely manner. These rules are shown in \autoref{lst:periodicballot}.
+
+In all votes we determine winners using a Borda-count protocol. 
 
 \begin{drools}[label=lst:periodicballot,caption=Rules to force opening and closing of ballots]
 rule "Force periodic vote"
@@ -1030,7 +1163,50 @@ previous experiments (described in \autoref{tab:scenarios}). This is to test
 that the organisational configuration is capable of finding an appropriate
 equilibrium under these static conditions.
 
+\begin{table}
+\centering
+\caption{Evaluation of paradigms across simulation scenarios.}\label{tab:selforg}
+\begin{tabular}{r|l||r|c|r|r|r||c}
+Scen. & Paradigm & Utility & Endures? & Partic. & Eff. & Equity & Total \\
+\hline \hline
+1 & central & 1280 & Yes. & 100.0\% & 68.2\% & 0.88 & 1.0 \\
+1 & collective & 1278 & Yes. & 100.0\% & 68.2\% & 0.86 & 0.995 \\
+1 & market & 1247 & Yes. & 100.0\% & 67.6\% & 0.83 & 0.979 \\
+\hline
+2 & central & 1082 & Yes. & 100.0\% & 64.4\% & 0.85 & 0.999 \\
+2 & collective & 972 & Yes. & 100.0\% & 62.4\% & 0.85 & 0.975 \\
+2 & market & 943 & Yes. & 100.0\% & 61.2\% & 0.75 & 0.93 \\
+\hline
+3 & central & 1076 & Yes. & 100.0\% & 64.2\% & 0.85 & 1.0 \\
+3 & collective & 839 & Yes. & 100.0\% & 58.3\% & 0.74 & 0.912 \\
+3 & market & -231 & No. & 0.0\% & 0.0\% & 0.0 & -0.054 \\
+\hline
+4 & central & 1070 & Yes. & 100.0\% & 64.2\% & 0.86 & 1.0 \\
+4 & collective & 989 & Yes. & 100.0\% & 62.9\% & 0.82 & 0.971 \\
+4 & market & 967 & Yes. & 100.0\% & 62.0\% & 0.2 & 0.785 \\
+\end{tabular}
+\end{table}
 
+From the results, in \autoref{tab:selforg}, we see that centralised control
+performs the best in all four scenarios. This is as expected, under this
+paradigm \emph{initiator} sets fees in the best interests of the institution,
+which in this case leads to an optimal outcome. The collective voting paradigm
+performs closely to centralised, being slightly less efficiency in the more
+resource constrained scenarios. Finally, the market approach performs equally
+well in the first two scenarios. However, in scenario 3, with high fixed costs
+for utilities, it fails to endure. Additionally, in scenario 4, with three
+non-compliant agents, overall utility accrued is close to that of the others,
+but equity is significantly reduced.
+
+The failure of the market in scenario 3 is expected. As each individual has
+their own facility in a market, having high fixed costs incurs an impossibly
+high cost on the individuals. In the other two paradigms these costs are
+shared.
+
+The low equity in the market in the final scenario can be attributed to the
+non-compliant agents exploiting being able to set higher fees or free riding.
+In the first case they gain more utility at the expense of the analyst, and
+the latter the quality of predictions will be reduced for all.
 
 % With centralised governance the initiator agent has control over subscription, gatherer pay, and analyst pay rates. Figure~\ref{fig:centralised1} shows a combination of:
 % \begin{itemize}
@@ -1070,26 +1246,166 @@ equilibrium under these static conditions.
 
 % We will not compare the three institutional paradigms with respect to the effect that malicious agent strategies can have on the institution.
 
-\subsubsection{Individual Power}
+\subsubsection*{Individual Power}
 
-How much difference can one agent changing strategy make? Figure~\ref{fig:powerbar} shows the difference in final utilities when individual agent strategies are changed to greedy ones. 
+In our final experiment we test the effect of non-compliant actors on these
+institutions, and the individual benefit which can be accrued by pursuing a
+non-compliant strategy. If each individual can achieve a better outcome by
+switching to non-compliance then we have a Prisoner's Dilemma, and rational
+agents will cause a tragedy of the commons through non-compliance. 
 
-In a centralised regime only the initiator agent can affect the outcome, and he is able to extract significant utility for himself from the other participants. In the market-based case analysts are able to improve their score with more aggressive pricing, but prosumers are unable to benefit themselves - largely as too aggressive pricing causes the knowledge they appropriate to be worse. Finally, with principled governance no individual is able to benefit themselves, however a selfish majority of prosumers can significantly impact the analyst's utility.
+We set up a system like Scenario 2, with flexible facility costs and a
+measuring cost of $0.1$. We run this scenario with all agents in compliant
+mode in order to get a baseline measurement for each organisational paradigm.
+We then test system performance with certain agents in non-compliant mode.
+Each of the following configurations were tested in turn:
+
+\begin{enumerate}
+\item Agent in the role of \emph{initiator}.
+\item Agent in the role of \emph{analyst}.
+\item Three prosumer agents (\emph{gatherer} and \emph{consumer}).
+\item Six prosumer agents.
+\item All (10) prosumer agents
+\end{enumerate}
 
 \begin{figure}
 \includegraphics{gfx/kc/powerbar.pdf} 
-\caption{Change in final utilities of agent groups when individuals change to a greedy strategy.}\label{fig:powerbar}
+\caption[Change in accrued utilities of agent groups with selected groups of non-compliant agents.]{Change in accrued utilities of agent groups with selected groups of non-compliant agents. Positive represents an increase in utility over the baseline, negative a reduction.}\label{fig:powerbar}
 \end{figure}
 
-From this we can conclude that both market and principled paradigms are much better at preventing self-interested individuals from exploiting the system, and also dis-incentivising non-cooperative behaviours.
+We then measure the change in utilities accrued over the simulation for each
+agent type between each configuration and the baseline. \autoref{fig:powerbar}
+shows this data, indicating a gain or loss of overall utility for each group.
+We see that in a centralised system the \emph{initiator} is able to extract
+significant benefit at the cost of the other agents, while these others have
+no impact on the system at all from their non-compliance. In both of the other
+systems the \emph{analyst} is able to achieve a significant improvement at a
+small cost to prosumers. Non-compliant prosumers are also able to improve at
+the cost of other agents in the market system, but this strategy fairs better
+when they are in the minority. When using Principle 3, there is no benefit to
+non-compliance as a prosumer.
+
+\begin{figure}
+\includegraphics{gfx/kc/powercolour.pdf} 
+\caption{Comparison of evaluative criteria under different organisational paradigms with different non-compliance agents.}\label{fig:powercolour}
+\end{figure}
+
+If we analyse these simulations further at a global level, using the
+evaluative criteria we can see other effects of the non-compliance.
+\autoref{fig:powercolour} shows this analysis. We can see that:
+
+\begin{itemize}
+\item The centralised solution is robust to non-compliance, always achieving full participation and optimal utility. However, when the \emph{initiator} is non compliant, equity is lost entirely.
+\item A market based solution regards profitable behaviour, but leads to inequity when agents exploit this. High levels of non-compliance lead to inefficiency and inequity, and therefore lower participation.
+\item Using Principle 3 performs better than the market in each case. However, as the number of non-compliance agents approaches a majority, equity and efficiency are lost.
+\end{itemize}
+
+While the additional utility which can be accrued by \emph{analysts} in market
+and Principle 3 -based systems reduces the equity overall, it is worth noting
+that the total system utility in these cases is actually higher than the
+baseline. The higher reward for the analyst from voting greedily allows him to
+appropriate more information early in the simulation, leading better knowledge
+as a result.
+
+Additionally, when applying Principle 3, we expect that when the non-compliant
+population approaches the majority, performance will suffer. Therefore the
+fall in participation when the majority of prosumers are non-compliant is
+expected. The voting mechanism relies on a majority working in the interests
+of sustainability, and when there is none the balance is skewed towards less
+optimal equilibria.
+
+What we see from these results, is that, of the three tested organisational
+paradigms, only with Principle 3 are do no agents have a non-compliance
+dilemma which can lead to an unsustainable outcome, or a significantly worse
+outcome for other agents. While centralised is immune to non-compliance by
+other agents, we have demonstrated the significant power of the
+\emph{initiator} to accrue significant reward for little input.
+
+We find that the results from self-organisation are very sensitive to the
+voting strategies of agents. Due to the reciprocity between roles we find that
+being `too greedy' often leads to the system failing to endure. Therefore,
+agents must vote conservatively, with the limited information they have
+available, in order to allow the agents they rely on to be able to provide for
+them. This makes some exploitation by non-compliant agents possible, as
+compliant agents will not respond provide their accrued utility is still
+within acceptable bounds.
 
 \section{Evaluation \& Conclusions}
 
+In this chapter we have described how a subset of participatory sensing
+problems can be modelled as reinforcement learning problems. We then described
+the implementation of a simulation model which combines an abstract
+reinforcement learning problem, an institution for provision and appropriation
+of information and knowledge, and agents who are able to interact with the
+former, using the institution in order to better exploit their combined
+information and knowledge. We then showed how the evaluative criteria for the
+knowledge commons, described in \autoref{sec:iad}, can generate objective
+criteria from this simulation model. We presented a series of experiments
+using this simulation model to show that the use of appropriate institutional
+rules can be used to manage an information and knowledge commons in this
+context.
+
+These experiments represent an initial study into the value of Ostrom's
+principles when applied to the knowledge commons and provision and
+appropriation systems. We also demonstrate the various factors which must be
+considered and accounted for in order to achieve an effective institution for
+participatory sensing. This is therefore a demonstration of the problem of
+supply of institutions which \citet{Ostrom1990} outlined.
+
+The results also offer a contribution towards this problem of supply. We
+demonstrate particular combinations of institutional rules and configurations
+we succeed, according to the evaluative criteria. This is not an exhaustive
+study of these permutations---that would be infeasible given the degrees of
+freedom available in the configuration of the model. However, the model itself
+can be a tool for institution designers to configure and test to find the
+correct configuration for their domain. In this way the model is a tool for
+applying Ostrom's second principle---that appropriation and provision rules
+should relate to the local conditions---allowing these rules to be tested
+before being deployed to a live system.
+
+We went on to show how collective choice can be used to create a self-
+organising knowledge commons for participatory sensing. Provided agents are
+able to make sufficiently intelligent voting decisions, we can shift some of
+the burden of finding sustainable equilibria from the supplier of the
+institution to the agents using it. By differentiating between who is
+empowered to participate in collective choice we can also represent different
+organisational paradigms, namely centralisation, market-based and collective
+governance.
+
+Our results with self-organisation validate our initial hypothesis from
+\autoref{ch:kc}---that centralisation in participatory sensing leads to
+exploitation of the data gatherers---as we showed that the \emph{initiator}
+agent is able to extract significant rewards. We also showed that utilising
+Ostrom's principles, specificially principle 3 in this situation, is able to
+prevent this use, and therefore that the knowledge commons approach works in
+participatory sensing.
+
+However, this model so far only implements the first three of Ostrom's
+principles. Most of these have been tested in isolation in other work, and
+could be also investigated within our model. The implementation of the agents
+and model here is such that we didn't need monitoring and sanctions in order
+to sustain the system. For example, we assumed that all agents will always
+perform the actions they are oliged to do. If this is not the case, then we
+require principles 4, 5 and 6---monitoring, graduated sanctions and conflict-
+resolution mechanisms---to detect this non-compliance, punish it, and to
+appeal when the former two are incorrectly applied. \citet{Pitt2012}
+demonstrate the use of these principles to counter such non-compliance.
+
+From this chapter we therefore have four main contributions:
 \begin{itemize}
-\item The problem of supply: Institutions are hard to set-up, particularly early on.
-\item Compensating desired roles: require self-organising mechanisms to incentivise desired behaviours.
-\item Concentration of power: Too much power given to an individual can allow them to unfairly influence others' outcomes.
-\item Centralised allows the \emph{initiator} agent to extract profit at will.
-\item Market: price competition generally cancels out and also mostly prevents concentrated power. NC agents kept interested by compensation for provisions.
-\item Collective: Robust to malicious agent strategies. Requires appropriate voting rules (weighted in this case).
+\item A general model of participatory sensing as a reinforcement learning problem.
+\item A specification and implementation of an institution for provision and appropriation of heterogeneous information and knowledge resources.
+\item An experimental validation of the problem of supply in this domain, and the pitfalls in centralisation of participatory sensing.
+\item An extension to the conclusion of \citet{Pitt2012}, that Ostrom's principles 2 \& 3 lead to robustness in environmental variation, to add that they can also be used to address non-compliance when used in this domain.
 \end{itemize}
+
+% Inst can be seperated from the model
+
+% \begin{itemize}
+% \item The problem of supply: Institutions are hard to set-up, particularly early on.
+% \item Compensating desired roles: require self-organising mechanisms to incentivise desired behaviours.
+% \item Concentration of power: Too much power given to an individual can allow them to unfairly influence others' outcomes.
+% \item Centralised allows the \emph{initiator} agent to extract profit at will.
+% \item Market: price competition generally cancels out and also mostly prevents concentrated power. NC agents kept interested by compensation for provisions.
+% \item Collective: Robust to malicious agent strategies. Requires appropriate voting rules (weighted in this case).
+% \end{itemize}
