@@ -1,3 +1,4 @@
+%!TEX root =../MacbethThesis.tex
 %*******************************************************
 % Table of Contents
 %*******************************************************
@@ -43,6 +44,15 @@
         
     \vspace*{8ex}
 %   \newpage
+
+    \refstepcounter{dummy}
+    %\addtocontents{loa}{\def\string\figurename{Algorithm}}
+    \pdfbookmark[1]{\listalgorithmcfname}{loa}
+    \listofalgorithms
+    %\addtocontents{loa}{\def\string\figurename{Algorithm}}
+    %\lstlistofalgorithms
+
+    \vspace*{8ex}
     
     %*******************************************************
     % List of Listings

@@ -10,14 +10,12 @@ common-pool resources we can improve the outcomes for agents in this system.
 We first describe our model of participatory sensing, which approximates a
 participatory sensing campaign as a reinforcement learning problem. This
 approximation allows us to abstract the details of individual campaigns and
-simply reason about where utility is accrued in the system. We then describe
-the implementation of this system using the Presage2 platform, which we have
-described in \autoref{ch:presage}. We then describe our implementation of the
-provision and appropriation system outlined in \autoref{sec:iad} using the
-Drools-EInst rule engine. We also describe the other institutional mechanisms
-to manage the resource during the simulation. We give a description of how
-agents play the reinforcement learning game and interact with the institution.
-Finally, we describe the results of our experiments with this model.
+simply reason about where utility is accrued in the system.  We describe the
+implementation of our simulation model, which combines an abstract
+reinforcement learning problem with the provision and appropriation system
+outlined in \autoref{sec:iad}. This model is implemented using Presage2, with
+institutional rules processed by Drools-EInst. We then describe the results of
+a series of experiments with this simulation model.
 
 \section{Modelling Participatory Sensing as a Reinforcement Learning Problem}
 
@@ -29,10 +27,12 @@ However, we have yet to describe what this knowledge is.
 In general, an algorithm which takes data as an input and gives information
 about the data as an output can be classified as a \emph{machine learning}
 algorithm. Data aggregation in participatory-sensing applications follows this
-pattern. This learning may be \emph{supervised}, where data is labelled by an
-expert and one aims to predict the value of the label given incomplete data,
-or \emph{unsupervised}, where one looks for an underlying pattern in
-unlabelled data.
+pattern. There are three main types of machine learning. \emph{Supervised
+learning} takes data which has been labelled by an expert, and aims to learn
+how to predict this label for unlabelled data; \emph{unsupervised learning}
+looks for patterns in unlabelled data; and in \emph{reinforcement learning}
+performs actions and receives feedback from an environment, and aims to chose
+actions which receive the highest rewards.
 
 Participatory sensing may deal with either of these types of machine learning.
 Using raw sensor readings of, for example, temperature, and using them to
@@ -40,10 +40,12 @@ predict future temperatures would be \emph{unsupervised} learning from sensing
 data. If these readings also had a user specified `comfort' level attached to
 them, then we could use \emph{supervised} learning to work out if comfort
 level is correlated with temperate and infer expected comfort levels from
-temperature data.
+temperature data. \emph{Reinforcement learning} would be used when the output
+of the sensing process informs actions to be taking in the same environment
+that sensing is done.
 
 When viewing participatory sensing as an agent-based system, we can see that
-information is generated as a result of an action: that of taking a sensor
+information is often generated as a result of an action: that of taking a sensor
 reading. This information, when combined with other information and processed
 by a suitable machine learning algorithm, leads to derived information with
 some additional value. In most cases, part of this value is offered back to
@@ -225,7 +227,6 @@ institution. With these principles, and the requirements of participatory sensin
 \item Clearly defined boundaries---The boundaries of the institution must be defined, not only who can contribute and withdraw resource units, but what resources are managed by the institution.
 \item Provision and appropriation rules---Appropriate rules for the conditions. In this case the incentivisation of particular user roles to encourage contribution is important.
 \item Collective-choice arrangements---That the rules can be modified by those who they affect.
-\item Simulation of Facility costs---The costs of the institution, so-called \emph{facility} costs, are a significant component of an information and knowledge commons.
 \end{itemize}
 
 The Drools-EInst provision and appropriation system module provides the basis
@@ -266,12 +267,12 @@ artifacts in the pool matching a query. The individual artifacts can then be
 appropriated. The same process applies to \texttt{Prune} actions for artifact
 removal.
 
-The running of the institution isn't free, however. We implement
+The running of the institution is not free, however. We implement
 \emph{facility} costs using four parameters:
 
 \begin{itemize}
-\item Sunk costs---This cost is a one-off cost incurred when the institution is created. This reflects initial hardware/software purchase etc.
-\item Fixed costs---This is a recurring cost each time-step. This would reflect long-term lease of equipment etc.
+\item Sunk costs---This cost is a one-off cost incurred when the institution is created. This reflects initial hardware/software purchase.
+\item Fixed costs---This is a recurring cost each time-step. This would reflect long-term lease of equipment or similar recurring costs.
 \item Marginal storage costs---This is a recurring cost proportional to the number of artifacts in the pool. For example renting storage space in a cloud data-centre.
 \item Marginal transaction costs---This is a recurring cost proportional to the number of provision/appropriation requests in the last time-step. This reflects the cost of processing power or bandwidth in a cloud computing environment.
 \end{itemize}
@@ -283,7 +284,7 @@ cease to operate.
 % sub fee + pay for provision/appropriation  
 
 In order to pay for facility costs the institution provides two mechanisms.
-The first is a simple cost sharing, there certain nominated roles share the
+The first is a simple cost sharing, where certain nominated roles share the
 cost of the outstanding institution invoices. This shares costs equally and
 ensures that, provided the agents can afford it, the institution's costs are
 covered. The other method is the use of a subscription fee on a per role
@@ -378,7 +379,7 @@ something which can be voted on, and how the voting is done in terms of:
 \item which agent roles are empowered to vote in a ballot on the issue,
 \item how votes should be cast (\eg single choice, preference list, rank order),
 \item what the valid choices are,
-\item how the winner is determined from the set of votes (\eg plurality, borda count etc.)
+\item how the winner is determined from the set of votes (\eg plurality, borda count, instant runoff)
 \end{itemize}
 
 The module provides the institutionalised powers based on this specification,
@@ -462,7 +463,7 @@ The agents in this simulation can be classified into two groups: those who are
 playing the reinforcement learning game, \texttt{PlayerAgent}s, and those who
 are not, \texttt{NonPlayerAgent}s. The former are the \emph{gatherers} and
 \emph{consumers} of information, while the latter constitute any other agent
-who is involved with the institution is some way. These two groups have
+who is involved with the institution in some way. These two groups have
 significant overlap in terms of their interactions with the institution,
 therefore we propose a behaviour-driven agent implementation where we define
 agents with a set of behaviours. These behaviours are independent, but may
@@ -503,7 +504,7 @@ disabled for the afore-mentioned gameplay behaviour.
 
 \subsubsection*{Institutional Behaviours}
 
-The rest of an agent's behaviours involve interaction with the institution.
+The remaining behaviours involve interaction with the institution.
 For several of these we are only interested in triggering the behaviour when
 the agent is empowered to do a particular action in an institution. For this
 we use a \texttt{PowerReactiveBehaviour}. This behaviour reacts to a
@@ -780,7 +781,7 @@ We configure a population of agents as follows:
 \item 10 \texttt{PlayerAgent}s in \emph{sustainable} mode and occupying \emph{gatherer} and \emph{consumer} roles. These agents are given no \texttt{Predictor} initially.
 \item One \texttt{NonPlayerAgent} in the \emph{analyst} role. This agent is given a \texttt{Predictor}.
 \item One \texttt{NonPlayerAgent} in the \emph{initiator} and \emph{manager} roles to perform institution administration tasks.
-\item One \texttt{PlayerAgent} with no roles in the institution and with the same \texttt{Predictor} as the analyst. This player acts as a benchmark for independent vs. cooperative play.
+%\item One \texttt{PlayerAgent} with no roles in the institution and with the same \texttt{Predictor} as the analyst. This player acts as a benchmark for independent vs. cooperative play.
 \end{itemize}
 
 We run parameter sweeps to test investigate how the pool appropriation fees
@@ -790,13 +791,21 @@ appropriate \texttt{Measured} information in the range $0-0.5$ in $0.02$
 intervals. For each parameter set we simulate 200 time-steps. The simulation
 are deterministic, so we do not require repeats.
 
-We also alter environmental conditions, to create different scenarios, as follows:
+We create a set of scenarios with varying environmental conditions, as shown
+in \autoref{tab:scenarios}. We have two facility cost profiles:
+\emph{flexible} costs, where each provision and appropriation action costs
+$0.1$; and \emph{fixed} costs, where the facility costs a fixed fee of $2$ per
+time-step. We also test with no cost for measuring, and with a small cost of
+$0.1$. Finally, we test the introduction of three \texttt{PlayerAgent}s who are in
+\emph{non-compliant} mode, replacing three of the compliant agents.
 
-\begin{enumerate}
-\item Measuring cost: $\{0, 0.1\}$,
-\item Facility costs: \emph{flexible} costs, where each provision and appropriation action costs $0.1$; and \emph{fixed} costs, where the facility costs a fixed fee of $2$ per time-step.
-\item Non-compliant agents: the number of the 10 \texttt{PlayerAgent}s who are in \emph{non-compliant} mode.
-\end{enumerate}
+% We also alter environmental conditions, to create different scenarios, as follows:
+
+% \begin{enumerate}
+% \item Measuring cost: $\{0, 0.1\}$,
+% \item Facility costs: \emph{flexible} costs, where each provision and appropriation action costs $0.1$; and \emph{fixed} costs, where the facility costs a fixed fee of $2$ per time-step.
+% \item Non-compliant agents: the number of the 10 \texttt{PlayerAgent}s who are in \emph{non-compliant} mode.
+% \end{enumerate}
 
 \begin{table}
 \centering
@@ -839,12 +848,12 @@ Meas. & Pred. & Total Utility & Endures? & Partic. & Efficiency & Equity & Total
 \end{table}
 
 Using these normalised metrics we plot heatmaps to determine optimal
-configurations in each scenario. Note that as sustainability follows the same
-trend as participation standards. Also, in a single scenario the facility
-costs are fairly constant, thus total utility becomes the dominant factor in
-this criterion. Therefore we display only participation level, total utility
-and equity in these figures, however the other two criteria are also included
-in the total score, which is also displayed.
+configurations in each scenario. Our visualisation only displays participation
+level, total utility, equity and the total over all 5 criteria.
+Sustainability follows the same trend as participation standards, and, as in a
+single scenario the facility costs are fairly constant, efficiency trends with
+total utility. Therefore this format still conveys most of the information about the
+5 criteria.
 
 \autoref{fig:static0} shows the heatmaps for the first scenario: flexible
 facility costs and no measuring cost. As can be seen also in
@@ -955,7 +964,7 @@ be easily offset through the cost of appropriating predictions. In
 \autoref{fig:static3nc} we see that once the \texttt{Measured} cost is over
 0.1 the system behaves as with no non-compliance.
 
-Finally, when looking at the difference between successful and unsuccessful simulations, we see that ???
+%Finally, when looking at the difference between successful and unsuccessful simulations, we see that ???
 
 % This first set of experiments looks at the problem of provisioning an institution for the problem we have outlined. Despite having a simple game where we can seemingly trivially generate utility, getting together disparate agents to all contribute and keeping it sustainable over the long time requires negotiating several hurdles. 
 
@@ -1312,7 +1321,9 @@ population approaches the majority, performance will suffer. Therefore the
 fall in participation when the majority of prosumers are non-compliant is
 expected. The voting mechanism relies on a majority working in the interests
 of sustainability, and when there is none the balance is skewed towards less
-optimal equilibria.
+optimal equilibria. This means that these results are rooted in the assumption
+of cooperation between agents. This can generally be assumed when interactions
+are repeated~\citep{Axelrod1984}.
 
 What we see from these results, is that, of the three tested organisational
 paradigms, only with Principle 3 are do no agents have a non-compliance
@@ -1330,7 +1341,7 @@ them. This makes some exploitation by non-compliant agents possible, as
 compliant agents will not respond provide their accrued utility is still
 within acceptable bounds.
 
-\section{Evaluation \& Conclusions}
+\section{Evaluation and Conclusions}
 
 In this chapter we have described how a subset of participatory sensing
 problems can be modelled as reinforcement learning problems. We then described

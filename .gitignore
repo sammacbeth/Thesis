@@ -2,10 +2,7 @@
 *.bbl
 *.blg
 *.brf
-*.lof
-*.log
-*.lol
-*.lot
+*.lo*
 MacbethThesis.pdf
 *.toc
 *.out
