@@ -1985,7 +1985,7 @@
 \long\def\algocf@latexcaption#1[#2]#3{% original definition of caption
   \par%
   \addcontentsline{\csname ext@#1\endcsname}{#1}%
-  {\protect Algorithm\numberline{\csname the#1\endcsname}{\ignorespaces #2}}%
+  {\protect \hspace*{-5mm} Algorithm \numberline{\csname the#1\endcsname}{\ignorespaces #2}}%
   \begingroup%
   \@parboxrestore%
   \if@minipage%
