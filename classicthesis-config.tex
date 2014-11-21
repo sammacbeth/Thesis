@@ -171,6 +171,19 @@
 		#1}
 	}
 	{}
+
+\lstnewenvironment{pseudocode}[1][]
+	{\lstset{
+		morekeywords={begin,end,if,foreach,do,then,else,switch,return,case},
+		mathescape=true,
+		morestring=[b]",
+		morecomment=[l]{//},
+		morecomment=[s]{/*}{*/},
+		float=*,
+		tabsize=3,
+		#1}
+	}
+	{}
 % ****************************************************************************************************    		   
 
 
