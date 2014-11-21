@@ -13,6 +13,9 @@ class db:
     def __exit__(self, type, value, traceback):
         self.conn.close()
 
+ncname = 'Greedy Prosumers'
+cname  = 'Sustainable Prosumers'
+
 ## Data extraction
 usedb = False
 if usedb == True:
@@ -34,15 +37,15 @@ if usedb == True:
         s.name,
         AVG(CASE WHEN g.actor LIKE 'i%' AND g.actor != 'ind' THEN g.account ELSE NULL END) AS Initiator,
         AVG(CASE WHEN g.actor LIKE 'a1' THEN g.account ELSE NULL END) AS Analyst,
-        AVG(CASE WHEN g.actor LIKE 'p%' THEN g.account ELSE NULL END) AS `Compliant Prosumers`,
-        AVG(CASE WHEN g.actor LIKE 'nc%' THEN g.account ELSE NULL END) AS `Non-Compliant Prosumers`
+        AVG(CASE WHEN g.actor LIKE 'p%' THEN g.account ELSE NULL END) AS `Sustainable Prosumers`,
+        AVG(CASE WHEN g.actor LIKE 'nc%' THEN g.account ELSE NULL END) AS `Greedy Prosumers`
         #SUM(CASE WHEN g.actor NOT LIKE 'ind' THEN g.account ELSE NULL END) / COUNT(DISTINCT s.id) AS Total
         FROM simulations AS s
         LEFT JOIN gameActions AS g ON g.simId = s.id AND g.time = 199
         WHERE s.id IN ({})
         GROUP BY s.name
         '''.format(','.join([str(g) for g in groupIds])), c, index_col='name')
-        df.loc[np.isnan(df['Non-Compliant Prosumers']),'Non-Compliant Prosumers'] = df.loc[np.isnan(df['Non-Compliant Prosumers']),'Compliant Prosumers']
+        df.loc[np.isnan(df[ncname]),ncname] = df.loc[np.isnan(df[ncname]),cname]
         
     df.to_csv('powerdata.csv')
 else:
@@ -60,9 +63,9 @@ paradigm = 'centralised'
 for name, group in labels:
     tb[name] = df.loc[group.format(paradigm)] - df.loc[base.format(paradigm)]
 tb = pd.DataFrame(tb).T
-tb.loc['Analyst','Non-Compliant Prosumers'] = 0
-tb.loc['Initiator','Non-Compliant Prosumers'] = 0
-tb.loc['All Prosumers','Compliant Prosumers'] = 0
+tb.loc['Analyst',ncname] = 0
+tb.loc['Initiator',ncname] = 0
+tb.loc['All Prosumers',cname] = 0
 central = pd.DataFrame([tb.loc[l[0],:] for l in labels], index=[l[0] for l in labels])
 
 tb = {}
@@ -70,9 +73,9 @@ paradigm = 'collective'
 for name, group in labels:
     tb[name] = df.loc[group.format(paradigm)] - df.loc[base.format(paradigm)]
 tb = pd.DataFrame(tb).T
-tb.loc['Analyst','Non-Compliant Prosumers'] = 0
-tb.loc['Initiator','Non-Compliant Prosumers'] = 0
-tb.loc['All Prosumers','Compliant Prosumers'] = 0
+tb.loc['Analyst',ncname] = 0
+tb.loc['Initiator',ncname] = 0
+tb.loc['All Prosumers',cname] = 0
 collect = pd.DataFrame([tb.loc[l[0],:] for l in labels], index=[l[0] for l in labels])
 
 base = 'basepower:1:{}:mc'
@@ -81,9 +84,9 @@ paradigm = 'fullmarket'
 for name, group in labels:
     tb[name] = df.loc[group.format(paradigm)] - df.loc[base.format(paradigm)]
 tb = pd.DataFrame(tb).T
-tb.loc['Analyst','Non-Compliant Prosumers'] = 0
-tb.loc['Initiator','Non-Compliant Prosumers'] = 0
-tb.loc['All Prosumers','Compliant Prosumers'] = 0
+tb.loc['Analyst',ncname] = 0
+tb.loc['Initiator',ncname] = 0
+tb.loc['All Prosumers',cname] = 0
 market = pd.DataFrame([tb.loc[l[0],:] for l in labels], index=[l[0] for l in labels])
 
 
@@ -101,6 +104,7 @@ labels = [l[0] for l in labels]
 
 fig, axes = plt.subplots(3,1, figsize=(5.27,5))
 ax = central.plot(kind='bar', ax=axes[0], title='Centralised', color=colours)
+#ax.grid(which='both')
 ax.set_xticklabels(['' for i in range(5)])
 bars = ax.patches
 for bar, hatch in zip(bars, hatches):
@@ -110,15 +114,15 @@ for bar, hatch in zip(bars, hatches):
 ax = market.plot(kind='bar', ax=axes[1], legend=False, title='Market', color=colours)
 ax.set_xticklabels(['' for i in range(5)])
 ax.set_ylim((-100,350))
-ax.set_ylabel('Change in utility accrued')
+ax.set_ylabel('Change in rewards accrued')
 bars = ax.patches
 for bar, hatch in zip(bars, hatches):
     bar.set_hatch(hatch)
 
-ax = collect.plot(kind='bar', ax=axes[2], legend=False, title='Principle 3', color=colours)
+ax = collect.plot(kind='bar', ax=axes[2], legend=False, title='Collective', color=colours)
 ax.set_xticklabels(labels)
 ax.set_ylim((-100,350))
-ax.set_xlabel('Non-compliant agents')
+ax.set_xlabel('Greedy agents')
 bars = ax.patches
 i = 0
 for bar, hatch in zip(bars, hatches):
