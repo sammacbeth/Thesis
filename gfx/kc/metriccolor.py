@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+#import mysql
 
 def heatmaps(e1):
     r = utils.rankSimulations(e1, rankFn=utils.proportion, ascending=False)
@@ -31,30 +32,35 @@ def heatmaps(e1):
         if i % 5 != 0:
             Rows[i] = ''
 
-    fig, axes = plt.subplots(2,2)
+    fig = plt.figure()
+    #ax = fig.add_subplot(111)
+    #fig, axes = plt.subplots(2,2)
+
+    xlabel = 'Cost of Prediction artifact'
+    ylabel = 'Cost of Measured artifact'
 
     plt.subplot(2,2,1)
     plt.pcolor(part, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
     plt.xticks(np.arange(0, len(Cols))+0.5, Cols)
     plt.yticks(np.arange(0, len(Rows))+0.5, Rows)
     plt.ylim(0,len(Rows))
-    plt.ylabel('Measured Cost')
-    plt.title('Participation Level')
+    #plt.ylabel('Measured Cost')
+    plt.title('Participation Standards')
 
     plt.subplot(2,2,2)
     im = plt.pcolor(ut, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
     plt.xticks(np.arange(0, len(Cols))+0.5, Cols)
     plt.yticks(np.arange(0, len(Rows))+0.5, Rows)
     plt.ylim(0,len(Rows))
-    plt.title('Total Utility')
+    plt.title('Total Rewards')
 
     plt.subplot(2,2,3)
     plt.pcolor(equi, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
     plt.xticks(np.arange(0, len(Cols))+0.5, Cols)
     plt.yticks(np.arange(0, len(Rows))+0.5, Rows)
     plt.ylim(0,len(Rows))
-    plt.xlabel('Prediction Cost')
-    plt.ylabel('Measured Cost')
+    #plt.xlabel('Prediction Cost')
+    #plt.ylabel('Measured Cost')
     plt.title('Equity')
     
     plt.subplot(2,2,4)
@@ -62,14 +68,17 @@ def heatmaps(e1):
     plt.xticks(np.arange(0, len(Cols))+0.5, Cols)
     plt.yticks(np.arange(0, len(Rows))+0.5, Rows)
     plt.ylim(0,len(Rows))
-    plt.xlabel('Prediction Cost')
+    #plt.xlabel('Prediction Cost')
     plt.title('Total Score')
 
     fig.subplots_adjust(right=0.8)
-    cbar_ax = fig.add_axes([0.90, 0.15, 0.03, 0.7])
+    cbar_ax = fig.add_axes([0.93, 0.15, 0.03, 0.7])
     fig.colorbar(im, cax=cbar_ax)
 
-args = {'db': 'kc_static3'}
+    fig.text(0.5, 0.02, xlabel, ha='center', va='center')
+    fig.text(0.02, 0.5, ylabel, ha='center', va='center', rotation='vertical')
+
+args = {'db': 'kc_static2'}
 
 w = 5.27
 h = 3.8
@@ -79,18 +88,22 @@ mpl.rc('text', usetex=True)
 mpl.rc('font', **{'family':'serif','serif':['Palatino'],'size': 8})
 mpl.rc('figure', figsize=(w,h))
 
+#conn = mysql.connect(args)
+#df = utils.evalCriteria(conn, range(2081))
+#conn.close()
 df = utils.evalCriteria(None, None)
 
 heatmaps(df[(df.facilityCost == 1) & (df.measuringCost == 0) & (df.nNcProsumers == 0)])
-plt.subplots_adjust(left=0.09,bottom=0.09,right=0.88,top=0.95,wspace=0.19,hspace=0.23)
+plt.subplots_adjust(left=0.08,bottom=0.09,right=0.90,top=0.95,wspace=0.19,hspace=0.27)
+#plt.show()
 plt.savefig('static_0.pdf')
 
 heatmaps(df[(df.facilityCost == 1) & (df.measuringCost == 0.1) & (df.nNcProsumers == 0)])
-plt.subplots_adjust(left=0.09,bottom=0.09,right=0.88,top=0.95,wspace=0.19,hspace=0.23)
+plt.subplots_adjust(left=0.08,bottom=0.09,right=0.90,top=0.95,wspace=0.19,hspace=0.27)
 plt.savefig('static_1.pdf')
 
 heatmaps(df[(df.facilityCost == 0) & (df.measuringCost == 0.1) & (df.nNcProsumers == 0)])
-plt.subplots_adjust(left=0.09,bottom=0.09,right=0.88,top=0.95,wspace=0.19,hspace=0.23)
+plt.subplots_adjust(left=0.08,bottom=0.09,right=0.90,top=0.95,wspace=0.19,hspace=0.27)
 plt.savefig('static_highfixed_1.pdf')
 
 # heatmaps(df[(df.facilityCost == 1) & (df.measuringCost == 0) & (df.nNcProsumers == 3)])
@@ -98,7 +111,7 @@ plt.savefig('static_highfixed_1.pdf')
 # plt.savefig('static_0_3nc.pdf')
 
 heatmaps(df[(df.facilityCost == 1) & (df.measuringCost == 0.1) & (df.nNcProsumers == 3)])
-plt.subplots_adjust(left=0.09,bottom=0.09,right=0.88,top=0.95,wspace=0.19,hspace=0.23)
+plt.subplots_adjust(left=0.08,bottom=0.09,right=0.90,top=0.95,wspace=0.19,hspace=0.27)
 plt.savefig('static_1_3nc.pdf')
 
 # heatmaps(df[(df.facilityCost == 1) & (df.measuringCost == 0) & (df.nNcProsumers == 6)])
@@ -106,5 +119,5 @@ plt.savefig('static_1_3nc.pdf')
 # plt.savefig('static_0_6nc.pdf')
 
 heatmaps(df[(df.facilityCost == 1) & (df.measuringCost == 0.1) & (df.nNcProsumers == 6)])
-plt.subplots_adjust(left=0.09,bottom=0.09,right=0.88,top=0.95,wspace=0.19,hspace=0.23)
+plt.subplots_adjust(left=0.08,bottom=0.09,right=0.90,top=0.95,wspace=0.19,hspace=0.27)
 plt.savefig('static_1_6nc.pdf')

@@ -50,6 +50,7 @@ def evalCriteria(conn, ids):
 		WHERE g.simId IN ({0}) AND g.time = 199 GROUP BY g.simId
 		'''
 	#df = psql.read_sql(query.format(','.join([str(x) for x in ids])), conn, index_col='simId')
+	#df.to_csv('staticdata.csv')
 	df = pd.read_csv('staticdata.csv')
 	df['efficiency'] = df['totalut'] / (df['totalut'] + df['facilityInvoices'])
 	df.loc[df['totalut'] < 0,'efficiency'] = 0
