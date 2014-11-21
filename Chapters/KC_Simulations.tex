@@ -961,7 +961,7 @@ $0.1$. Finally, we test the introduction of three \texttt{PlayerAgent}s who are 
 \centering
 \caption{Conditions for static simulation scenarios.}\label{tab:scenarios}
 \begin{tabular}{c||c|c|c}
-Scenario & Facility cost & Measuring cost & Non-compliant agents \\
+Scenario & Facility cost & Measuring cost & Greedy agents \\
 \hline
 1 & flexible & 0 & 0 \\
 2 & flexible & 0.1 & 0 \\
@@ -1050,8 +1050,7 @@ Meas. & Pred. & Rewards & Endures? & Partic. & Efficiency & Equity & Total \\
 \end{figure}
 
 Finally, we test the effect of the introduction of greedy agents into
-the system. \autoref{fig:static3nc} shows the results for a system with 3 non-
-compliant agents. Here participation levels and utility is reduced when the
+the system. \autoref{fig:static3nc} shows the results for a system with 3 greedy agents. Here participation levels and utility is reduced when the
 reward for provision of \texttt{Measured} artifacts is less than $0.1$. This is
 due to the greedy agent behaviour to not measure when the reward is
 less than the cost.
@@ -1367,7 +1366,7 @@ performs closely to centralised, being slightly less efficient in the more
 resource constrained scenarios. Finally, the market approach performs equally
 well in the first two scenarios. However, in scenario 3, with high fixed costs
 for utilities, it fails to endure. Additionally, in scenario 4, with three
-non-compliant agents, overall rewards accrued is close to that of the others,
+greedy agents, overall rewards accrued is close to that of the others,
 but equity is significantly reduced.
 
 The failure of the market in scenario 3 is expected. As each individual has
@@ -1376,7 +1375,7 @@ high cost on the individuals. In the other two paradigms these costs are
 shared.
 
 The low equity in the market in the final scenario can be attributed to the
-non-compliant agents exploiting being able to set higher fees or free riding.
+greedy agents exploiting being able to set higher fees or free riding.
 In the first case they gain more rewards at the expense of the analyst, and
 the latter the quality of predictions will be reduced for all.
 
@@ -1442,7 +1441,7 @@ In turn, we tested each of the follow groups in greedy mode:
 
 \begin{figure}
 \includegraphics{gfx/kc/powerbar.pdf} 
-\caption[Change in accrued utilities of agent groups with selected groups of non-compliant agents.]{Change in accrued utilities of agent groups with selected groups of non-compliant agents. Positive represents an increase in utility over the baseline, negative a reduction.}\label{fig:powerbar}
+\caption[Change in accrued rewards of agent groups with selected groups of greedy agents.]{Change in accrued rewards of agent groups with selected groups of greedy agents. Positive represents an increase in rewards over the baseline, negative a reduction.}\label{fig:powerbar}
 \end{figure}
 
 We then measure the change in utilities accrued over the simulation for each
