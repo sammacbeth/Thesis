@@ -8,8 +8,8 @@ governance can be deployed, in line with the theory of the knowledge commons,
 to lead to a more equitable outcome in these applications.
 
 In \autoref{ch:kc} we reviewed governance in participatory-sensing
-applications, finding predominantly centralisation and lack of user-
-enfranchisement. Having looked at the theory of the knowledge commons, from
+applications, finding predominantly centralisation and lack of 
+user-enfranchisement. Having looked at the theory of the knowledge commons, from
 the social sciences, we saw that similar systems based on the exchange of
 information and knowledge could be managed as a shared resource, and the
 principles defined by \citet{Ostrom1990} could be applied to increase the
@@ -90,7 +90,7 @@ assume some of the previous conclusions with respect to Ostrom's principles.
 \end{tabularx}
 \end{table}
 
-We showed how principle 1 can be addressed for a purely digital resource via
+We showed how Principle 1 can be addressed for a purely digital resource via
 role-based access control. This establishes institutionalised power to
 contribute and extract from the resource, effectively prevent outside access.
 This does, however, relying on the security of the authentication and
@@ -102,8 +102,8 @@ Our experiments in supplying institutions showed that provision and
 appropriation rules played an important role in providing robustness to
 environmental conditions. Therefore, with significantly different rules, and
 different resource characteristics we observed the same effect as in
-\citet{Pitt2012b} for principle 2. Furthermore, we also show that principle 2
-can mitigate non-compliance by making compliance a dominant strategy.
+\citet{Pitt2012b} for Principle 2. Furthermore, we also show that Principle 2
+can mitigate greed by making the dominant strategy a sustainable one.
 
 In participatory sensing we saw that covering the costs of measuring is an
 important aspect in ensuring all agents contribute, and providing a balance
@@ -121,15 +121,15 @@ property, as over time it will lead to greater levels of compliance and
 cooperation in a system as agents' strategies evolve. This property was
 demonstrated by \citet{Axelrod1984}---that agents will evolve a socially
 optimal strategy if they cannot extract individual benefit in the long run
-from non-compliance.
+from greedy decisions.
 
-We discussed principle 4 in \autoref{sec:iad}, noting that if institutional
+We discussed Principle 4 in \autoref{sec:iad}, noting that if institutional
 actions are logged, analysis of this log can detect institutional violations.
 Again, having a digital resource with access control largely prevents
 malicious extraction of it, which was the primary target of this principle in
 \possessivecite{Ostrom1990} work. However, other violations such as
 provisioning false information have yet to be explored here. We expect the
-approaches to monitoring given to be appropriate. % TODO monitoring techniques.
+approaches to monitoring given are likely to be appropriate. % TODO monitoring techniques.
 
 Principles 5 and 6 are general purpose and do not depend on the specifics of
 the system characteristics, beyond the specific sanctions given. Therefore we
@@ -151,7 +151,7 @@ resource provision is exogenous and appropriation is subtractive, and a
 provision and appropriation system, in which provision is endogenous and
 appropriation non-subtractive. The common-pool resource abstraction is
 applicable to both, but specifics of suitable rules vary with the types of
-actions performed and which patterns of interaction are to be encouraged, and
+actions performed, which patterns of interaction are to be encouraged, and
 which are to be discouraged. We find that the \ac{IAD} framework is a
 particularly useful tool for determining these specifics.
 
@@ -188,7 +188,7 @@ contributors. It provides a middle ground between the two extremes of
 information sharing---sharing nothing and sharing everything. The former is
 often the preferred strategy of self-interested agents, leading to socially
 sub-optimal results. The latter is an altruistic strategy which is likely to
-benefit those who don't share more than those who do. This middle ground gives
+benefit those who don't share, more than those who do. This middle ground gives
 incentives to ensure everybody contributes while still protecting the resource
 from external agents.
 
@@ -204,7 +204,7 @@ While there exist multiple simulation platforms for multi-agent systems and
 agent-based systems, we argued that an important, and oft ignored, feature of
 a platform is an environment-level specification of the observability of
 simulation state. This is an intermediary in between an agent and the raw
-state of the environment, which can limit access to state or modifying it.
+state of the environment, which can limit access to state or provide a modified view of it.
 This has two advantages:
 
 Firstly, it provides a level playing field for all agents. Particularly if
@@ -221,8 +221,7 @@ agents out of simulation and into deployment by rewriting these \acp{API} for
 interaction with the target environment.
 
 The development of Presage2 also goes some way to addressing a limitation in
-the previous Presage implementation, given by~\citet{Neville2011}. The noted
-scalability as an issue for their implementation, as a single-threaded
+the previous Presage implementation, given by~\citet{Neville2011}. Scalability is noted as an issue for their implementation, as a single-threaded
 program. Presage2 is designed to support multi-threaded simulation natively
 and seamlessly. However, we have yet to explore fully distributed simulation
 with the platform yet.
@@ -240,10 +239,10 @@ deductive reasoning with executable specifications, and we showed the
 application of this for electronic institutions.
 
 Our use of the Drools-EInst engine within a Presage2 simulation allows us to
-address two limitations given with previous work, of \citet{Schaumeier2013},
+address two limitations given in the previous work of \citet{Schaumeier2013},
 which used an electronic institution in a Presage2 simulation:
 
-Firstly, institutionalised power is only represented implicitly in simulations
+Firstly, institutionalised power is only represented implicitly in simulations,
 using conditions in the agent logic. This precludes full listings of when
 powers, permissions and obligations occur, requires that the agent know of the
 conditions which lead to its empowerment, and therefore also precludes dynamic
@@ -302,30 +301,31 @@ results. For example, we only explore a small subset of the possible facility co
 available in our model, which may lead to interesting results, however do not
 contribute towards our experimental agenda.
 
+\paragraph{Assumptions}
+
 \paragraph{Multiple Analysts}  In our simulations we use a single agent in the
 role of analyst. This leads to this agent having significant power over the
-institution, as shown in the results when this agent follows a non-compliant
+institution, as shown in the results when this agent follows a greedy
 strategy. To address this we may consider having multiple analysts, and this
 would be a desirable scenario, giving more choice and competition to agents.
 
 However, our simulation model is ill-equipped for this configuration. As
-agents appropriate a single prediction each time-step then adding another
-analyst will reduce the number of appropriations per analyst to half. This has
+agents appropriate a single prediction each time-step, adding another
+analyst will reduce the number of appropriations per analyst by half. This has
 the implication that, in order to achieve equity, as we have defined it, the
 institution must compensate analysts twice as much per prediction.
-Furthermore, if one analyst's predictions are `better' (\ie generate more
-utility) than the others, consumers will preferentially appropriate these
+Furthermore, if one analyst's predictions are `better' (\ie\ generate higher rewards) than the others, consumers will preferentially appropriate these
 predictions, and the second analyst brings no benefit to the institution.
 
 Therefore, this poses the question of whether it is worthwhile to have the
-redundancy of multiple analysts. With the simulated reinforcement learning
-game we use for our simulations it is not, however we see several cases when
+redundancy of multiple analysts. With the simulated reinforcement-learning
+problem we use for our simulations it is not, however we see several cases when
 it may be:
 
 \begin{itemize}
-\item If predictions are specific to an individual consumer, and the analyst has limited computational capacity to generate them, then additional analysts will increase the capacity of the system to handle consumer's requests.
+\item If predictions are specific to an individual consumer, and the analyst has limited computational capacity to generate them, then additional analysts will increase the capacity of the system to handle consumers' requests.
 \item If analysts' knowledge is comparatively better in different areas of the solution space then combined they will provide better knowledge than either would be able to individually.
-\item If analysts provision knowledge, then the combination of multiple analysts' knowledge could lead to better knowledge as a result. 
+\item If analysts provision knowledge, in the form of their prediction algorithm, then the combination of multiple analysts' knowledge could lead to better knowledge as a result. 
 \end{itemize}
 
 \paragraph{Reinforcement learning problem} We used a model of a reinforcement
@@ -336,11 +336,11 @@ non-determinism of reinforcement learning would have implications for equity,
 both coincidently, or possibly due to malicious activity. These learning
 algorithms rely on occasionally `exploring' unknown actions to find possible
 better alternatives. Most times these exploration actions will give lower
-utility than the current greedy action choice, therefore there is a question
+rewards than the current greedy strategy choice, therefore there is a question
 of how such actions should be allocated.
 
 If this allocation is done randomly, then an `unlucky' agent could end up with
-significantly lower utility purely through bad allocations. There are methods
+significantly lower accrued rewards purely through bad allocations. There are methods
 to make allocations fairly in such scenarios (cf.~\citet{Pitt2014}), however
 in this case the allocation is at the discretion of the predictor provider,
 and outside the boundaries of the institution. This opens the door for
@@ -352,24 +352,21 @@ be provided to those who chose to do exploration. With proper selection of the
 value of this incentive, this method would have the potential of finding an
 optimal exploration rate, while socialising the cost of exploration.
 
-\paragraph{Non-compliance} In our experiments non-compliant strategies were
-limited to limiting when the agent measures or provisions, and how they vote
-on issues within the institution. These strategies are not ones which break
-the rules of the institution, but instead aim to achieve an individual
-advantage or benefit within the scope of the institutional rules. There exists
-significant scope for \emph{institutional non-compliance} within our
+\paragraph{Non-compliance} 
+In our experiments we did not explore non-compliance with the institutional rules.
+There exists significant scope for \emph{institutional non-compliance} within our
 simulation. This encompasses performing actions without institutionalised
 power and/or permission to do so, and not performing an action which one is
 obliged to do.
 
-This kind of non-compliance has been explored in previous work, and principles
+This non-compliance has been explored in previous work, and principles
 4, 5 and 6 offer mechanisms to mitigate the effect of it. However, with the
 improved institutional representation offered by Drools-EInst allows for more
 subtle non-compliance than has been previously tested. For example, by solving
 the limitation of synchrony from previous work, we open up the possibility to
 examine the effect of delayed decision making on non-compliance. For example,
 if the chair of a vote expects the the result will not go in his favour, he
-can not declare the result---even though he is obliged to---in order to delay
+can decide to not declare the result---even though he is obliged to---in order to delay
 the negative effect on himself. Even though this non-compliance should be
 caught and punished, the delay may be sufficient to do damage to the
 institution.
@@ -395,9 +392,9 @@ data on this scale yet. Our current implementation stores all provisioned
 information in the rule engine, which in Drools is kept in memory for fast
 rule processing. This storage limitation can be overcome by a Drools feature
 which stores facts in a database, however this again becomes a bottleneck once
-the quantity of information expands beyond what can be kept on a single hard-
-disk drive. For truly big data, information warehousing and indexing will have
-to be offloaded to distributed databases.
+the quantity of information expands beyond what can be kept on a single hard-disk
+drive. For truly big data, information warehousing and indexing will have
+to be offloaded to distributed file-systems and databases.
 
 \paragraph{Exogenous Rewards} The simulation model assumes requires that
 gatherers are also consumers, in order that there is only one source of
@@ -419,6 +416,8 @@ administration. A criticism of centralisation in other fields is that it
 provides a single point of failure, or a bottleneck in a system. This system
 still has this flaw---all institutional state and rules are kept in the rule
 engine and executed in one place.
+
+\paragraph{It's a Model}
 
 \subsection{Presage2}
 
