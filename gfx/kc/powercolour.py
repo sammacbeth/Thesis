@@ -13,6 +13,9 @@ class db:
     def __exit__(self, type, value, traceback):
         self.conn.close()
 
+ncname = 'Greedy Prosumers'
+cname  = 'Sustainable Prosumers'
+
 ## Load data
 usedb = False
 if usedb == True:
@@ -115,7 +118,7 @@ mpl.rc('figure', figsize=(w,h))
 
 cmap = plt.get_cmap('pink_r')
 
-RowLabels = ['Centralised','Principle 3','Market']
+RowLabels = ['Centralised','Collective','Market']
 ColLabels = [l[0] for l in Cols]
 fig, axes = plt.subplots(2,2)
 
@@ -124,21 +127,21 @@ plt.pcolor(part, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
 plt.xticks(np.arange(0, len(Cols))+0.5, ['' for l in ColLabels])
 plt.yticks(np.arange(0, len(Rows))+0.5, RowLabels, rotation=45)
 plt.ylim(0,len(Rows))
-plt.title('Participation Level')
+plt.title('Participation Standards')
 
 plt.subplot(2,2,2)
 im = plt.pcolor(ut, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
 plt.xticks(np.arange(0, len(Cols))+0.5, ['' for l in ColLabels])
 plt.yticks(np.arange(0, len(Rows))+0.5, ['' for l in Rows])
 plt.ylim(0,len(Rows))
-plt.title('Total Utility')
+plt.title('Total Rewards')
 
 plt.subplot(2,2,3)
 plt.pcolor(equi, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
 plt.xticks(np.arange(0, len(Cols))+0.5, ColLabels, rotation=45)
 plt.yticks(np.arange(0, len(Rows))+0.5, RowLabels, rotation=45)
 plt.ylim(0,len(Rows))
-plt.xlabel('Non-compliant Agents')
+#plt.xlabel('Non-compliant Agents')
 plt.title('Equity')
 
 plt.subplot(2,2,4)
@@ -146,12 +149,14 @@ plt.pcolor(total, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
 plt.xticks(np.arange(0, len(Cols))+0.5, ColLabels, rotation=45)
 plt.yticks(np.arange(0, len(Rows))+0.5, ['' for l in Rows])
 plt.ylim(0,len(Rows))
-plt.xlabel('Non-compliant Agents')
+#plt.xlabel('Non-compliant Agents')
 plt.title('Total Score')
 
 fig.subplots_adjust(right=0.8)
-cbar_ax = fig.add_axes([0.91, 0.15, 0.03, 0.7])
+cbar_ax = fig.add_axes([0.93, 0.15, 0.03, 0.7])
 fig.colorbar(im, cax=cbar_ax)
 
-plt.subplots_adjust(left=0.12,bottom=0.18,right=0.88,top=0.93,wspace=0.08,hspace=0.20)
+fig.text(0.5, 0.02, 'Greedy Agents', ha='center', va='center')
+
+plt.subplots_adjust(left=0.10,bottom=0.16,right=0.90,top=0.94,wspace=0.10,hspace=0.22)
 plt.savefig('powercolour.pdf')
