@@ -2,7 +2,7 @@
 \acresetall
 \chapter{Simulation of a Knowledge Commons}\label{ch:results}
 
-In this chapter we create a computer model of participatory sensing and use
+\lettrine[lines=3]{I}{n} this chapter we create a computer model of participatory sensing and use
 this model to test our theory that by managing information and knowledge as a
 commons, and according to Ostrom's principles for sustainable management of
 common-pool resources we can improve the outcomes for agents in this system.
@@ -208,16 +208,17 @@ superceded by new.
 The reward function of this game $r_t$, given a chosen strategy $a$, can be specified as follows:
 
 \begin{align*}
-r_t(a) &= \frac{1}{e \cdot n} \sum_{t^\prime = t-e}^t \left| \left\{ m \in M_{t^\prime} : \mathit{pred}\left(a \right) = f, m \in \mathit{collectedM}\left(f,t\right) \right\} \right| \\
-n &= \max_t |M_t|
+%r_t(a) &= \frac{1}{e \cdot n} \sum_{t^\prime = t-e}^t \left| \left\{ m \in M_{t^\prime} : \mathit{pred}\left(a \right) = f, m \in \mathit{collectedM}\left(f,t\right) \right\} \right| \\
+r_t \left(a\right) &= \frac{1}{e\cdot n} \left|  \mathit{collectedM}\left(t\right)\right| \text{, where } \mathit{pred}\left( \mathit{collectedM}\left(t\right)\right)=a
 \end{align*}
+%n &= \max_t |M_t|
 
-Where $M_t$ is the set of all \texttt{Measured} objects measured at time $t$,
-the \emph{pred} function determines the prediction algorithm use for a
-strategy, \emph{collectedM} returns the set of measurements which have been
-collected by a prediction algorithm by time $t$, $e$ represents the expiry
-time of measurements, and $n$ is a normalising factor equal to the maximum
-number of measurements possible in a single time-step.
+Where $e$ represents the expiry time of measurements, $n$ is a normalising
+factor equal to the maximum number of measurements possible in a single time-
+step, \emph{collectedM} returns the set of measurements which have been
+collected for a prediction algorithm at time $t$ (limited to the time window
+$[t-e,t]$), and the \emph{pred} function generates a strategy, $a$, from a set
+of measurements.
 
 This function therefore returns the average proportion of possible measurements gathered by the prediction algorithm over the last $e$ time-steps. This is a value between 0 and 1 which represents how good the
 policy is. The size of the expiry parameter, $e$, adjusts the
@@ -1266,11 +1267,14 @@ Role & \multicolumn{1}{c}{Centralised} & \multicolumn{1}{c}{Market} & \multicolu
 \multirow{3}{*}{\emph{initiator}} & subscription fee & \multirow{3}{*}{--} & \multirow{3}{*}{subscription fee} \\
 & measured cost & & \\
 & prediction cost & & \\
+\hline
 \multirow{3}{*}{\emph{analyst}} & \multirow{3}{*}{--} &  \multirow{3}{*}{own prediction cost} & subscription fee \\
 & & & measured cost \\
 & & & prediction cost \\
+\hline
 \multirow{2}{*}{\emph{gatherer}} & \multirow{2}{*}{--} & \multirow{2}{*}{own measured cost} & subscription fee \\
 & & & measured cost \\
+\hline
 \multirow{2}{*}{\emph{consumer}} & \multirow{2}{*}{--} & \multirow{2}{*}{--} & subscription fee \\
 & & & prediction cost \\
 \end{tabularx}
