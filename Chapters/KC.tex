@@ -13,7 +13,7 @@ and knowledge, a so-called \emph{Knowledge Commons}. We review governance in par
 applications to determine to what extent the participants are enfranchised and
 treated fairly, and therefore whether the application is likely to be
 sustainable and enduring. These outcomes are compared to that of existing
-Knowledge Commons, which leads us to believe that more fair outcomes can be
+Knowledge Commons, which leads us to believe that fairer outcomes can be
 achieved with this approach. Finally, we argue that
 participatory sensing can be seen as such a common-pool resource system, and we can
 therefore utilise Ostrom's theories for sustainable resource
@@ -21,7 +21,7 @@ management.
 
 This chapter forms the first step in the \ac{SIC} methodology. Through our
 review we are observing phenomena in participatory sensing and the knowledge
-commons, and beginning to construct a theory about the application of the
+commons, and beginning to construct a `theory' about the application of the
 knowledge commons to participatory sensing.
 
 \section{Participatory Sensing}\label{sec:psense}
@@ -61,7 +61,7 @@ that there are many costs for a users to consider when choosing whether to
 participate in a sensing campaign, such as energy consumption of their sensing
 device and communication fees. Users are unlikely to give up control over
 their mobile device without limits on what the external application can do, or
-sufficient transparency to guarantee and acceptable usage of resources.
+sufficient transparency to guarantee an acceptable usage of resources.
 
 \citet{Burke2006} define a `campaign' model for participatory-sensing
 applications. A participatory-sensing `campaign' describes the process through
@@ -90,9 +90,11 @@ measuring of environmental conditions, such as pollution and traffic, to
 personal health and activity monitoring. In these applications the focus has
 generally been on the practical aspects of deploying the campaign: how data is
 gathered; scaling of data collection infrastructure; and development and
-implementation of evaluation and analysis algorithms. Incentivisation of
-gatherers, governance of the campaign, and the effect of the latter on the
-former are not addressed, and are issues we intend to address in this chapter.
+implementation of evaluation and analysis algorithms. 
+
+% Incentivisation of
+% gatherers, governance of the campaign, and the effect of the latter on the
+% former are not addressed, and are issues we intend to address in this chapter.
 
 The spread of `Big Data' and participatory sensing, as well as the abundance
 of information on the Web, has led to serious privacy concerns with the
@@ -104,11 +106,16 @@ gatherer being revealed by the available data~\citep{ohara2010}.
 ``serendipitous reuse''---value generated from unexpected reuse of information
 ---which can be enabled through its availability.
 
-We argue that incentivisation of gatherers can be partly achieved through
-appropriate governance of the participatory-sensing application. Furthermore,
-this governance can empower gatherers, and the other user roles, in the
-application to determine rules which work for their individual privacy
-requirements.
+% We argue that incentivisation of gatherers can be partly achieved through
+% appropriate governance of the participatory-sensing application. Furthermore,
+% this governance can empower gatherers, and the other user roles, in the
+% application to determine rules which work for their individual privacy
+% requirements.
+
+Thus, we argue that these issues of opportunism, incentivisation and control
+of information require explicit governance to be handled in a sustainable
+manner. For this governance we look to theories from the management of
+information and knowledge. % TODO better?
 
 \section{Data and Knowledge as a Commons}\label{sec:commons}
 
@@ -131,7 +138,7 @@ The commons is a term generally used to describe shared resource systems. They a
 
 Having done extensive field work analysing both cases where this tragedy had been overcome and where it had not, \citet{Ostrom1990} contested that it was in fact possible to sustainably manage these resources as a commons.
 The key to this success was  how the commons were governed and how the individuals involved in the use and maintenance of the commons were engaged in this governance. 
-Ostrom identified eight principles which, when all satisfied, increase the chances of a successful commons~\cite[pp.\ 91-101]{Ostrom1990}:
+Ostrom identified eight principles which, when all satisfied, will likely lead to a successful commons~\cite[pp.\ 91-101]{Ostrom1990}:
 \begin{enumerate}
 \item Clearly defined boundaries---``Individuals or households who have rights to withdraw resource units from the \ac{CPR} must be clearly defined, as must the boundaries of the \ac{CPR} itself."
 \item Congruence between appropriation and provision rules and local conditions--- ``Appropriation rules restricting time, place, technology, and/or quantity of resource units are related to local conditions and to provision rules requiring labor, materials, and/or money."
@@ -143,9 +150,8 @@ Ostrom identified eight principles which, when all satisfied, increase the chanc
 \item Nested enterprises---``Appropriation, provision, monitoring, enforcement, conflict resolution, and governance activities are organised in multiple layers of nested enterprises."
 \end{enumerate}
 
-Ostrom later formalised the analysis methodology used as the \ac{IAD} framework~\citep{Ostrom2005}. 
-This framework examines the relevant factors in an institution which manages a commons, allowing the evaluation of institutions with respect to Ostrom's eight principles, and with respect to other institutions which have been analysed in the same way. 
-The framework can also be used for the design of institutions, and we will use the framework in this way later in this article.
+Ostrom later formalised the analysis methodology used for this work, in the \ac{IAD} framework~\citep{Ostrom2005}. 
+This framework examines the relevant factors in an institution which manages a commons, allowing the evaluation of institutions with respect to Ostrom's eight principles, and with respect to other institutions which have been analysed in the same way.
 
 Since~\citeapos{Ostrom1990} book many new areas have been recognised as commons. It has been deemed applicable to many shared resource problems: from transport to radio spectrum to the Internet~\citep{Hess2000}. 
 Many have emerged from technological innovations which have either created a new virtual resource, or transformed the properties of a resource such that it is feasible to treat it as a commons. One example is knowledge~\citep{Hess2007}, with open-access publishing as a specific case study. 
@@ -167,7 +173,7 @@ Many have emerged from technological innovations which have either created a new
 The shift to treating knowledge as a commons has largely been enabled by the digitalisation of information which has separated the knowledge from the physical format of publication~\citep{Ostrom2003}. 
 In this section we consider data, information and knowledge as resources, and how they are managed. 
 For this discussion we require a definition of these terms within this context.
-Most definitions give a hierarchy where data is just raw values, information is data organised in context, and knowledge is an understanding of meaning of information and how to use it~\citep{Machlup1983}:
+Most definitions, such as~\citet{Machlup1983}, give a hierarchy where data is just raw values, information is data organised in context, and knowledge is an understanding of meaning of information and how to use it. These definitions are echoed by others:
 
 \begin{quote}
 ``Knowledge derives from information as information derives from data''~\citep[p.6]{Davenport2000}.
@@ -177,7 +183,14 @@ Most definitions give a hierarchy where data is just raw values, information is 
 data with an interpretation''~\citep[p.203]{Shadbolt2013}.
 \end{quote}
 
-For example the tuple $(51,0)$ would be data; adding the context that this tuple corresponds to latitude and longitude transforms it into information; and knowledge would be the ability to provide directions to travel to this location along public roads. It is generally thought that with current technology the creation of knowledge requires human intervention~\citep{Davenport2000}, but data and information can be generated independently by devices. In this work we will use these definitions for data, information and knowledge.
+For example the tuple $(51,0)$ would be data; adding the context that this tuple corresponds to latitude and longitude transforms it into information; and knowledge would be the ability to provide directions to travel to this location along public roads. It is generally thought that with current technology the creation of knowledge requires human intervention~\citep{Davenport2000}, but data and information can be generated independently by devices. 
+
+In this work we define these terms as follows:
+\begin{itemize}
+\item \emph{Data} is a set of one or many values. These are often numerical, but could also be any other type of unstructured values.
+\item \emph{Information} is data organised into a context, which can normally be done by simply labelling it.
+\item \emph{Knowledge} is understanding of the meaning of information and how to use it.
+\end{itemize}
 
 \citet{Ostrom2003} assessed how information and knowledge can be a commons by using a classification of \emph{exclusion} and \emph{subtractability}. 
 Exclusion is a measure of how easy it is to exclude individuals from the benefits of the good, either through physical or legal means. 
@@ -207,7 +220,7 @@ Irrigation systems} \\[0.6cm]
 \end{table}
 
 % Why information as a commons - exclusion undesirable, alienability.
-The shift that has occurred in information and knowledge due to technology is that its distribution has become non-rivalrous~\citep{Ostrom2003,Bollier2007}.
+The shift that has occurred in information and knowledge due to technology is that its distribution has become non-rivalrous\footnote{\ie\ low rivalry/subtractability}~\citep{Ostrom2003,Bollier2007}.
 Previously information and knowledge would have to be put into tangible form, for example a book, to allow others to use it. 
 In this form it has high subtractability: by owning a book you prevent someone else owning that copy of the book, and the supply of books is limited by the publisher. 
 This meant that information and knowledge goods were either common-pool or private goods depending on whether they were distributed by a library (difficult exclusion) or sold (easy exclusion). 
@@ -224,7 +237,7 @@ Wikipedia provides a public knowledge resource, having chosen to not have any ex
 For example, some publishers have imposed ebook lending limits on libraries, preventing too many simultaneous withdrawals. 
 This effectively prevents this knowledge from becoming a public good, ensuring that library lending remains a common-pool resource.
 
-Therefore we have a resource which is able to be cast into any of the four goods categories. 
+Therefore we can cast this resource into any of the four goods categories. 
 While information and knowledge should naturally be a public good, technological and legal control allows the properties to be changed in order to create a more beneficial good for the creator. 
 Copyright law generally advocates that creative work should eventually become public goods by falling into the public domain, and that the protected state of work is purely an incentive mechanism~\citep{Samuelson2006}. 
 The argument for this is that, because information and knowledge also aid in the creation of new information and knowledge, having a large public domain will have a cumulative effect and increase overall knowledge as a result. 
@@ -243,7 +256,7 @@ We reach a dilemma where the knowledge creators wish to exert their control to a
 The premise of the information and knowledge commons is that a method of collective action as seen in past commons literature can be used here in order to tap into the benefits of making information and knowledge more available~\citep{Hess2007,MayoFusterMorell2010,Shadbolt2013}. \citet{Ostrom2007a} analysed the knowledge commons in the same way as physical commons: using the \ac{IAD} framework.
 
 The creation of an institution in order to manage knowledge and information in practical scenarios is certainly non-trivial. 
-There is a problem of supply~\cite[p. 42]{Ostrom1990}---that someone must provide the initial organisational structure and institutional rules---and, as we will see in the next section, there is a fine line between the emergence of centralised or collective governance. 
+There is a problem of supply~\cite[p. 42]{Ostrom1990}---that someone must provide the initial organisational structure and institutional rules---and, as we will see in the next section, there is a fine distinction between the emergence of centralised and collective governance. 
 Rules which satisfy Ostrom's eight principles are often very specific to the resource characteristics so we don't have a pre-existing `library' of rules available when looking to `supply' an institution with which to manage a new resource. 
 The difficulty of implementing effective collective governance structures is arguably a contributing factor to why in many cases initiators decide to follow Hardin's advice---privatisation seems to be the only way.
 
@@ -278,19 +291,19 @@ The difficulty of implementing effective collective governance structures is arg
 \section{Participatory Sensing and the Knowledge Commons}\label{sec:review}
 
 %Having outlined the theoretical case for self-organising governance of participatory sensing as a knowledge commons, 
-This section presents a review of existing participatory-sensing applications in order to assess the current approach to governance models.  
+This section presents a review of existing participatory-sensing applications in order to assess their current approach to governance models.  
 We outline a set of criteria which we use to evaluate a representative sample of both experimental applications from the literature and commercial applications leveraging participatory sensing in their product. 
 We also look at two socio-technical systems dealing with information and knowledge as an example of effective self-organising management of such a resource.
 
 % Survey criteria + justification
 There are two other relevant surveys on participatory-sensing applications. 
 \citeasnoun{Christin2011} surveys privacy in 30 sensing applications. The survey identifies privacy threats by looking at what is sensed and the granularity of the sensing in each application. 
-\citeasnoun{Tilak2013} performs a simple survey of the domains of several applications and the hardware and software tools used for sensing. 
+\citeasnoun{Tilak2013} performs a survey of the domains of several applications and the hardware and software tools used for sensing. 
 This survey differs from these, in that our focus is on the organisational structures and where benefits are accrued in each application.
 
 \subsection{Evaluative Criteria for Participatory Sensing}
 
-Our survey criteria assess three distinct points in the sensing process: what information flows into the system and how; how information is managed inside the system; and what benefits are generated by the system and who can access them. The aim is to determine the flow of value (in the form of information and knowledge) into and out of the system, and if and how users are incentivised to contribute to and sustain the system.
+Our survey criteria assess three distinct points in the sensing process: what and how information flows into the system; how information is managed inside the system; and what benefits are generated by the system and who can access them. The aim is to determine the flow of value (in the form of information and knowledge) into and out of the system, and if and how users are incentivised to contribute to and sustain the system.
 
 We classify information flowing into the application in two ways. 
 Firstly, by the source of the information. It can be people-centric, collecting information about the user, or environment-centric, capturing information about the participants' surroundings~\citep{Kanhere2013}. The latter is public information, any other user could gather the same data by being in the same physical location (or equivalent). Secondly we look at how the data is gathered. This can be explicitly contributed or implicitly gathered~\citep{Shadbolt2013}. Most participatory sensing is explicit---the user knows that they are contributing information. However, increasingly information is being gathered implicitly, often without user knowledge.
@@ -329,17 +342,11 @@ We took a sample of experimental applications from the literature covering multi
 \item Cloud2Bubble~\citep{Costa2012} collects data on ambient conditions on public transport from smartphones and suggests to users changes that they can make to their journey to give themselves a better quality of experience.
 \item Gas-Mobile~\citep{Hasenfratz2012} uses low-cost sensors connected to smartphones to measure air pollution levels.
 \end{itemize}
-Each application was evaluated according to our given criteria. The results are shown in the `Experimental Applications' section of \autoref{table:litsurvey}. 
 
-The reviewed papers all follow a similar methodology. 
-Each one identifies a domain to which participatory sensing can be applied, determines a method for gathering appropriate data from users, develops an algorithm for producing useful analytics from the data set, and deploys a small test application to verify the method. Under this method there is no need to consider how to incentivise participation in the application via fair governance and access to benefits. 
-We made the following observations from our survey:
-\begin{itemize}
-\item Data gathering is almost always explicit. Users are recruited specifically for the purpose of the sensing campaign.
-\item Governance is not considered in any case. In deployed applications it is assumed that the institution has complete control over the application with no oversight.
-\item Architectures are mostly centralised. This is the simplest way to deploy such a system when scaling is not a requirement. In some cases the authors considered scaling and thus architectures which utilised some peer-to-peer technologies were used~\citep{Mendez2011,Hasenfratz2012}.
-\item Access to the system's benefits is only specified in four cases, and this access is always private, requiring certain membership or ownership of an app. As the authors' aims were generally to show that the proposed algorithms generate correct inferences from the sensors then access to this data for users was not considered in many cases.
-\end{itemize}
+% Surveyed applications (commercial)
+To see how participatory sensing is deployed in real-world scenarios we extended the survey to two commercial applications, Waze\footnote{http://www.waze.com} and OpenSignal\footnote{http://opensignal.com}. Waze is a smartphone application which provides car navigation information to the user as well as alerts about hazards which may affect users' journeys. Information is sent back while the app is in use to track the speed of certain routes and traffic levels. Users may also actively report events which affect their progress, such as accidents or flooding. Waze uses this information to firstly build a map of possible driving routes and detect new roads, and secondly provide optimal routing to users with accurate arrival predictions. OpenSignal aggregates information on mobile phone signal quality from user devices in order to generate maps of the quality of service available under each provider across the world.
+
+Each application was evaluated according to our criteria. The results are shown in the `Experimental Applications' and `Commercial Applications' sections of \autoref{table:litsurvey}.
 
 \begin{sidewaystable}
 \centering
@@ -370,11 +377,21 @@ Wikipedia & N/A & Explicit & Community & Centralised & Community & Public \\
 \end{tabularx}
 \end{sidewaystable}
 
-% Surveyed applications (commercial)
-To see how participatory sensing is deployed in real-world scenarios we extended the survey to two commercial applications, Waze\footnote{http://www.waze.com} and OpenSignal\footnote{http://opensignal.com}. Waze is a smartphone application which provides car navigation information to the user as well as alerts about hazards which may affect users' journeys. Information is sent back while the app is in use to track the speed of certain routes and traffic levels. Users may also actively report events which affect their progress, such as accidents or flooding. Waze uses this information to firstly build a map of possible driving routes and detect new roads, and secondly provide optimal routing to users with accurate arrival predictions. OpenSignal aggregates information on mobile phone signal quality from user devices in order to generate maps of the quality of service available under each provider across the world.
+\subsection{Survey Observations}
 
-The survey of these applications is shown in \autoref{table:litsurvey} (Commercial Applications section). 
-In both cases a central governance is used. The companies control any changes to policies governing the data they hold and access to it. The applications differ in how data is collected and benefits accessed. 
+From this review we see that the experimental applications all follow a similar methodology. 
+Each one identifies a domain to which participatory sensing can be applied, determines a method for gathering appropriate data from users, develops an algorithm for producing useful analytics from the data set, and deploys a small test application to verify the method. Under this method there is no need to consider how to incentivise participation in the application via fair governance and access to benefits. 
+
+We made the following observations from our survey:
+\begin{itemize}
+\item Data gathering is almost always explicit. Users are recruited specifically for the purpose of the sensing campaign.
+\item Governance is not considered in any case. In deployed applications it is assumed that the institution has complete control over the application with no oversight.
+\item In most cases, architectures are centralised. This is the simplest way to deploy such a system when scaling is not a requirement. In some cases the authors considered scaling and thus architectures which utilised some peer-to-peer technologies were used~\citep{Mendez2011,Hasenfratz2012}.
+\item Access to the system's benefits is only specified in four cases, and this access is always private, requiring certain membership or ownership of an app. As the authors' aims were generally to show that the proposed algorithms generate correct inferences from the sensors then access to this data for users was not considered.
+\end{itemize}
+
+From the survey of commercial applications we see that 
+in both cases a central governance is used. The companies control any changes to policies governing the data they hold and access to it. The applications differ in how data is collected and benefits accessed. 
 OpenSignal is explicit about data gathering---the sole purpose of their app is the gathering of signal strength data. 
 Their aggregated data set is then made open to the public via their websites and publications. Therefore this application does not provide incentives for users to participate in the gathering effort beyond some personal stats on their own gathered data. Waze, on the other hand, hides its data gathering behind the app's functionality as a satellite navigation tool. 
 While the app is performing navigation for the user, data is fed back to Waze in order to improve the navigation performance. 
@@ -386,7 +403,7 @@ While access to the real-time travel map is made publicly available through the 
 
 % Conclusions and trends
 
-From this review we draw two main conclusions. Firstly, that the current work on participatory sensing focuses on the provision of sensing campaigns and algorithms for the processing of data for those campaigns. Secondly, where governance and infrastructure has been provisioned for large-scale, long running participatory-sensing deployments it tends to be centralised. The fact that centralised governance is provisioned should not be a surprise. 
+We draw two main conclusions from this review. Firstly, that the current work on participatory sensing focuses on the provision of sensing campaigns and algorithms for the processing of data for those campaigns. Secondly, where governance and infrastructure has been provisioned for large-scale, long running participatory-sensing deployments it tends to be centralised. The fact that centralised governance is provisioned should not be a surprise. 
 For the organisations involved it satisfies a self-interested strategy, which is also an effective one in terms of return on investment and/or profit. 
 This governance choice does not seem to hinder the operation of the system as users can be incentivised to contribute.
 
@@ -396,7 +413,7 @@ This governance choice does not seem to hinder the operation of the system as us
 To assess possible alternatives to centralised governance of participatory-sensing systems we extend our survey to a particular kind of social system which is accessed and controlled via the Internet. 
 These systems involve large numbers of participants and contributors, who access and build on the information and knowledge in a shared resource. They can be seen as knowledge commons. We look at two examples: Wikipedia\footnote{http://www.wikipedia.org} and \ac{FOSS}\footnote{Software which is free \emph{and} open source, as advocated by the Free Software Foundation (http://www.fsf.org), amongst others.}. Wikipedia is an example of a very successful deployment of community governance which has created a knowledge commons which is arguably richer than what could be produced through other means. 
 In \ac{FOSS} we have a general framework which has enabled anyone in the world to create and contribute to software which can compete with commercial products, and also give free and libre\footnote{In the context of open-source software these terms are used to describe two different meanings of `free': `for zero price' and `with little or no restriction' (libre).} access to this software. 
-We can test both of these systems against the same criteria we have used previously, and the results are again in \autoref{table:litsurvey} (Social Systems section).
+We have tested both of these systems against the same criteria we used previously, and the results are again in \autoref{table:litsurvey} (Social Systems section).
 
 % Review KC applications
 Under our survey criteria, Wikipedia is classified as gathering information explicitly. Contributions are new articles, modifications to existing ones, or moderations of others' submissions, and therefore users generating this content are aware that they are provisioning it to Wikipedia. The result of these contributions is a knowledge resource which is available to anyone, and no specific rewards are reserved to encourage editing or moderation actions. While its architecture is centralised under one website, Wikipedia has a complex community governance which allows policies on the site to change provided consensus is behind the change. This governance has developed over time to become more open in response to criticism and concerns over possible involvement from commercial organisations~\citep{MayoFusterMorell2011}. The need for dynamic governance is in part driven by the permissive licence given to content on the site, which allows anyone to publish the content elsewhere, and has in the past let to the forking of whole sections to separate sites~\citep{Famiglietti2011}.
@@ -415,7 +432,12 @@ It offers a middle ground between the copyright extremes of `all rights reserved
 These two examples show that successful systems have been built to develop and manage shared resources of information and knowledge using decentralised, community governance. 
 Like in physical commons the governance system can be shown to conform to Ostrom's principles, and further analysis can identify some particular features which contribute to their success.
 
-
+From our survey of participatory sensing applications we have identified the
+prevalence of centralised control and no governance consideration. When we
+consider social systems for managing knowledge commons we see that it is
+possible to sustain such a commons with open access and decentralised,
+community governance. We argue that this approach can be applied to
+participatory sensing.
 
 %Conjecture: Lack of governance options for psensing; centralised not egalitarian (expensive to create); Successful governance in similar social system conforms to Ostrom's principles; Why not do reverse: create a governance system with Ostrom's principles.
 
@@ -441,13 +463,6 @@ Like in physical commons the governance system can be shown to conform to Ostrom
 % Our observation is that the high cost of provisioning a participatory sensing application under the current paradigm contributed to a centralised governance which seeks to achieve a return on investment. 
 % Finally, we looked at social systems for managing knowledge commons which have been shown to conform to Ostrom's design principles to sustain and develop a rich commons of knowledge, as well as a framework which enables very cheap and easy provision of infrastructure and governance for information and knowledge commons.
 % This is the motivation for specifying a system which uses a collective governance model for participatory sensing, as presented in the next section.
-
-From our survey of participatory sensing applications we have identified the
-prevalence of centralised control and no governance consideration. When we
-consider social systems for managing knowledge commons we see that it is
-possible to sustain such a commons with open access and decentralised,
-community governance. We argue that this approach can be applied to
-participatory sensing.
 
 Participatory sensing deals with two types of `good': the information gathered
 from sensors, and the evaluative or analytic knowledge to process this
@@ -509,6 +524,14 @@ indicator of sustainable governance in the Knowledge Commons, just as it is in
 physical \ac{CPR} systems. Therefore, these principles, and the associated
 \ac{IAD} framework, form the basis of our \emph{preformal theory} of self-governing
 management of participatory sensing as a Knowledge Commons.
+
+This analysis confirms our motivating suspicion that information providers in
+participatory sensing are being exploited, and reveals a solution path through
+the treatment of participatory sensing as a Knowledge Commons. In the next
+chapter we explore this path through an analysis of this commons with the
+\ac{IAD} in conjunction with a framework for self-organising electronic
+institution. This will lead to a formal characterisation of a 
+participatory-sensing Knowledge Commons.
 
 % p-sensing
 % Participatory sensing deals with the creation of sensor networks from user devices~\citep{Burke2006}. 
