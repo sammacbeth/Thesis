@@ -417,6 +417,43 @@ provides a single point of failure, or a bottleneck in a system. This system
 still has this flaw---all institutional state and rules are kept in the rule
 engine and executed in one place.
 
+There are several technical solutions which would enable decentralisation of
+the institutional state, like those which can be used for decentralised
+facilities. For example distributed version control could be used for
+institutional rules, and/or peer-to-peer technology for synchronising state
+between agents. However, with a distributed system, conflicts may arise, for
+example if an agent applies an old version of the rules, or reasons with an
+old institutional state. This mandates a conflict resolution mechanism, as
+provided by Ostrom's Principle 7.
+
+Furthermore, if we decentralise of the institution administration we must
+consider the possibility of groups separating from and later rejoining the
+institution. This may be unintentional, for example a break in communication
+leaves a group isolated. In this case the agents should be able to continue,
+and then reconcile institutional state with the rest of the system once
+communication is restored. Here, Ostrom's Principle 8 (that activities are
+organised in layers of nested enterprises) will help, as having this principle
+presumes that sub-groups can have reasonable levels on autonomy within the
+institution.
+
+Agents may also intentionally break away from an institution and form their
+own based on the former's rule-set. This institutional `fork' is a more
+extreme form of collective choice which is enabled by having open rules. This
+model, applied to \ac{FOSS} repositories has been extremely successful in
+recent years, allowing one to have free reign over one's own \emph{fork} of a
+software repository, but also be able to push useful changes back up to the
+original repository, whose maintainers can then evaluate whether accept the
+changes. This model has also been adapted to \emph{federated wikis}, which
+allow personal wikis to be linked in a federated, with pages forked and merged
+in between them\footnote{The developer of the first wiki on the web, Ward
+Cunningham, has developed such a federated wiki, called the `Smallest
+Federated Wiki', according to these principles.}. The fork and merge approach
+allows each individual to curate their own information and knowledge, but with
+the benefit of being able to incorporate the inputs of others into their
+repository.
+
+This presents a brief summary into the possible issues and lines of inquiry opened up by the problem of entirely decentralising an institution.
+
 \paragraph{It's a Model}
 
 \subsection{Presage2}
@@ -435,7 +472,25 @@ grows around the project.
 
 \subsection{Drools-EInst}
 
+\paragraph{Scalability}
 
+In \autoref{ch:droolseinst} we showed how the performance of Drools-EInst was
+significantly better than that of \ac{EC} implementations, and fair when
+compared to a fast, hard-coded implementation, when performing deductive tasks
+on a representative electronic institution specification with large numbers of
+actions. However, this test, which contained, as a maximum, thousands of
+fluents and actions may not be representative of the kinds of conditions we
+may expect the rule engine to handle in large-scale electronic institutions.
+
+The Drools-EInst library depends on JBoss Drools for its performance. The
+current Drools implementation keeps all state in memory and has single
+threaded execution, therefore this will cause scalability issues as the number
+of fluents and actions increase. Depending on the requirements of the
+specification, memory usage can be managed through the removal of old facts
+from the state. However, executing large numbers of facts serially may result
+in performance that is too slow for real-time environments. Parallelisation of
+the Rete algorithm (which Drool's engine is based on) is something which could
+address this in the future.
 
 \section{Further Work}
 
@@ -449,18 +504,60 @@ the analysis stage in \autoref{sec:iad}.
 
 We firstly explore lines of work immediately available from the simulation model:
 
-\begin{itemize}
-\item Our experiments do not explore the role of \emph{evaluator} in the participatory-sensing application. We envisage this role acting their in a monitoring position, detecting users provisioning low quality information to the pool, or as a reviewer, providing information about the quality of other information. This tasks are complementary, so could both be performed by the same process. Execution of these tasks will improve the quality of information in the pool and better inform agents about which information will be most beneficial to them. We would like to explore, firstly, how to integrate this role into the model as a method of implementing monitoring, and secondly, how collective evaluation of information quality compares to individual methods, which may use trust or social capital~\citep{Petruzzi2014} to access quality of provisions based on previous outcomes.
-\item 
-\end{itemize}
+\paragraph{The evaluator role} Our experiments do not explore the role of
+\emph{evaluator} in the participatory-sensing application. We envisage this
+role acting their in a monitoring position, detecting users provisioning low
+quality information to the pool, or as a reviewer, providing information about
+the quality of other information. This tasks are complementary, so could both
+be performed by the same process. Execution of these tasks will improve the
+quality of information in the pool and better inform agents about which
+information will be most beneficial to them. We would like to explore,
+firstly, how to integrate this role into the model as a method of implementing
+monitoring, and secondly, how collective evaluation of information quality
+compares to individual methods, which may use trust or social
+capital~\citep{Petruzzi2014} to access quality of provisions based on previous
+outcomes.
 
-% gamification to encourage participation in governance
-In future work, we envision enabling this interaction through
-serious games and gamification, with an emphasis on the visualisation of the `state' of the common pool and the rule
-(see \citeasnoun{Bourazeri12} for an example using SmartMeters with energy as the common pool), and through
-design contractualism, whereby design decisions and governance models are manifested both in the code and in the interface
-\cite{Pitt12}.
+\paragraph{Institutional non-compliance} We can test the effect of
+institutional non-compliance, by introducing a behaviour which ignores certain
+obligations. This can be non-intentional non-compliance, where the agent
+breaks an institutional rule because of a fault or other problem, for example
+if there was a communication problem prevent the agent from being notified of
+an obligation. Alternatively, malicious non-compliance is where an agent will
+selectively break rules in order to maximise rewards for himself. Previously,
+these kinds of compliance have been address with Ostrom's Principles 4, 5 and
+6~\citep{Pitt2012b}.  
 
+\paragraph{Knowledge pools} So far we only used pools in the institution for
+information, in the form of information about how the problem works
+(measurements of rewards), and information about how best to play the game
+(predictions about the best strategy). We would like to explore the sharing of
+knowledge in the commons. This could be modelled by types of knowledge,
+possessed by agents and distributed amongst the population, which act as
+building blocks and can be provided to create better prediction algorithms.
+For example, in machine learning some algorithms work by composition of other
+learning algorithms~\citep{Opitz1999}, and we can model this process such
+that agents are able to iterate on a pool of knowledge to find the best
+composition for their target problem.
+
+\paragraph{Other reinforcement learning problems} We outlined the limitations
+of our reinforcement learning problem and the issues of dealing with the
+exploration vs. exploitation trade-off in an institution in the previous
+section. If a viable solution to this problem is found we would then be able
+to begin to investigate how the nature of the learning problem to be solved
+affects how the institution needs to be managed. This would also further test
+robustness in the presence of different levels of rewards and costs.
+
+\paragraph{Long-term institutional change} In this work we only dealt with
+scenarios which started in a certain state and then observed how this state
+developed over time. We did not test how the system response to `shocks' or
+other stimuli after a steady state had been reached. For example, a large
+influx of agents to the system will affect the equilibrium. What is the effect
+on outcomes for the original population and the newcomers? Does the system and
+should the system favour those who were there at its inception, or is it
+better to join later?
+
+\paragraph{External Resource flows}
 Our results show that, when the provision and appropriation system is taken in
 isolation, it is rarely possible to achieve the ideal of free \emph{and} libre
 access to the resource---the cost of the institution and incentivising users
@@ -469,5 +566,65 @@ exogenous utilities accrued, or by voluntary contributions to costs. However,
 within the bounds of an isolation, paid access is required to encourage the
 rational agent to share. We do not yet have a model these external resource
 flows, and their effect on the system equilibrium.
+
+In addition to the lines of investigation we can take with the current
+simulation model, there are other aspects of development with respect to our
+knowledge commons framework.
+
+Firstly, as a framework for socio-technical systems, we would like to explore
+the interactions which the framework enables between human and computational
+actors and the institutional rules. While we have designed a framework to
+incentivise participation in the system on the operational level, for an
+effective institution we want high participation on the collective-choice and
+constitutional levels. Thus, for human actors, we envision enabling this
+participation through serious games and gamification, with an emphasis on the
+visualisation of the `state' of the common pool and the rule (for example
+\citet{Bourazeri12} use this approach to engage SmartMeter users). 
+
+We mentioned in \autoref{sec:iad} that the Open Mustard Seed
+platform~\citep{Hardjono2014a} was a possible target for deployment of our
+framework to real-world socio-technical systems. Providing solid foundations
+for data control and privacy, it would allow the introduction of our framework
+at the governance and information management level. Thus, moving forward, we
+still this integration as a primary implementation and deployment vehicle for
+the ideas expressed in this thesis.
+
+% gamification to encourage participation in governance
+% In future work, we envision enabling this interaction through
+% serious games and gamification, with an emphasis on the visualisation of the `state' of the common pool and the rule
+% (see \citeasnoun{Bourazeri12} for an example using SmartMeters with energy as the common pool), and through
+% design contractualism, whereby design decisions and governance models are manifested both in the code and in the interface
+% \cite{Pitt12}.
+
+\subsection{Presage2}
+
+The Presage2 platform continues to be developed to incorporate new features.
+This includes the graphical support for modelling we outlined at the end of
+\autoref{ch:presage}. This support would allow for the specification of
+simulation with a \ac{GUI}, by connecting parameters to modules and agents.
+
+We also aim to further develop modules for the platform for common use-cases
+and domains. The availability of modules speeds up the prototyping stage of
+model implementation, and reduces the amount of programming required for a
+working simulation.
+
+Finally, we hope to expand the use of the tool for the deployment of agents.
+We have said that our modular approach, and the abstraction layer between
+agents and environment state allow for agent implementations to be taking out
+of the simulation and into a real-world deployment without re-implementation.
+This is something we would like to explore and test in further work.
+
+\subsection{Drools-EInst}
+
+Drools-EInst, as a fairly young project has significant scope for further
+improvement work. As a library of specifications for electronic institutions,
+it only has the specifications described in this thesis implemented so far.
+Therefore, this library should be expanded to increase the number of available
+tools it provides.
+
+Additionally, while the tool's use in simulation has been demonstrated here,
+we would like to further test it in a real application. We good candidate for
+this deployment is the Open Mustard Seed project, for which the current
+libraries are appropriate as a governance tool.
 
 \section{Final Remarks}
