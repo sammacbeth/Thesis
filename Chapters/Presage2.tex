@@ -184,7 +184,7 @@ portable between different environments, that agents can be unknowledgeable
 about the consequences of actions they perform, and that faulty agent code
 won't break a simulation.
 
-It is for this reason that we decide to build on the promising  framework of Presage and address its shortcomings in a new version, Presage2. We describe the design and implementation of this platform in the next section.
+It is for this reason that we decide to build on the framework of Presage and address its shortcomings in a new version, Presage2. We describe the design and implementation of this platform in the next section.
 
 %The core of a multi-agent simulation is a fairly straightforward control process. There is some representation of the environment state and of the state of agents in the environment. 
 
@@ -220,7 +220,7 @@ firstly, most agents have reactive components which require constant
 monitoring of the environment state, and secondly, a waiting agent can simply
 return immediately when queried for actions by the simulator, wasting very
 little resources. The advantage of time-driven over event-driven simulation is
-that the former is easier to parallelise~\citep{Ferscha1995}.
+that the former is simpler to parallelise~\citep{Ferscha1995}.
 
 Beyond the discrete-time driven constraint, the framework does not specify how
 agents should be implemented, or what architecture they should use. There are
@@ -346,7 +346,7 @@ Conceptually, these \emph{environment services} simulate the behaviour of a
 perception device for an agent. In a real-world scenario an agent would have
 some interface for perceiving the state of the environment. By using this
 abstraction we aim to enable the writing of agents who are not tied too closely
-to the simulation platform, and whose simulated perception can be easily
+to the simulation platform, and whose simulated perception can be
 replaced with real perception for rapid transition from simulation to
 deployment.
 
@@ -449,9 +449,9 @@ components required for the simulation. Firstly, we must create all the required
 objects for the environment: action handlers, environment functions and
 environment services; secondly, we must create agents and link them to the
 environment and environment services; and finally, we must create an initial
-shared state of the environment and agents. This process should be easily
+shared state of the environment and agents. This process should be 
 parameterised, as in order to perform experiments, we require that the initial state
-can be easily controlled.
+can be controlled.
 
 The construction of complex objects, with multiple dependencies, in languages
 such as Java is often a verbose and tedious process, often referred to as 
