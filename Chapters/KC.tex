@@ -2,8 +2,8 @@
 \acresetall
 \chapter{Governance in Participatory Sensing}\label{ch:kc}
 
-\lettrine[lines=3]{I}{n} this chapter we review the governance currently used in participatory-
-sensing applications. We firstly look at the participatory-sensing paradigm
+\lettrine[lines=3]{I}{n} this chapter we review the governance currently used in 
+participatory-sensing applications. We firstly look at the participatory-sensing paradigm
 and discuss the involved parties, entities, and their interactions. We then
 take a step back, to investigate how governance can be used to manage data,
 information and knowledge. We introduce Elinor Ostrom's work on managing
@@ -52,8 +52,8 @@ participatory sensing from what they call \emph{opportunistic} sensing. They
 suggest that participatory sensing is driven by the user, and permission is
 required each time data is to be gathered. To prevent the need for constant
 user intervention they propose that opportunistic sensing---where gathering is
-done automatically in response to the requirements of a remote application---
-is a more effective approach. 
+done automatically in response to the requirements of a remote 
+application---is a more effective approach. 
 
 However, this mentality seems to reflect a lack of consideration of the device
 owner's role in the data-gathering process. \citet{BuckinghamShum2012} note
@@ -576,8 +576,8 @@ participatory-sensing Knowledge Commons.
 
 \lettrine[lines=3]{W}{e} have seen how information and knowledge can be treated as a commons, and
 some examples where collective governance has been supplied for this purpose.
-We now see how we can fully develop this concept into a theory for self-
-governing management of participatory sensing as a knowledge commons, and a
+We now see how we can fully develop this concept into a theory for 
+self-governing management of participatory sensing as a knowledge commons, and a
 formal characterisation of this theory.
 
 However, so far we have only seen knowledge commons managed by human actors.
@@ -598,10 +598,10 @@ enable agents to interact in order to achieve both individual and collective
 goals by regulating and constraining their behaviour, voluntarily, according
 to a set of conventional rules.
 
-In this section we propose an architecture for provision and appropriation of information and knowledge for participatory sensing and analyse it, using the \ac{IAD} framework~\citep{Ostrom2005}, as an information and knowledge commons.
-We then gave a formalisation of an electronic institution for participatory sensing using this architecture, show how it can accommodate Ostrom's principles,
+In this chapter we propose an architecture for provision and appropriation of information and knowledge for participatory sensing and analyse it, using the \ac{IAD} framework~\citep{Ostrom2005}, as an information and knowledge commons.
+We then give a formalisation of an electronic institution for participatory sensing using this architecture, show how it can accommodate Ostrom's principles,
 and evaluate the expected outcomes of such an institution according to the evaluative criteria of the \ac{IAD}.
-Finally, we consider how formal system can provide a library of rules which can be instantiated in order to `supply' an electronic institution. 
+Finally, we consider how a formal system can provide a library of rules which can be instantiated in order to `supply' an electronic institution. 
 
 % Preceding para was move to other sec, is this point still needed?
 %The different information gathering methods shape the user's expectations regarding the value of their data. When contributing data explicitly a user will estimate a value for what they think this data is worth. Additional value derived from information which is implicitly contributed and/or 3rd party sensed is a free bonus for the data collector. 
@@ -682,6 +682,7 @@ The \ac{IAD} is split into nine areas of analysis (\autoref{fig:iad}).
 The left side of the framework looks at what the resource and the community using it is like, and rules which have been created for resource and institution management. 
 The middle section deals with where interactions occur and who these interactions are between. 
 The right-hand side observes what the outcomes are and evaluates them.
+
 Our use of the \ac{IAD} in the section is split into three parts.
 Firstly we provide an analysis of a participatory sensing system using the left-hand side of the framework, looking at resource and community characteristics and rules-in-use. 
 Secondly we propose a new set of rules-in-use to address each of Ostrom's principles for sustainable institutions. 
@@ -699,20 +700,55 @@ Following the \ac{IAD} framework we discuss the characteristics of the informati
 \subsection{Bio-Physical Characteristics}
 
 Typically this area is concerned with the physical attributes of the resource, in terms of \emph{flow} and \emph{facility}. This distinction separates the resource units (\emph{flow}) from where they are stored and generated (\emph{facility}). In order to deal with the complexity of information and knowledge \citeasnoun{Ostrom2003} put forward an alternative method, considering \emph{ideas}, \emph{artifacts} and \emph{facilities}. 
-In this framework, \emph{ideas} are data, information and knowledge in intangible form; \emph{artifacts} are the expression of ideas into tangible, observable form; \emph{facilities} store artifacts and make them available. 
+In this framework, \emph{ideas} are data, information and knowledge in intangible form; \emph{artifacts} are the expression of ideas into tangible, observable form; and \emph{facilities} store artifacts and make them available. 
 As intangible objects, \emph{ideas}, by definition, cannot be represented within a computational system---they must be expressed into files, databases or algorithms to be used. In this form they are then \emph{artifacts}. Therefore we treat \emph{ideas} as a resource flow external to the system, and instead manage the tangible derivative works from them: \emph{artifacts}.
 %However, in a computational system \emph{ideas} can be ignored. It is impossible for data, information or knowledge to exist in such a system in intangible form. 
 %Therefore \emph{ideas} are a resource flow external to the system we are considering.
 
-In participatory sensing, the \emph{artifacts} are raw sensor data, contextualised sensor information, algorithms for the analysis of data, and rich information generated from these algorithms. Some of these artifacts will be protected by copyright law, and this will affect what control the organisation is able to have over them. The status of data and information (as we have defined them) with regards to copyright is currently ambiguous, traditionally it was not copyrightable, however databases are copyrightable~\citep{Miller2008}. This copyright protection is important as it affects how easily the organisation can protect its assets. Bad protection limits the ability of the organisation to prevent \emph{forks} of the information. This will affect the excludability of the artifacts, as while one may be able to exclude access to one database, if the information can be freely copied elsewhere then this control is lost. It has become prevalent in the age of digital information that when individuals feel there will be no or little chance of punishment for sharing information, they do so on a large scale~\citep[pp.\ 62--66]{Lessig2004}.
+In participatory sensing, the \emph{artifacts} are raw sensor data,
+contextualised sensor information, algorithms for the analysis of data, and
+rich information generated from these algorithms. Some of these artifacts will
+be protected by copyright law, and this will affect what control the
+organisation is able to have over them. The status of data and information (as
+we have defined them) with regards to copyright is currently ambiguous,
+traditionally it was not copyrightable, however databases are
+copyrightable~\citep{Miller2008}. This copyright protection is important as it
+affects how easily the organisation can protect its assets. Bad protection
+limits the ability of the organisation to prevent \emph{forks}\footnote{A \emph{fork} is when a new organisation is formed from a copy of one repository of information or knowledge.} of the
+information. This affects the excludability of the artifacts, as while one may
+be able to exclude access to one database, if the information can be freely
+copied elsewhere then this control is lost. It has become prevalent in the age
+of digital information that when individuals feel there will be no or little
+chance of punishment for sharing information, they do so on a large
+scale~\citep[pp.\ 62--66]{Lessig2004}.
 
-% TODO: Find OMS and bitcoin references
-The \emph{facilities} constitute how the data, information and knowledge are stored. A suitable facility depends on the properties of the resource (for example, where this storage is physically located, \ie under whose control it is) and who is willing to underwrite its costs.  In existing participatory-sensing applications the initiator, evaluators and/or analysts provide this infrastructure and pay for it. Alternatives would be distributed or peer-to-peer databases where a set of individuals cooperatively provide infrastructure and bear that cost (perhaps being compensated by those who cannot contribute). 
-A peer-to-peer system could be one where each individual looks after their own data and responds to requests for it (cf. Global Sensor Network~\citep{Aberer2006} and Open Mustard Seed\footnote{http://idcubed.org/open-platform/platform/ [Accessed Feb. 2014]}), or a robust replicated system where every user has a copy of the whole data set (cf. decentralised version-control system Git\footnote{http://git-scm.com} and crypto-currency Bitcoin\footnote{http://bitcoin.org}), or anywhere between these extremes. 
-We may also have different facilities for different artifact types within a single organisation if the artifact quantity and transitivity differ.
+The \emph{facilities} constitute how the data, information and knowledge are
+stored. A suitable facility depends on the properties of the resource (for
+example, where this storage is physically located, \ie\ under whose control it
+is) and who is willing to underwrite its costs.  In existing 
+participatory-sensing applications the initiator, evaluators and/or analysts provide this
+infrastructure and pay for it. Alternatives would be distributed or peer-to-peer 
+databases where a set of individuals cooperatively provide infrastructure
+and bear that cost (perhaps being compensated by those who cannot contribute).
+A peer-to-peer system could be one where each individual looks after their own
+data and responds to requests for it (cf. Global Sensor
+Network~\citep{Aberer2006} and Open Mustard Seed~\citep{Hardjono2014}), or a
+robust replicated system where every user has a copy of the whole data set
+(cf. decentralised version-control system Git\footnote{http://git-scm.com} and
+crypto-currency Bitcoin\footnote{http://bitcoin.org}), or anywhere between
+these extremes.  We may also have different facilities for different artifact
+types within a single organisation if the artifact quantity and transitivity
+differ.
 
-We can furthermore consider computational resources as facilities.
-Evaluators and analysts use their knowledge (\ie algorithms) with the information stored in the facility to generate new information. This process requires computational resources which are provided by the evaluator or analyst themselves. Alternatively participants could provision resources or share cost for this computation. The commodification of computational resources makes this very easy to achieve in practice.
+We can furthermore consider computational resources as facilities. Evaluators
+and analysts use their knowledge (\ie\ algorithms) with the information stored
+in the facility to generate new information. This process requires
+computational resources which are provided by the evaluator or analyst
+themselves. Alternatively participants could provision resources or share
+costs for this computation. The commodification of computational resources
+makes this very easy to achieve in practice as, for example, computing power
+and storage space can be purchased on a metered basis from cloud providers,
+preventing the need for large capital outlays.
 
 \subsection{Attributes of the Community}
 
@@ -722,7 +758,7 @@ Each of these groups contain multiple sub-groups, each with different interests 
 
 The \emph{users} in participatory sensing are those appropriating information in order to apply knowledge to it (\emph{evaluators} and \emph{analysts}) and those appropriating this derived data (\emph{consumers}). As in many cases consumers are also providers as they have a reciprocal relationship with the analysts.
 
-\emph{Providers} constitute the users providing sensor information (\emph{providers}), users providing both information derived from knowledge and/or the knowledge itself (\emph{evaluators} and \emph{analysts}), and users providing infrastructure for \emph{facilities}. This is a diverse group which is likely to involve almost all users in the application. However it is also one of the most critical groups, as a lack of provision will be a key factor in the success of the organisation. Big data has shown us that the value of information is additive, often exponentially so, and gaining traction---a critical mass of providers---is important. 
+\emph{Providers} constitute the users providing sensor information (\emph{gatherers}), users providing both information derived from knowledge and/or the knowledge itself (\emph{evaluators} and \emph{analysts}), and users providing infrastructure for \emph{facilities}. This is a diverse group which is likely to involve almost all users in the application. However it is also one of the most critical groups, as a lack of provision will be a key factor in the success of the organisation. Big data has shown us that the value of information is additive, often exponentially so, and gaining traction---a critical mass of providers---is important. 
 We have seen in \autoref{sec:review} some methods for incentivising contribution.
 
 Finally, \emph{policymakers} constitute a more diverse and abstract group of community decision makers. Any \emph{user} or \emph{provider} can be a \emph{policymaker}, but equally, membership of those groups is not a requirement. 
@@ -756,7 +792,7 @@ With these rights we can make rules to describe the operational and most of the 
 
 %\subsubsection*{Action Arena}
 
-%The action arena encapsulates all the situations where interactions occur in the organisation. These action situations can be on different levels of the rule hierarchy, and on different scales (\ie local or global). In our case we see provision and appropriation on multiple levels as action situations (as illustrated in Figure~\ref{fig:psysex}). We also see action situations emerge around organisational actions such as access control and collective choice.
+%The action arena encapsulates all the situations where interactions occur in the organisation. These action situations can be on different levels of the rule hierarchy, and on different scales (\ie\ local or global). In our case we see provision and appropriation on multiple levels as action situations (as illustrated in Figure~\ref{fig:psysex}). We also see action situations emerge around organisational actions such as access control and collective choice.
 
 \section{Formal Characterisation}\label{sec:formalchar}
 
@@ -781,9 +817,9 @@ We assume that we are able to distinguish between each of these resource types a
 
 %Once the institution has been provisioned agents can join and being contributing to the resource. How they can do this will depend on the rules-in-use in the institution. We will now discuss how an institution can satisfy Ostrom's principles and formalise the rules required to do this.
 
-\subsection{The Event Calculus and Institutionalised Power}
+\subsection{The Event Calculus and Institutionalised Power}\label{sec:ecprimer}
 
-\marginpar{EC Primer should be moved to introduction?}For this formalisation we wish to use a language which is able to represent and reason about action, agency, social constraints, and change. 
+For this formalisation we wish to use a language which is able to represent and reason about action, agency, social constraints, and change. 
 We continue with the \ac{EC}, as we are extended the specification from \citeasnoun{Pitt2012b}. Additionally, its clarity of exposition and executable specification are useful for this task.
 
 The \ac{EC} is a logical formalism for representing and reasoning about actions or events and their effects, based on a many-sorted first-order predicate calculus. 
@@ -892,7 +928,7 @@ Predicate/Function & Values/Range & Description \\
 $\m{type}(\m{Obj})$ & \{$\m{sensor\_information}$, $\m{derived\_information}$, $\m{meta\_information}$, $\m{analytic\_knowledge}$, $\m{evaluative\_knowledge}$\} & Determines the artifact type of $Obj$. \\
 $\m{countAppropriations}(\newline A,I,R,T1,T2)$ & \integer & Counts the number of appropriations by agent $A$ of resources of type $R$ in institution $I$ between times $T1$ and $T2$. \\
 $\m{countProvisions}(\newline A,I,R,T1,T2)$ & \integer & Counts the number of provisions by agent $A$ of resources of type $R$ in institution $I$ between times $T1$ and $T2$. \\
-$\m{derivedFrom}(S,Alg,O)$ & \bool & $\true$ iff artifact $O$ was derived from artifact $S$ using $Alg$. \\
+$\m{derivedFrom}(\newline S,Alg,O)$ & \bool & $\true$ iff artifact $O$ was derived from artifact $S$ using $Alg$. \\
 \end{tabular}
 \end{table}
 
@@ -943,7 +979,7 @@ $\B{obl}(G, \m{assign}(G,A,I,\Role))=\true \holdsAt T \pad \leftarrow$ \\
 \end{tabbing}
 }}
 
-Using roles we can define who will be \emph{empowered}, \ie have the right, to provision and appropriate certain resources, according to \autoref{fig:psysex}.
+Using roles we can define who will be \emph{empowered}, \ie\ have the right, to provision and appropriate certain resources, according to \autoref{fig:psysex}.
 
 \mbox{\parbox{.95\columnwidth}{
 \begin{tabbing}
@@ -1013,7 +1049,7 @@ We can use the concepts of learning, self-simulation and self-awareness to provi
 
 \subsubsection*{Principle 4: Monitoring}
 
-Monitoring can be implemented, provided sufficient auditing capabilities are available~\citep{Pitt2012b}. Wikipedia sets a good example here: all users are able to monitor each other through the edit history, which gives a fine grained breakdown of what has been contributed and by whom. However, this level of transparency may seem too much for some, as full visibility of users actions will come with privacy concerns. 
+Monitoring can be implemented, provided sufficient auditing capabilities are available~\citep{Pitt2012b}. Wikipedia sets a good example here: all users are able to monitor each other through the edit history, which gives a fine-grained breakdown of what has been contributed and by whom. 
 In technical systems, this auditing can be done via a log of institutional actions performed by agents. This creates a narrative, like the ones which can be processed with the \ac{EC}, and the process of monitoring is simply looking for actions which are performed when the actor did not have the permission to perform that action at the time.
 
 Effective monitoring can occur in several different ways. 
@@ -1193,31 +1229,33 @@ We now move on to the evaluative aspects of the \ac{IAD}. We perform this evalua
 We have talked of some current outcomes seen in participatory-sensing applications, namely enclosure and inequity. 
 This analysis should help us understand why we see these, but we will also look at other potential outcomes we may observe from different organisational approaches. 
 
-\begin{itemize}
-
-\item \textbf{Enclosure}---What we see in often participatory sensing and other applications based around information collection is the enclosure of the database. 
+\paragraph{Enclosure}
+What we see in often participatory sensing and other applications based around information collection is the enclosure of the database. 
 The data collector wants to keep the information to try and derive as much value from it themselves as possible. 
-This is firstly inefficient; we see that, when data is made open much more total value is derived than any individual could achieve by themselves~\citep{Shadbolt2012}. 
+This is firstly inefficient; when data is made open much more total value is derived than any individual could achieve by themselves~\citep{Shadbolt2012}. 
 Secondly, it deprives the original information provider, the user, from their own property. 
 
-\item \textbf{Access}---The opposite to the negative outcome of enclosure is access. 
+\paragraph{Access}
+The opposite to the negative outcome of enclosure is access. 
 This has a beneficial effect of having an information and knowledge resource where there was none before. 
 The benefits of access increase the more open the information is.
 
-\item \textbf{Equity}---Equity and inequity are outcomes based on the fairness of the allocation of the resource, in terms of information and knowledge availability. Fairness can be evaluated in several different ways, many of which are subjective. We can use a more objective measure by assessing whether each user is compensated according to the value of their input to the system. 
+\paragraph{Equity}
+Equity and inequity are outcomes based on the fairness of the allocation of the resource, in terms of information and knowledge availability. Fairness can be evaluated in several different ways, many of which are subjective. We can use a more objective measure by assessing whether each user is compensated according to the value of their input to the system. 
 
 %Many participatory sensing applications fail to gain significant traction because gatherers don't believe them to be meritorious. They 
 
-\item \textbf{Pollution}---The insertion of incorrect information can affect the quality of the resource. 
-This information could be contributed accidentally, \eg\ a gatherer, whose sensor is faulty, provisioning information, or maliciously, \eg\ doctoring information to gain a competitive edge~\citep{Oreskes2010}. While the \emph{evaluator's} role can be partly to validate information and guard against pollution, this can be very difficult to practice, as has been seen from the manipulation of Facebook likes, product reviews and Google PageRank. %[citation] needed?
-Pollution can be countered by trust and reputation systems, or redundancy in the information gathering process.
+\paragraph{Pollution}
+The insertion of incorrect information can affect the quality of the resource. 
+This information could be contributed accidentally, \eg\ a gatherer, whose sensor is faulty, provisioning information, or maliciously, \eg\ doctoring information to gain a competitive edge~\citep{Oreskes2010}. 
+The \emph{evaluator's} role can be to validate information and guard against pollution,
+for example through trust and reputation systems, or redundancy in the information gathering process (this approach has been used to combat pollution in peer-to-peer systems~\citep{Kamvar2003,Costa2007}).
 
-\item \textbf{Degradation and Depletion}---These outcomes are caused by either the removal of information, or insufficient provision of new information. 
+\paragraph{Degradation and Depletion}
+These outcomes are caused by either the removal of information, or insufficient provision of new information. 
 These relate to the endurance of a system. They will occur either when the system does not react to changing external or internal conditions,  or if the system evolves into a `bad' state, causing participation to be no longer worthwhile for some agents. 
 Lack of reactivity to changing conditions is likely to be caused by a lack of flexibility in the institution, either by not having mechanisms in place for reacting, or such mechanisms being blocked by entrenched interests or inappropriate decision-making processes~\citep{North1990}. 
 Similarly `bad' states can be caused by malicious groups of agents manipulating the institution for short-term benefit.
-
-\end{itemize}
 
 \subsection{Evaluative Criteria}
 
@@ -1226,8 +1264,12 @@ We evaluate outcomes and participant's interactions with measurable values, allo
 We take general criteria applied to knowledge commons, as proposed by \citeasnoun{Ostrom2007a}, describe how we can measure them, and then discuss the effect we expect our framework will have on the values of the criteria. 
 These criteria are: increase in knowledge, sustainability and preservation, participation standards, economic efficiency and equity through fiscal equivalence.
 
-Certainly a successful participatory-sensing application will lead us to have increased knowledge, in terms of more information derived from a large pool of sensor information. 
-However we may also see an improvement in the knowledge being applied to the information by analysts and evaluators. In academia it is generally accepted that open collaboration can improve the quality of knowledge generated. Allowing participants to share their knowledge and then allow others to modify and improve it is an efficient way of increasing knowledge, and one which could be leveraged in participatory sensing. Therefore the increase in knowledge can be measured as the quantity and quality of information generated by the application.
+A successful participatory-sensing application should lead us to have increased knowledge, in terms of more information derived from a large pool of sensor information. 
+However we may also see an improvement in the knowledge being applied to the information by analysts and evaluators.
+% E.g. machine learning ensembles.
+For example, for some machine learning problems, better results can be achieved by combining several algorithms together as an \emph{ensemble}~\citep{Opitz1999}.
+%In academia it is generally accepted that open collaboration can improve the quality of knowledge generated. 
+Allowing participants to share their knowledge and then allow others to modify and improve it is an efficient way of increasing knowledge, and one which could be leveraged in participatory sensing. Therefore the increase in knowledge can be measured as the quantity and quality of information generated by the application.
 
 % Quantity through incentivisation and participation. Quality through monitoring and evaluation.
 Quantity of provision is achieved through high participation standards and incentivisation. 
