@@ -2,7 +2,8 @@
 \acresetall
 \chapter{Principled Operationalisation using Presage2}\label{ch:presage}
 
-\lettrine[lines=3]{P}{rincipled} Operationalisation is the process of transforming a symbolic or formal representation of a system (often written in some kind of calculus) into a computer model of the system in question~\citep{Jones2013}. This process varies greatly in difficulty depending on the complexity of the system to be modelled and the requirements of the computer model. Models can range from small prolog programs~\citep{Pitt2005a} to significant software engineering undertakings~\citep{Timm2005}.
+\lettrine[lines=3]{B}{efore} we can test our hypothesis about a participatory-sensing knowedge commons we require a suitable tool for principled operationalised.
+This is the process of transforming a symbolic or formal representation of a system (often written in some kind of calculus) into a computer model of the system in question~\citep{Jones2013}. This process varies greatly in difficulty depending on the complexity of the system to be modelled and the requirements of the computer model. Models can range from small prolog programs~\citep{Pitt2005a} to significant software engineering undertakings~\citep{Timm2005}.
 
 \ac{ABM} and \ac{MABS} are approaches to modelling and simulating complex systems as multi-agent systems~\citep{Macal2010,Moss2001}.
 This is a form of micro-simulation, where by modelling low-level interactions from the `ground up' we can observe macro level behaviours such as self-organisation, self-adaptation and so on.
@@ -14,7 +15,14 @@ It should be noted that principled operationalisation, \ac{ABM} and \ac{MABS} do
 
 Work in \ac{ABM} and \ac{MABS} has led to creation of many software packages and platforms to ease the development of simulation testbeds~\citep{CynthiaNikolaiandGregoryMadey2009}. These aim to reduce the engineering effort required to implement agent models, providing reusable components, user-interface based design and/or prescriptive frameworks. In particular, they aim to ensure simulation validity while maintaining usability and extendibility~\citep{Axelrod1997}.
 
-In this chapter we derive a set of requirements for a general-purpose software platform for simulation of socio-technical systems, which is suitable for principled operationalisation. We then review a selection of existing platforms with respect to these requirements, concluding that building upon our existing Presage platform~\citep{Neville:2009} best meets our needs. Finally we present the result of this work, Presage2~\citep{Macbeth2014}. % TODO
+In this chapter we aim to determine a suitable platform for principled
+operationisation for the simulation of a Knowledge Commons. We derive a set of
+requirements for a general-purpose software platform for simulation of socio-
+technical systems, which is suitable for this principled operationalisation.
+We then review a selection of existing platforms with respect to these
+requirements, concluding that building upon our existing Presage
+platform~\citep{Neville:2009} best meets our needs. Finally we present the
+result of this work, Presage2~\citep{Macbeth2014}. % TODO
 
 %\section{Requirements}
 %
@@ -200,7 +208,10 @@ identified that the Presage framework was best suited to the task. In this
 section we, firstly, describe the framework of Presage2, an evolution of the
 original Presage, secondly, describe its implementation as a Java library,
 and, finally, evaluate it with respect to the criteria in the previous
-section.
+section. We describe the software largely on a conceptual level, in order to
+justify our self-evaluation of its features. A low-level description of
+software structures and algorithms is outside of the scope of this
+presentation.
 
 \subsection{Framework Description}
 
@@ -999,7 +1010,14 @@ organising agents. However, we have shown in this chapter that the platform's
 framework is generic and extendible. Thus, we expect an increase in application
 domains for which Presage2 is used as it gains traction.
 
-
+This chapter identified a void in tool support for principled operationalised
+of socio-technical systems, as outlined in the \ac{SIC} methodology. With the
+development of the Presage2 platform, we have filled this void, while also
+creating a tool with significant use as a general-purpose simulation and
+modelling tool. Having now a tool for principled operationalisation of the
+participatory-sensing knowledge commons, we now move on to the problem of
+efficiently executing an institutional specification for this commons, in the
+next chapter.
 
 %A single time-step consists of running the state observability function to determine the data available for each agent, running each agent function, then running the state transformer function with the aggregated agent actions. This specifies a simple and easy to parallelise simulation loop. The shared state is constant until the final step, thus there are no issues with mutable state or shared memory management. We can further optimise by decomposing the state transformer function into three components:
 %\begin{itemize}
