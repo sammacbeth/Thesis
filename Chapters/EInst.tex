@@ -19,7 +19,7 @@ institutional rule can be called a `policy', as often seen in network
 management ~\citep{Sloman1999}. In all cases, the institution is assigning
 some form of institutionalised power, permission and/or
 obligation (cf.~\citet{Jones1996}) for agents to perform certain actions (and it has
-been argued that this kind of assignment is essential~\citep{Artikis2009a}).
+been argued that this kind of assignment is essential to properly specify a system which extends beyond purely physical state~\citep{Artikis2009a}).
 In an open system any agent could perform any action (within its physical
 capabilities). An electronic institution used in the context is able to
 distinguish between actions which should and should not cause a change in
@@ -49,18 +49,17 @@ institutional state, and actions which are allowed and forbidden.
 % actions which should and should not cause a change in institutional state, and
 % actions which are allowed and forbidden.
 
-A useful institution will also make agents aware of when they have the power,
+A institution may also make agents aware of when they have the power,
 permission or obligation to do an action. This aids in the planning of actions,
 so that agents do not waste energy with ineffectual actions, or worse, forbidden
 actions which may lead to sanctions. For example, most governments will notify
 their citizens of the time window in which going to ones local polling station
-and marking a cross on a piece of paper will count as an election vote. Outside
-of this time window this action is, at best, a waste of time, and, at worst,
-breaking and entering.
+and marking a cross on a piece of paper will count as an election vote. Outside 
+of this window this action has no effect.
 
 Thus, an implementation of an electronic institution should be an executable
 specification which, firstly, holds some state of the institution, though which
-powers, permissions and obligations can be deduced. Secondly, defines how
+powers, permissions and obligations can be deduced, secondly, defines how
 actions may change the state of the institution at a given time, and, finally,
 allows agents to query whether they are empowered, permitted or obliged to perform
 any given action.
@@ -72,7 +71,7 @@ specification of a parliamentary authority for organisations. Organisations
 can take this specification and update their institutional rules accordingly
 to incorporate this robust protocol. The aim of electronic institutions is to
 provide such tools for open, agent-based systems, and work has been done on
-specifying various protocols, include the aforementioned
+specifying various protocols, include the a voting protcol from the aforementioned
 \ac{RONR}~\citep{Pitt2005a}, floor control
 protocols~\citep{Artikis2004,Artikis2009b}, monitoring and sanctioning
 procedures~\citep{Pitt2012c}, argumentation~\citep{Artikis2003} and auctions~
@@ -92,9 +91,9 @@ should therefore meet the following requirements:
 In this chapter we investigate the specification and execution of electronic
 institutions. We review languages for specification of institutional rules.
 Taking the Event Calculus as an example, we assess its use for the execution of
-Robert's Rules of Order. We go on to show how performance can be drastically
+voting as per Robert's Rules of Order. My profiling the performance in this representative task, we show how performance can be drastically
 improved using a naive rule-based implementation of the Event Calculus. Finally,
-we argue that a Business rule engines have the necessary features to implement
+we argue that a business-rule engine has the necessary features to implement
 electronic institutions, and show how Event Calculus specifications can be
 translated to the JBoss Drools rule engine, using the \ac{RONR} example. 
 
@@ -187,7 +186,7 @@ specification of open agent systems to enable the specification, which
 contains the institutional rules, to change over time as a result of agent's
 actions.
 
-Therefore, we can now define an Electronic Institution as a set of executable
+Therefore, we define an Electronic Institution as a set of executable
 rules which specify:
 
 \begin{itemize}
@@ -307,7 +306,7 @@ electronic institutions.
 
 \section{The Problem with the Event Calculus}\label{sec:ecperf}
 
-The \ac{EC} is a good formalism for executable specification of electronic
+The \acl{EC}\footnote{We gave a brief primer on the \ac{EC} and its predicates in \autoref{sec:ecprimer}. A more detailed introduction to the concepts can be found in \citet{Shanahan1999}.} is a good formalism for executable specification of electronic
 institutions, as evidenced by its widespread use. It also has a rich feature
 set, enabling verification of specifications, deductive, abductive and
 inductive tasks~\citep{Shanahan1999}. However, like with other declarative
@@ -317,13 +316,19 @@ specification in real-time or in simulation, with a constant stream of events,
 and many deductive tasks to query the state of the institution.
 
 In this section we will quantify this performance, using an example electronic
-institution specification. In \citet{Pitt2005a}, \ac{RONR} is specified in the
-\ac{EC}. This specification has an associated implementation in Prolog, whose
-execution we can test (this specification is listed in \autoref{sec:ronrcode}).
-This is a slightly reduced specification from the original, omitting obligations
-and sanctions, leaving just institutionalised power and the voting protocol.
-
-% TODO: Prolog explanation?
+institution specification. In \citet{Pitt2005a}, a voting protocol from
+\ac{RONR} is specified in the \ac{EC}. This specification has an associated
+implementation in Prolog, whose execution we can test (this specification is
+listed in \autoref{sec:ronrcode}). This is a slightly reduced specification
+from the original, omitting obligations and sanctions, leaving just
+institutionalised power and the voting protocol. This problem, coupled with a
+suitable narrative, is a representative example of an electronic institution
+specification. Therefore, benchmark results with it are an indicator of the
+general performance of \ac{EC} implementations for electronic institutions. We
+test two implementations of \ac{EC}: the Simple Event Calculus and Cached
+Event Calculus. We then show that significantly faster execution can be
+achieved for deductive tasks with a simple rule-based implementation of
+\ac{EC} predicates.
 
 \subsection{Experimental Setup}
 
@@ -446,12 +451,12 @@ update([H|T]):-
 We test the execution time, as reported by the SWIProlog profiler, with
 an increasing number of motions to pass. These results are shown in \autoref{tab:ronrsec}.
 As inferences are made at query time, the narrative has a negligible process
-time. Query times scale very badly as the total number of action increases, such
+time, and in fact the timing method used is unable to measure it. Query times scale very badly as the total number of action increases, such
 that with just three motions in the narrative the query did not terminate.
 
 \begin{table}
 \caption[Runtime of RONR with the Simple Event Calculus]{Runtime of RONR with the Simple Event Calculus. With three motions the
-code failed to terminate in the given time.}\label{tab:ronrsec}
+code failed to terminate in the given time. Note, narrative time is reported as 0 as the timing method does not report times less than $1$ms.}\label{tab:ronrsec}
 \centering
 \begin{tabular}{c|c|r|r}
 Motions & Actions & Narrative time /s & Query time /s \\ \hline
@@ -499,8 +504,8 @@ TuProlog engines}\label{fig:cec}
 As we are working with a Java-based simulation tool, Presage2, we would like
 to be able to interface with our electronic institution specification from
 Java. This can be done either with a bridge between the Java application and a
-Prolog interpreter, as offered by the JPL project\footnote{http://www.swi-
-prolog.org/packages/jpl/java\_api/index.html}; or with a pure Java Prolog
+Prolog interpreter, as offered by the JPL project
+\footnote{http://www.swi-prolog.org/packages/jpl/java\_api/index.html}; or with a pure Java Prolog
 engine. The former will offer comparable performance to the standalone Prolog
 implementation, as the overhead of the communication between Java and Prolog
 processes will be negligible (in relation to the runtime of the Prolog query).
@@ -512,22 +517,26 @@ with Java code. tuProlog~\citep{Denti2005} is a lightweight Prolog
 implementation in Java. We perform another performance test using this Prolog
 engine to compare to those in the previous section.
 
-We orchestrate the same testing scenario for \ac{RONR} as before, with
+We orchestrate the same testing scenario as before, with
 identical narratives. The use of Java aids the automation of these tests, so
 we run 10 repeats for each narrative. Additionally, runtime optimisation by
 the Java Runtime Environment (JRE) means that the execution time will improve over
 time, thus we exclude the first results, only taking results after the JRE has
-`warmed-up'. Timing is calculated using the Java built-in function
+`warmed-up'
+\footnote{This `warm-up' refers to the dynamic, just-in-time compilation, and run-time optimisation performed by the JRE, which causes slower performance early in the program life-cycle~\citep{Blackburn2008}}. 
+Timing is calculated using the Java built-in function
 \texttt{System.nanoTime()}\footnote{http://docs.oracle.com/javase/7/docs/api/java/lang/System.html\#nanoTime()} 
 which provides up-to nano second accuracy for timing tasks.
 
 % TODO Results here
-\autoref{fig:cec_tupl} the performance of the Cached Event Calculus running on
+\autoref{fig:cec_tupl} shows the performance of the Cached Event Calculus running on
 TuProlog. It shows that this engine is significantly slower than running the
 same Prolog code in SWIProlog. However it scales slightly better, with the
 performance going from 60 times slower with one motion,to 30 times at 30
-motions. Despite this, given the significant runtime with relatively small
-numbers of actions, we do not see this as a viable approach.
+motions.
+
+%Despite this, given the significant runtime with relatively small
+%numbers of actions, we do not see this as a viable approach.
 
 \subsection{A rule-based implementation of EC axioms}
 
@@ -536,11 +545,11 @@ inductive reasoning capabilities. This allows for a broad range of tasks, such
 as planning and monitoring. However, the cost of catering for all this tasks
 in a single logic engine is shown in the computational complexity of seemingly
 simple deductive tasks. If we wish to use an electronic institution, in a
-simulation or application, purely for deductive tasks, to know what's true
-when, given what has happened, then Prolog is not a very efficient solution.
+simulation or application, purely for deductive tasks (to know what's true
+when, given what has happened), then Prolog is not a very efficient solution.
 We test this hypothesis by creating a proof-of-concept implementation of a
 rule-based approach of the processing of \ac{EC} axioms, and testing its
-performance with the same \ac{RONR} specification.
+performance with the same \ac{RONR} voting specification.
 
 A purely deductive \ac{EC} implementation will only need to be able to query
 for facts which can directly be inferred to be true. This will be either
@@ -704,6 +713,8 @@ shortcoming is highlighted in \ac{EC} specifications, where multiple different
 fluents are used to describe different aspects of a single entity, while in
 Java one would have a single object with multiple attributes.
 
+\subsection{Summary of \acl{EC} Performance}
+
 In summary, this section has outlined the issues with using direct prolog
 implementations of the \ac{EC} when dealing with primarily deductive tasks,
 and interfacing these with a Java runtime. Furthermore, by implementing a
@@ -767,8 +778,7 @@ The Drools rule engine is implemented with an improved version of the Rete
 algorithm (originally proposed by \citet{Forgy1982}). This algorithm optimises
 the speed of pattern matching in the rule engine by employing a network of
 nodes. Drools has developed various extensions to the original algorithm to
-improve performance, properly integrate Java objects, and fuzzy reasoning
-\footnote{A full description of the algorithm is given in the software
+improve performance, properly integrate Java objects, and fuzzy reasoning\footnote{A full description of the algorithm is given in the software
 documentation, available at \url{http://docs.jboss.org/drools/release/6.1.0.Final/drools-docs/html/HybridReasoningChapter.html}}.
 
 The Drools \ac{PRS} then consists of the following at runtime:
@@ -1241,6 +1251,46 @@ benchmark reduces.
 \includegraphics{gfx/ec/droolsvsrules}
 \caption{Execution time of RONR using Drools-EInst implementation.}\label{fig:droolsperf}
 \end{figure}
+
+\subsection{Correctness of Specification Translation}
+
+In this section we have presented a method of translating \ac{EC}
+specifications in to Drools ones. Having performed this translation we want to
+verify that the two specifications we have now are equivalent, that the
+translation is provably \emph{correct}.
+
+The deductive portion of the \ac{EC} can be characterised as a function which
+maps a state (being a set of fluents), and a narrative (a set of actions) to a
+new state. Similarly, we use Drools to do this same mapping from a state in
+the rule-engine and a set of actions to a new state. Therefore a proof of
+correctness must proof the equivalence of these two functions.
+
+However, there are several hurdles to such a proof:
+
+Firstly, our translation process may cause some changes to the representation
+of state and fluents. We change some fluents in order to take advantage of the
+richer state representations possible in Java, and to better match the Drools
+workflow. This means that we have an additional translation, from \ac{EC}
+state and action representations, to those for Drools.
+
+Secondly, the way we handle past values of fluents in the translation is
+incompatible with the \ac{EC} method, therefore the new state generated by the
+Drools implementation may only store a subset of past fluents, and therefore
+not be equivalent anyway.
+
+% Finally, while the \ac{EC} is a logical specification, and as such has well defined and provable properties, Drools is not so well defined and its algorithms are not fully formally defined. Therefore a proof would have to make significant assumptions about the correctness of 
+
+This second issue would prevent full correctness being proved, but we may wish
+to instead prove that the state concerning the latest time point is
+equivalent. We do not yet have such a proof, and we leave this for future work.
+
+However, instead of attempting to prove equivalence for all possible inputs,
+we can instead test a subset thereof with unit testing. Using the same
+framework as we did for benchmarking we can test a series of input state and
+narratives in both specifications, and compare the output states between
+\ac{EC} and with translated Drools rules. These input combinations can be
+chosen to test each rule in isolation, and combined, and thus give a high
+level of confidence in the correctness of the translation.
 
 \section{Summary}
 

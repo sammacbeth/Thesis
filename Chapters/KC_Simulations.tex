@@ -214,8 +214,8 @@ r_t \left(a\right) &= \frac{1}{e\cdot n} \left|  \mathit{collectedM}\left(t\righ
 %n &= \max_t |M_t|
 
 Where $e$ represents the expiry time of measurements, $n$ is a normalising
-factor equal to the maximum number of measurements possible in a single time-
-step, \emph{collectedM} returns the set of measurements which have been
+factor equal to the maximum number of measurements possible in a single time-step,
+\emph{collectedM} returns the set of measurements which have been
 collected for a prediction algorithm at time $t$ (limited to the time window
 $[t-e,t]$), and the \emph{pred} function generates a strategy, $a$, from a set
 of measurements.
@@ -465,8 +465,8 @@ fees and pool appropriation fees.
 
 % Pool/inst instantiation
 
-This implementation brings together the general purpose tools from Drools-
-EInst, with the library of general purpose modules to create an implementation
+This implementation brings together the general purpose tools from Drools-EInst
+, with the library of general purpose modules to create an implementation
 of generic components for a provision and appropriation system. For the
 specific simulation we wish to simulate, we construct an instance with the
 correct components enabled and configured. This is done by simply inserting facts to describe the institution configuration into the rule engine, loaded with the general
@@ -786,8 +786,8 @@ end
 Due to the power-reactive nature of most of the institutional behaviours we
 can include them in all agents, and they will lie dormant if they are not
 applicable to the roles the agent occupies in the institution. This means that
-the differences between agents are determined by the allocation of non-
-institutional behaviours, their operating mode and the initial
+the differences between agents are determined by the allocation of 
+non-institutional behaviours, their operating mode and the initial
 \texttt{Predictor}. We define agents for each of the participatory sensing
 roles as follows:
 
@@ -1563,8 +1563,8 @@ could be also investigated within our model. The implementation of the agents
 and model here is such that we didn't need monitoring and sanctions in order
 to sustain the system. For example, we assumed that all agents will always
 perform the actions they are oliged to do. If this is not the case, then we
-require principles 4, 5 and 6---monitoring, graduated sanctions and conflict-
-resolution mechanisms---to detect this non-compliance, punish it, and to
+require principles 4, 5 and 6---monitoring, graduated sanctions and 
+conflict-resolution mechanisms---to detect this non-compliance, punish it, and to
 appeal when the former two are incorrectly applied. \citet{Pitt2012b}
 demonstrate the use of these principles to counter such non-compliance.
 

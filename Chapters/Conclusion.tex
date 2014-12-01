@@ -445,8 +445,14 @@ in performance that is too slow for real-time environments. Parallelisation of
 the Rete algorithm (which Drool's engine is based on) is something which could
 address this in the future.
 
-\paragraph{Correctness}
-We presented no proof of the correctness of the translation of \ac{EC} into Drools. 
+\paragraph{Correctness} We presented no proof of the correctness of the
+translation of \ac{EC} into Drools. However, we are able to use unit-testing
+to provide confidence in the correctness of a translation. As the translation
+process should make changes to the representation of state in the
+specification, a formal proof of correctness would be difficult to achieve,
+and require a more stringently prescribed process of rule and state
+translation that what we have presented. Therefore we leave this as further
+work.
 
 \section{Further Work}
 
@@ -671,7 +677,7 @@ agents and environment state allow for agent implementations to be taking out
 of the simulation and into a real-world deployment without re-implementation.
 This is something we would like to explore and test in further work.
 
-\subsection{Drools-EInst}
+\subsection{Continued development of Drools-EInst}
 
 Drools-EInst, as a fairly young project has significant scope for further
 improvement work. As a library of specifications for electronic institutions,
@@ -680,8 +686,17 @@ Therefore, this library should be expanded to increase the number of available
 tools it provides.
 
 Additionally, while the tool's use in simulation has been demonstrated here,
-we would like to further test it in a real application. We good candidate for
+we would like to further test it in a real application. We see good candidate for
 this deployment is the Open Mustard Seed project, for which the current
 libraries are appropriate as a governance tool.
+
+We identified possible future work being a proof of the translation process
+from \ac{EC} to Drools specifications. This could be complimented by a
+formalisation of the translation process, in the form of a transpiler (a
+source-to-source compiler) to take the \ac{EC} as an input, and generate
+Drools and Java source. However, as our method aims to have a readable
+specification in both languages, significant work would be required to produce
+machine generated code which is human-readable, and relateable to the original
+\ac{EC} source.
 
 \section{Final Remarks}
