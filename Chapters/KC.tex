@@ -860,6 +860,53 @@ In order to represent and reason about permissions and access control within an 
 This term refers to the feature of institutions whereby designated agents, often acting in specific roles, are empowered, obliged or permitted to perform certain actions which in turn may modify certain institutional facts. 
 In \ac{EC} we formalise these powers as fluents which indicate whether an agent has or had a specific power at a time.
 
+An institutionalised power for an agent to perform an action signifies that
+the institution has granted the agent the power that performing the designated
+action will lead to a change in institutional state. The absence of this power
+does not preclude the agent from perform this action however, it just means
+that, as the institution does not recognise it as a valid action, it will not
+result in the same change in institutional state as when the empowered agent
+did the action. This power differs from physical capability, as one can still
+perform an action when one is not empowered to do so, but the reverse is also
+true, that one could be empowered to do something that one is not able to do.
+
+Permission represents that an agent has been explicitly permitted to perform
+an action by the institution. This is subtly different to power, as one can
+have power but not permission. In this case performing the action will still
+change institution state (as the agent was empowered), but may have later
+repercussions.
+
+Obligations specify actions which \emph{ought} to be performed. An agent with
+an obligation to perform an action should perform that action to avoid
+sanctions from the institution for non-compliance. They can often be used to
+define protocol. For example a polling period for a vote can be defined by
+setting an obligation for when the ballot must be closed.
+
+To take an example of voting in an election. The state will
+give \emph{permission} for a subset of the population to vote. However, the
+people are not empowered to do so until they receive a valid polling card. At
+the polling station, the staff are \emph{obliged} to give a citizen a voting
+slip should they be presented with a valid polling card, and the time is
+within the allowed voting period. With this slip they are then
+\emph{empowered} to cast a vote, and performing the action of ticking a box
+now counts-as a valid vote in the election.
+
+Should the staff fail in their obligation, and give a voting slip without
+seeing a valid polling card, they may empower someone to vote who does not
+have permission. The vote will still count, despite them not being permitted
+to vote.
+
+Alternatively, if someone arrived too late to the polling station they cannot
+be give a voting slip, and therefore would not have the \emph{power} to vote,
+despite having \emph{permission}.
+
+Finally, someone could create their own voting slip, mark a cross on it, and
+attempt to vote with it. They could still perform the voting action, however,
+having not been correctly \emph{empowered}, the vote would not count, as the
+counting process should identify an incorrect voting slip (provided it is not
+produced to look the same as a valid one). Thus, this is an example of
+performing an action without empowerment.
+
 \subsection{Addressing Ostrom's principles}
 %
 %Having thoroughly analysed participatory sensing as a knowledge commons we now look at the provision of such a system. To do this we address \possessivecite{Ostrom1990} eight principles and discuss how they can be satisfied.
@@ -1290,9 +1337,10 @@ Free-riding is a frequent negative behaviour in the commons and is likely to aff
 Through collective-choice, a self-organising institution should be more sustainable than dictatorial institutions, as each agent is properly enfranchised and is able to address any issues they have with the current rules. 
 Equally effective self-organisation should imply good reactivity to changing conditions. 
 However, we must consider the possible implications of inappropriate collective-choice procedures which can cause deadlocks. 
-Voting mechanisms can be manipulated, or unrealistic win criteria may be required for the passing of motions~\citep{Pitt2011b}. 
-In social systems we can identify these issues and attempt to work around them, but in computational systems collective choice will simply grind to a halt. 
-Therefore, we must be careful in the supply of institutions that these issues are considered.
+Voting mechanisms can be manipulated, or unrealistic win criteria may be required for the passing of motions~\citep{Conitzer2007,Pitt2011b}. 
+In social systems we can identify these issues and attempt to work around them, but in computational systems collective choice will simply grind to a halt, 
+unless we explicitly build in procedures to deal with this.
+%Therefore, we must be careful in the supply of institutions that these issues are considered.
 
 Participation standards can be maintained through both enfranchisement and incentivisation. 
 Participatory sensing also has a promotional aspect to it, which helps to gain and maintain participation. 
@@ -1313,6 +1361,10 @@ In order to be more efficient overall, this increase in generated value must out
 Finally, we can assess equity through fiscal equivalence. 
 This is a measure of the ratio of effort put in, versus benefit extracted from a system. 
 An observation from other knowledge commons is that consumers often benefit for little or no effort (\eg\ Wikipedia, open-access publishing, FOSS). However this benefit is not at a cost to the knowledge providers---in these examples consumption by others usually benefits the providers, helping them achieve fiscal equivalence---but is a form of redistributional equity. In participatory sensing there is not such a strong benefit to information providers from its consumption so we focus more on fiscal equivalence and equality.
+
+Together, these criteria offer a way of measuring the quality of the outcomes
+of a knowledge commons. Later, we will derive metrics from these criteria for
+our model of participatory sensing.
 
 \section{Supply of a Participatory Sensing commons}
 
@@ -1341,7 +1393,9 @@ The use of Twitter as an independent third party infrastructure provider provide
 A key feature is a rule engine governing access to data on a per-user basis and explicit recognition of governance as a key factor in the system.
 Such a platform could enable the formation of institutions for participatory sensing with transparency over information access and use, but also with overrides for users. 
 The \ac{OMS} architecture is peer-to-peer, enabling sharing of facility costs by design, and offering scalability and data privacy. 
-For these reasons we see \ac{OMS} as an implementation avenue for our framework.
+%For these reasons we see \ac{OMS} as an implementation avenue for our framework.
+
+%TODO may concluding statement.
 
 \section{Summary}\label{sec:conclude}
 
