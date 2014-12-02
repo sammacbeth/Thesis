@@ -109,4 +109,77 @@ Through our use of this methodology we have two major contributions to the \emph
 
 \section{Thesis Outline}
 
+This thesis follows the aforementioned \ac{SIC} methodology, thus is structured accordingly, with each chapter corresponding to a portion of this process.
+
+\paragraph{\autoref{ch:kc}}
+reviews governance in participatory-sensing
+applications. We present an approach to the management of information and knowledge as a knowledge commons, from
+the social sciences, where systems based on the exchange of
+information and knowledge can be managed as a shared resource. We discuss the
+principles defined by \citet{Ostrom1990} which can be applied to increase the
+likelihood of success of this endeavour. 
+
+We then perform a critical review of participatory-sensing applications from
+various domains, and compare and contract the outcomes of these applications
+to that of systems based on the collective management of information and
+knowledge, as a commons. We argue that the characteristics of participatory
+sensing allow it to be seen as a knowledge commons, and that managing as such
+could address the problems we identified in current applications.
+
+\paragraph{\autoref{sec:iad}}
+firstly presents a formalisation of participatory sensing as a provision and
+appropriation system. This allows us to do a thorough
+analysis of the problem using Ostrom's \ac{IAD} framework, and to link this
+system to an axiomatisation of Ostrom's principles, by \citet{Pitt2012b}.
+We then adapt the latter's \ac{EC} axioms for the purpose of the
+knowledge commons, and participatory sensing in particular, creating a formal specification in the \ac{EC}.
+
+\paragraph{\autoref{ch:presage}} firstly surveys platforms for \ac{ABM} of
+socio-technical systems for the purpose of principled operationalisation. We
+require such a platform in order to implement the specification presented in
+the previous chapter. Having found no existing platform suitable for the task,
+we present the design and implementation of the Presage2 platform which we
+have written specifically for this purpose.
+
+\paragraph{\autoref{ch:droolseinst}} looks at the problem of effectively
+executing a specification of an Electronic Institution written in the \ac{EC},
+such that we can execute our specification from \autoref{sec:iad}. We review
+existing approaches to electronic institutions, and their specification and
+execution. We explore the execution of the \ac{EC}, benchmarking a
+representative specification and finding significant performance issues. We
+then show that using a rule-based approach for deductive queries can overcome
+these issues, and a process for translating \ac{EC} specifications into
+business rules for the JBoss Drools rule engine. We describe our reference
+implementation, Drools-EInst, and implemented specifications for it.
+
+\paragraph{\autoref{ch:results}} concerns the implementation of the system
+specified in \autoref{sec:iad}. We propose a model of participatory sensing as
+a reinforcement learning problem. We implement this model using Presage2, then
+integrate it with an institution specification, based on the axioms given in
+\autoref{sec:iad}, implemented using Drools-EInst. Using this simulation model
+we run a series of experiments which give us empirical evidence of the
+benefits of Ostrom's principles for management of a knowledge commons in
+participatory sensing.
+
+\paragraph{\autoref{ch:conc}}
+summaries this work, and gives conclusions based on our simulation results. We formulate a set of guidelines for the application of Ostrom's principles to participatory sensing, based on what we test in our simulations, and based on the analysis from \autoref{sec:iad}. Afterwards we present several limitations of our simulation model, the Presage2 simulation platform, and our method of translating \ac{EC} specifications into Drools. We conclude with several lines of further work possible each of these three contributions.
+
 \section{Contributions}
+
+This thesis has five main contributions. Three of these pertain to the problem of governance of participatory-sensing applications, and achieving sustainability and equity therein. The other two enable this analysis by contributing tools for the \ac{SIC} methodology. The contributions are therefore the following:
+
+\begin{itemize}
+\item A review of governance in participatory-sensing applications, identifying a lack of governance consideration and user enfranchishment.
+\item An analysis of participatory sensing as a knowledge commons, using the \ac{IAD} framework, in conjunction with a framework for self-organising electronic institutions, which provides an architectural and algorithmic basis for governance of a knowledge commons.
+\item A general purpose simulation platform for agent-based simulation and modelling, Presage2, suitable of the principled operationalisation of a model of the participatory-sensing knowledge commons.
+\item A method of translating \acl{EC} into business rules, and an implementation for specification of electronic institutions, Drools-EInst, along with a suite of modules, with which we can implement a specification for a self-organising knowledge commons.
+\item An experimental model of the management of participatory sensing as a knowledge commons, through which we generate an experimental validation of the problem of supply of institutions, and the importance of proper enfranchisement of the data providers for equity in participatory sensing.
+\end{itemize}
+
+In total, this thesis shows that sustainable, collective, self-organising
+management of the information and knowledge in participatory-sensing
+applications is both possible, and competitive with other approaches. We
+provide a framework and guidelines for the provision of institutions for this
+purpose, such that autonomous agents can dynamically create and sustain these
+sensing campaigns in order to better exploit collective capabilities in open
+systems.
