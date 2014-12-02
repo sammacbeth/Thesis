@@ -203,8 +203,8 @@ As we have defined that for an institution to be electronic it must be
 executable, we now re-visit electronic institution specifications, and
 particularly, their operationalisation. 
 
-Work on specification of constraints, or norms, for multi-
-agent systems often focuses on the use of logics for specification. Logical
+Work on specification of constraints, or norms, for multi-agent
+systems often focuses on the use of logics for specification. Logical
 specifications have the advantage of enabling model checking and formal proofs
 of validity. Logics typically also support deductive, adductive and inductive
 reasoning:
@@ -699,8 +699,8 @@ specification, a process which is likely to introduce errors. The format of
 these translated rules is fairly structured and uniform, therefore it would be
 possible to write a compiler from \ac{EC} axioms to these programmatic rule
 implementations. However, there already exist Java rule engines which have
-declarative rule definitions, and employ much more robust and optimised rule-
-processing algorithms. We discuss how we can leverage these Production Rule
+declarative rule definitions, and employ much more robust and optimised 
+rule-processing algorithms. We discuss how we can leverage these Production Rule
 Engines in the next section.
 
 An additional issue when using Prolog-like syntax for axioms is the
@@ -755,8 +755,8 @@ so that we can be confident of maintaining correctness.
 
 In this section we present a method of translating \ac{EC} axioms into a
 declarative rule form, using the language of a \acl{PRS} system, JBoss Drools.
-We also present our implementation of a framework, and module library, Drools-
-EInst, to enable the use of specifications translated with this method within
+We also present our implementation of a framework, and module library, 
+Drools-EInst, to enable the use of specifications translated with this method within
 a Java program, and the current set of modules implemented from various
 \ac{EC} specifications. Finally, we give a runtime performance comparison
 using the same \ac{RONR} example as in the previous section.
@@ -1322,8 +1322,8 @@ induction this first loss is expected. The second is mitigated by the fact
 that with Drools we can still explicitly store fluents describing historical
 states, and therefore keep history in a more efficient manner.
 
-Currently there are only a small number of modules implemented in the Drools-
-EInst library. We expect this to increase as it is used by more simulations
+Currently there are only a small number of modules implemented in the 
+Drools-EInst library. We expect this to increase as it is used by more simulations
 and applications. The modularity of the library's design enables it to be used
 for rapid development and prototyping of Electronic Institutions. A user can
 easily test various different module permutations, as well as rich
