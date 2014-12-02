@@ -1264,8 +1264,7 @@ maps a state (being a set of fluents), and a narrative (a set of actions) to a
 new state. Similarly, we use Drools to do this same mapping from a state in
 the rule-engine and a set of actions to a new state. Therefore a proof of
 correctness must proof the equivalence of these two functions.
-
-However, there are several hurdles to such a proof:
+However, there are significant hurdles to such a proof:
 
 Firstly, our translation process may cause some changes to the representation
 of state and fluents. We change some fluents in order to take advantage of the
@@ -1290,7 +1289,8 @@ framework as we did for benchmarking we can test a series of input state and
 narratives in both specifications, and compare the output states between
 \ac{EC} and with translated Drools rules. These input combinations can be
 chosen to test each rule in isolation, and combined, and thus give a high
-level of confidence in the correctness of the translation.
+level of confidence in the correctness of the translation. This method is used
+for all specifications implemented in Drools-EInst
 
 \section{Summary}
 
