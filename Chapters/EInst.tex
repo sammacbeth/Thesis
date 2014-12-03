@@ -49,7 +49,7 @@ institutional state, and actions which are allowed and forbidden.
 % actions which should and should not cause a change in institutional state, and
 % actions which are allowed and forbidden.
 
-A institution may also make agents aware of when they have the power,
+An institution may also make agents aware of when they have the power,
 permission or obligation to do an action. This aids in the planning of actions,
 so that agents do not waste energy with ineffectual actions, or worse, forbidden
 actions which may lead to sanctions. For example, most governments will notify
@@ -91,9 +91,9 @@ should therefore meet the following requirements:
 In this chapter we investigate the specification and execution of electronic
 institutions. We review languages for specification of institutional rules.
 Taking the Event Calculus as an example, we assess its use for the execution of
-voting as per Robert's Rules of Order. My profiling the performance in this representative task, we show how performance can be drastically
+voting as per Robert's Rules of Order. By profiling the performance in this representative task, we show how performance can be drastically
 improved using a naive rule-based implementation of the Event Calculus. Finally,
-we argue that a business-rule engine has the necessary features to implement
+we argue that a business rule engine has the necessary features to implement
 electronic institutions, and show how Event Calculus specifications can be
 translated to the JBoss Drools rule engine, using the \ac{RONR} example. 
 
@@ -334,13 +334,13 @@ achieved for deductive tasks with a simple rule-based implementation of
 
 We intend to test the performance of different \ac{EC} implementations
 with the same specifications and with the same narratives. We start with a
-common initial state, defining an initial population of agents as per the \ac{RONR} 
+common initial state, defining an initial population of agents as per the voting protocol
 implementation. We define seven agents, one occupying the role of \emph{chair}
 and two who qualify for \emph{proposer} and \emph{seconder} roles. All agents
 also occupy the \emph{voter} role. This state is encoded in prolog as shown in
 \autoref{lst:ronrinitially}.
 
-\begin{prolog}[caption=Initial state of RONR in Prolog,label=lst:ronrinitially]
+\begin{prolog}[caption=Initial state of voting protocol in Prolog,label=lst:ronrinitially]
 initially(qualifies(cAgent0,chair)=true).
 initially(qualifies(cAgent0,voter)=true).
 initially(role_of(cAgent0,chair)=true).
@@ -376,7 +376,7 @@ generator returns a list of events for this narrative, which we encode as a
 Prolog statement for our tests. \autoref{lst:ronrnarr} shows an example of a
 narrative with one motion.
 
-\begin{prolog}[caption=RONR narrative with one motion passed,label=lst:ronrnarr]
+\begin{prolog}[caption=Voting protocol narrative with one motion passed,label=lst:ronrnarr]
 narrative([happens(open_session(cAgent0,s0), 1),
 	happens(propose(pAgent0,m0), 2),
 	happens(second(pAgent1,m0), 3),
@@ -412,7 +412,7 @@ test :-
 \subsection{The Simple Event Calculus}
 
 The Simple Event Calculus is the most basic form of the \ac{EC}~\citep{Shanahan1999}.
-This version was used in the original \ac{RONR} implementation, and is shown in \autoref{lst:secpl}. To this we add a \texttt{doUpdate} implementation which simply asserts each
+This version was used in the original \ac{RONR} voting protocol implementation, and is shown in \autoref{lst:secpl}. To this we add a \texttt{doUpdate} implementation which simply asserts each
 \texttt{happens} tuple:
 
 \begin{prolog}[caption=Prolog implementation of the Simple Event Calculus,label=lst:secpl]
@@ -455,7 +455,7 @@ time, and in fact the timing method used is unable to measure it. Query times sc
 that with just three motions in the narrative the query did not terminate.
 
 \begin{table}
-\caption[Runtime of RONR with the Simple Event Calculus]{Runtime of RONR with the Simple Event Calculus. With three motions the
+\caption[Runtime of voting protocol with the Simple Event Calculus]{Runtime of voting protocol with the Simple Event Calculus. With three motions the
 code failed to terminate in the given time. Note, narrative time is reported as 0 as the timing method does not report times less than $1$ms.}\label{tab:ronrsec}
 \centering
 \begin{tabular}{c|c|r|r}
@@ -495,7 +495,7 @@ time is non-linear.
 {\label{fig:cec_swipl}\includegraphics{gfx/ec/cec_swipl}}
 \subfloat[TuProlog]
 {\label{fig:cec_tupl}\includegraphics{gfx/ec/cec_tupl}}
-\caption{Execution time of RONR using Cached Event Calculus with SWIProlog and
+\caption{Execution time of voting protocol using Cached Event Calculus with SWIProlog and
 TuProlog engines}\label{fig:cec}
 \end{figure}
 
@@ -674,7 +674,7 @@ the set of \emph{HoldsAt} rules is checked to find a candidate rule to infer the
 with. If one is found, we use the \texttt{Binder} to return, or check the value
 of the fluent.
 
-We can translate the \ac{RONR} specification to run with this implementation,
+We can translate the \ac{RONR} voting protocol specification to run with this implementation,
 and then again run our test-suite to determine performance. As before, we
 perform 50 repeats of each narrative and allow for the Java Runtime
 Environment to `warm-up' before collecting results. The results are shown in \autoref{fig:rulec}.
@@ -759,7 +759,7 @@ We also present our implementation of a framework, and module library,
 Drools-EInst, to enable the use of specifications translated with this method within
 a Java program, and the current set of modules implemented from various
 \ac{EC} specifications. Finally, we give a runtime performance comparison
-using the same \ac{RONR} example as in the previous section.
+using the same \ac{RONR} voting protocol example as in the previous section.
 
 \subsection{JBoss Drools}
 
@@ -961,7 +961,7 @@ Pow(actor == $a, action.matches($act))
 With the design groundwork in place we now demonstrate how \ac{EC}
 specifications can be translated into Drools. We present this translations as a
 set of steps to undertake, and illustrate these steps with examples of the
-translation of the original \ac{RONR} specification.
+translation of the \ac{RONR} voting protocol specification.
 
 \subsubsection*{Declaration of events}
 
@@ -986,7 +986,7 @@ public class OpenSession extends Action {
 \subsubsection*{Representation of fluents}
 
 We can simplify the state representations of electronic institutions by collected
-related fluents into objects. For example, in \ac{RONR} there are separate
+related fluents into objects. For example, in the voting protocol there are separate
 fluents for the status of a motion and the number of votes each way on it.
 Furthermore there is no fluent expressing the link between a motion and the
 session it is occurring in. We can easily encapsulate all this information in a
@@ -1074,7 +1074,7 @@ then
 end
 \end{droolsinline}
 
-To illustrate this process in practice, we give two examples from \ac{RONR}.
+To illustrate this process in practice, we give two examples from the voting protocol.
 \autoref{lst:ronrinitiates} shows the original Prolog and the translated
 Drools rules. In this case, there are two rules to be triggered off the same
 action, so we cannot use the \emph{valid} attribute for both. As the second
@@ -1085,7 +1085,7 @@ power again, as it is implicitly true by virtue of the action being
 \emph{valid}. Note also the additional clause in this rule to retrieve the
 \texttt{RoleOf} fluent we wish to retract.
 
-\begin{drools}[label=lst:ronrinitiates,caption={[Example of translated RONR initiates clauses.]Example of translated RONR initiates clauses. Original Prolog specification is shown in the comment above each rule.}]
+\begin{drools}[label=lst:ronrinitiates,caption={[Example of translated initiates clauses.]Example of translated initiates clauses. Original Prolog specification is shown in the comment above each rule.}]
 //	initiates( second(B,M), status(M)=seconded, T ) :-
 //		holdsAt( pow(B, second(B,M))=true, T ).
 rule "Second"
@@ -1117,7 +1117,7 @@ end
 
 \subsubsection*{Translation of HoldsAt clauses}
 
-\emph{HoldsAt} clauses in the ac{EC} state that a fluent is true when certain
+\emph{HoldsAt} clauses in the \ac{EC} state that a fluent is true when certain
 conditions are satisfied. They can be written in Prolog as follows:
 
 \begin{prologinline}
@@ -1139,11 +1139,11 @@ then
 end
 \end{droolsinline}
 
-\autoref{lst:droolsholdsat} shows an example rule from ac{RONR}. Each
+\autoref{lst:droolsholdsat} shows an example rule from the voting protocol. Each
 condition from Prolog becomes a Drools condition, and the bound variables are
 used to construct the relevant institutionalised power.
 
-\begin{drools}[label=lst:droolsholdsat,caption={[Example of a translated RONR holdsAt clause.]Example of a translated RONR holdsAt clause. Original Prolog specification is shown in the comment the rule.}]
+\begin{drools}[label=lst:droolsholdsat,caption={[Example of a translated holdsAt clause.]Example of a translated holdsAt clause. Original Prolog specification is shown in the comment above the rule.}]
 //	holdsAt( pow(B, second(B,M))=true, T ) :-
 //		holdsAt( status(M)=proposed, T ),
 //		holdsAt( role_of(B,seconder)=true, T ).
@@ -1225,7 +1225,7 @@ We have implemented six modules from \ac{EC} specifications:
 \item Access Control -- Assigns \texttt{RoleOf} facts according to the protocol from \citet{Pitt2012b}. This includes multiple role assignment methods.
 \item Micro Payments -- A simple implementation of micro-payments within an institution.
 \item Provision and Appropriation -- Manages provision and appropriation of heterogeneous resources to a pool, as set out in \autoref{sec:formalchar}. Enables the creation of multiple \emph{pools} which can specify certain types of resource which can be provisioned to them. Agents can request resources from the pool and appropriate them. Additionally allows for retraction/removal of resources. Power to do these actions is role-based, using the Access Control module for this.
-\item \ac{RONR} -- The \ac{RONR} specification as given in \autoref{sec:ronrcode}.
+\item \ac{RONR} voting protocol -- The voting protocol specification from \ac{RONR} as given in \autoref{sec:ronrcode}.
 \item Voting -- A more general voting protocol which enables multiple different vote types and winner determination methods.
 \end{itemize}
 
@@ -1249,7 +1249,7 @@ benchmark reduces.
 \begin{figure}
 \centering
 \includegraphics{gfx/ec/droolsvsrules}
-\caption{Execution time of RONR using Drools-EInst implementation.}\label{fig:droolsperf}
+\caption{Execution time of voting protocol using Drools-EInst implementation.}\label{fig:droolsperf}
 \end{figure}
 
 \subsection{Correctness of Specification Translation}
@@ -1273,9 +1273,9 @@ workflow. This means that we have an additional translation, from \ac{EC}
 state and action representations, to those for Drools.
 
 Secondly, the way we handle past values of fluents in the translation is
-incompatible with the \ac{EC} method, therefore the new state generated by the
+incompatible with the \ac{EC} method. The new state generated by the
 Drools implementation may only store a subset of past fluents, and therefore
-not be equivalent anyway.
+not be equivalent.
 
 % Finally, while the \ac{EC} is a logical specification, and as such has well defined and provable properties, Drools is not so well defined and its algorithms are not fully formally defined. Therefore a proof would have to make significant assumptions about the correctness of 
 
