@@ -1,0 +1,48 @@
+\documentclass{standalone}
+
+\usepackage{tikz}
+\usepackage{palatino}
+\usetikzlibrary{positioning}
+\usetikzlibrary{fit}
+\usetikzlibrary{calc}
+
+\begin{document}
+
+\begin{tikzpicture}
+
+	\tikzstyle{state} = [text width=2.5cm,text centered]
+	\tikzstyle{stepl} = [text width=2.5cm,text centered]
+	\tikzstyle{roundnode} = [circle, draw=red!60, fill=red!5, very thick, minimum size=7mm]
+	
+	\node [state] (obs_phen) {\textbf{Observed Phenomena}};
+	\node [state, above=3cm of obs_phen)] (pre) {\textbf{PreFormal `Theory'}};
+	\draw [>=latex,->] (obs_phen) -- node [right,stepl,align=left] (theory) {\textit{\small Theory\\Construction}} (pre);
+	
+	\node [right=3cm of pre] (calc) {
+		\begin{tikzpicture}
+			\node (calc1) {\textbf{Calculus$_1$}};
+			\node [below right of=calc1] (calcn) {\textbf{Calculus$_n$}};
+			\draw [dotted] (calc1) -- (calcn);
+		\end{tikzpicture}
+	};
+	\draw [>=latex,->] (pre) -- node [above,stepl] (formalchar) {\textit{\small Formal\\Characterisation}} (calc);
+	
+	\node [state,right=3cm of calc] (model) {\textbf{Computer Model}};
+	\draw [>=latex,->] (calc) -- node [above,stepl] (pi) {\textit{\small Principled\\Operationalisation}} (model);
+	
+	\node [state,below=3cm of model] (obs_perf) {\textbf{Observed\\Performance}};
+	\draw [>=latex,->] (model) -- node [left,stepl,align=right] {\textit{\small Controlled\\Experimentation}} (obs_perf);
+	
+	\node [text width=3cm,text centered] at ([shift={(-2cm,.5cm)}] calc|-obs_phen) {\textit{\scriptsize Expressive capacity}\\[-1mm]$\Leftarrow$\\[-1mm]\textit{\scriptsize Conceptual granularity}};
+
+	\node [text width=3.5cm,text centered] at ([shift={(2cm,.5cm)}] calc|-obs_phen) {\textit{\scriptsize Semantic formality}\\[-1mm]$\Rightarrow$\\[-1mm]\textit{\scriptsize Computational tractability}};
+
+	% Boxes
+	\node [draw,very thick,dotted,fit=(theory) (obs_phen),pin=left:2, inner xsep=-5] (chp2) {};
+	\node [draw,very thick,dotted,fit=(calc) (pre) (formalchar),pin=3, inner xsep=-3] (chp3) {};
+	\node [draw,very thick,dotted,fit=(pi),pin=above:${4,5}$] {};
+	\node [draw,very thick,dotted,fit=(obs_perf) (model),pin=right:6] {};
+	
+\end{tikzpicture}
+
+\end{document}
