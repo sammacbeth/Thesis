@@ -3,56 +3,67 @@
 \chapter{Summary, Conclusion and Further Work}\label{ch:conc}
 
 \lettrine[lines=3]{I}{n} this thesis, we have described the importance of
-governance to participatory-sensing applications, and how algorithmic
+governance to part\-icipatory-sensing applications, and how algorithmic
 governance can be deployed, in line with the theory of the knowledge commons,
-to lead to a more equitable outcome for the users of these applications.
+to lead to a more equitable outcome for users of these applications.
 
 In \autoref{ch:kc} we reviewed governance in participatory-sensing
-applications, finding predominantly centralisation and lack of 
-user-enfranchisement. Having looked at the theory of the knowledge commons, from
+applications, finding predominantly that this governance was centralised and did not
+enfranchise users. Having looked at the theory of the knowledge commons, from
 the social sciences, we saw that similar systems based on the exchange of
 information and knowledge could be managed as a shared resource, and the
-principles defined by \citet{Ostrom1990} could be applied to increase the
-likelihood of success of this endeavour. Thus we argued that the
+principles defined by \citet{Ostrom1990}, for sustainable management of common-pool resource systems, could be applied to increase the
+likelihood of success of this endeavour. Thus, we argued that the
 characteristics of participatory sensing allow it to be seen as a knowledge
-commons, and that managing as such could address the problems we identified in
+commons, and that managing it as such could address the problems we identified in
 current applications.
 
 We presented a formalisation of participatory sensing as a provision and
 appropriation system in \autoref{sec:iad}. This allowed us to do a thorough
 analysis of the problem using Ostrom's \ac{IAD} framework, and to link this
-system to an axiomatisation of Ostrom's principles, by \citet{Pitt2012b}. This
-led to a derivation of the latter's \ac{EC} axioms for the purpose of the
+system to an axiomatisation of Ostrom's principles by \citet{Pitt2012b}. From this we
+developed a derivation of the latter's \ac{EC} axioms for the purpose of the
 knowledge commons, and participatory sensing in particular.
 
 The problem of implementing the system and axioms described in
 \autoref{sec:iad} posed a significant technical challenge. In
-\autoref{ch:presage} a simulation platform for this purpose, Presage2, was
-described. We followed with a discussion of the specification and execution of
+\autoref{ch:presage}, we described a simulation platform for this purpose, Presage2.
+We then followed with a discussion of the specification and execution of
 electronic institutions in \autoref{ch:droolseinst}. We presented a method for
 translation of \ac{EC} axioms for use with the JBoss Drools rule engine to
 enable fast runtime execution of \ac{EC} specifications, and a reference
 implementation with accompanying libraries, Drools-EInst.
 
 In \autoref{ch:results} we proposed a model of participatory sensing as a
-reinforcement learning problem. We implemented this model using Presage2, then
-integrated this model with an institution specification, based on the axioms
-given in \autoref{sec:iad}, and implemented using Drools-EInst. Using this
-simulation model we ran a series of experiments which give us empirical
-evidence of the benefits of Ostrom's principles for management of a knowledge
+reinforcement learning problem. We implemented this model using Presage2 and then
+integrated this model with an institution specification. This specification was based on the axioms
+given in \autoref{sec:iad} and implemented using Drools-EInst. Using this
+simulation model, we ran a series of experiments which give us empirical
+evidence of the benefits of Ostrom's principles for the management of a knowledge
 commons in participatory sensing.
 
-This thesis therefore contributes the following:
+This thesis makes the following contributions:
 
 \begin{itemize}
 \item A review of governance in participatory-sensing applications, identifying a lack of governance consideration and user enfranchishment.
-\item An analysis of participatory sensing as a knowledge commons, using the \ac{IAD} framework, in conjunction with a framework for self-organising electronic institutions, which provides an architectural and algorithmic basis for governance of a knowledge commons.
+\item An analysis of participatory sensing as a knowledge commons, using the \ac{IAD} framework in conjunction with a framework for self-organising electronic institutions, which provides an architectural and algorithmic basis for governance of a knowledge commons.
 \item A general purpose simulation platform for agent-based simulation and modelling, Presage2, suitable of the principled operationalisation of a model of the participatory-sensing knowledge commons.
-\item A method of translating \acl{EC} into business rules, and an implementation for specification of electronic institutions, Drools-EInst, along with a suite of modules, with which we can implement a specification for a self-organising knowledge commons.
-\item An experimental model of the management of participatory sensing as a knowledge commons, through which we generate an experimental validation of the problem of supply of institutions, and the importance of proper enfranchisement of the data providers for equity in participatory sensing.
+\item A method of translating \acl{EC} into business rules, and an implementation for the specification of electronic institutions, Drools-EInst, along with a suite of modules, with which we can implement a specification for a self-organising knowledge commons.
+\item An experimental model of the management of participatory sensing as a knowledge commons, with which we validated of the problem of supply of institutions, and the importance of proper enfranchisement of the data providers for equity in participatory sensing.
 \end{itemize}
 
 \section{Conclusions}
+
+We conclude on the three distinct sets of contributions made by this thesis
+individually. First, we on the main topic of this thesis: the management of
+participatory-sensing applications a knowledge commons. From both our analysis
+and experimentation we derive rough guidelines for the application of Ostrom's
+principles to these applications. Second, we conclude the contributions of the
+Presage2 platform. Finally, we discuss the specification of electronic
+institutions, using our method of translating \ac{EC} into Drools rules, and
+our specification library Drools-EInst.
+
+\subsection{Management of Participatory-sensing Applications}
 
 This work represents the first steps to a design toolkit for the digital
 knowledge commons. Much like the \ac{FOSS} model provides a framework for
@@ -70,7 +81,7 @@ with highly subtractable resources, while the knowledge commons is an
 endogenous provision and appropriation system with no subtractability. This
 means that the specifications differ significantly, and we can no longer
 assume some of the previous conclusions with respect to Ostrom's principles.
-\citet{Pitt2012b} described the effect of six of of Ostrom's principles, and this was extended at all 8 by \citet{Schaumeier2013}. These benefits are shown in \autoref{tab:principlebenefit}.
+\citet{Pitt2012b} described the effect of six of of Ostrom's principles, and this was extended to all eight by \citet{Schaumeier2013}. These benefits are shown in \autoref{tab:principlebenefit}.
 
 \begin{table}[ht]
 \centering
@@ -91,7 +102,7 @@ assume some of the previous conclusions with respect to Ostrom's principles.
 \end{tabularx}
 \end{table}
 
-We showed how Principle 1 can be addressed for a purely digital resource via
+In our work we showed how Principle 1 can be addressed for a purely digital resource via
 role-based access control. This establishes institutionalised power to
 contribute and extract from the resource, effectively prevent outside access.
 This does, however, rely on the security of the authentication and
@@ -102,7 +113,7 @@ protection mechanisms used to provide this access control.
 
 Our experiments in supplying institutions showed that provision and
 appropriation rules play an important role in providing robustness to
-environmental conditions. Therefore, with significantly different rules, and
+environmental conditions. Therefore, with significantly different rules and
 different resource characteristics we observed the same effect as in
 \citet{Pitt2012b} for Principle 2. Furthermore, we also showed that Principle 2
 can mitigate greed by making the dominant strategy a sustainable one.
@@ -115,12 +126,12 @@ equity.
 Principle 3 provides further robustness to environmental variation by allowing
 the aforementioned rules to be modified. \citet{Schaumeier2013} also shows
 that this principle reduces `unfair' behaviour, according to various fairness
-metrics. We show, similarly, that we can reduce inequitable outcomes through
+metrics. We show similarly, that we can reduce inequitable outcomes through
 this principle, which, for some definitions of fairness, is the same
 result\footnote{\citet{Schaumeier2013} initially measures fairness using the
 concept of utilitarian social welfare, which is equivalent to our `equity'
 metric. They later explore alternative, individual and self-aware fairness
-measures.}. Furthermore, we showed that this principle is able to mitigate the
+measures.}. Furthermore, we demonstrated that this principle is able to mitigate the
 effect of agents with greedy strategies gaining self-benefit. This is an
 important property, as over time it will lead to greater levels of compliance
 and cooperation in a system as agents' strategies evolve. This property was
@@ -138,12 +149,12 @@ approaches to monitoring given are likely to be appropriate. % TODO monitoring t
 
 Principles 5 and 6 are general purpose and do not depend on the specifics of
 the system characteristics, beyond the specific sanctions given. Therefore we
-expect the conclusions of \citet{Pitt2012b,Schaumeier2013} to hold: that
+expect the conclusions of \citet{Pitt2012b} and \citet{Schaumeier2013} to hold: that
 together they provide mitigation of non-compliant behaviour, while being able
 to self-correct for when punishments are incorrectly given.
 
-We discussed how principle 7 could be applied in the context of a knowledge
-commons. In the knowledge commons resources are heterogeneous, and attributed
+We discussed how Principle 7 could be applied in the context of a knowledge
+commons. In a knowledge commons, resources are heterogeneous and attributed
 to an individual or group of individuals, therefore the rights given through
 copyright law may contradict the institutional rules. The requirement of
 permissive licensing of provisioned content can be used to prevent such
@@ -151,25 +162,25 @@ conflicts without taking away other important rights of the individuals.
 However, this hypothesis remains to be tested.
 
 Thus, this work has provided a study of the similarities and differences in
-application of Ostrom's principles between a resource allocation system, where
+application of Ostrom's principles between a resource-allocation system, where
 resource provision is exogenous and appropriation is subtractive, and a
 provision and appropriation system, in which provision is endogenous and
 appropriation non-subtractive. The common-pool resource abstraction is
 applicable to both, but specifics of suitable rules vary with the types of
-actions performed, which patterns of interaction are to be encouraged, and
+actions performed, which patterns of interaction are to be encouraged and
 which are to be discouraged. We find that the \ac{IAD} framework is a
 particularly useful tool for determining these specifics.
 
 With our general framework of participatory sensing as a provision and
 appropriation system, we have a method of specifying participatory-sensing
 problems in terms of these actions and the pools of information which are
-generated. We have shown that within this framework which can specify
+generated. We have shown that within this framework we can specify
 institutional rules to adhere to each of Ostrom's principles, but also that
 other methods of managing the resource can be specified within the same
 framework simply with a change in institutional rules and/or changes to the
 institutionalised powers, permissions and obligations of certain roles.
 
-Our implementation of this framework and rule-set therefore allows for direct
+Our implementation of this framework and rule set therefore allows for direct
 comparison between organisational paradigms, and individual rules or rule
 permutations. We find with self-organising mechanisms, that inferring the
 performance of combinations thereof is not always
@@ -181,7 +192,7 @@ scenario with the same rule-set. This is a key advantage of working with an
 
 Our approach aims to find a method of democratising the large-scale
 aggregation of user-generated information, with participatory sensing as an
-example of this process. As these systems are digital, and often online, using
+example of this process. As these systems are digital and often online, using
 electronic institutions and algorithmic governance enables us to bring both
 the enforcement of rules, as well as governance determining what the rules
 are, into one place. It also enables autonomous agents to interact with the
@@ -193,49 +204,49 @@ contributors. It provides a middle ground between the two extremes of
 information sharing---sharing nothing and sharing everything. The former is
 often the preferred strategy of self-interested agents, leading to socially
 sub-optimal results. The latter is an altruistic strategy which is likely to
-benefit those who don't share, more than those who do. This middle ground gives
-incentives to ensure everybody contributes while still protecting the resource.
+benefit those who don't share more than those who do. This middle ground gives
+incentives to ensure everybody contributes while promoting openness and preserving individual rights to information.
 
 \subsection{Principled Operationalisation with Presage2}
 
-In the simulation platform, Presage2, we have built a general purpose tool for
-the agent-based modelling. We have also shown its suitability for the
+In the simulation platform Presage2, we have built a general-purpose tool for
+agent-based modelling. We have also shown its suitability for the
 principled operationalisation and controlled experimentation phases of the
 \ac{SIC} methodology, both in this thesis and in other
 work~\citep{Macbeth2014}.
 
 While there exist multiple simulation platforms for multi-agent systems and
-agent-based systems, we argued that an important, and oft ignored, feature of
-a platform is an environment-level specification of the observability of
+agent-based systems, we argued that an important and oft ignored feature of
+a platform is an environment-level specification of the observability of the
 simulation state. This is an intermediary in between an agent and the raw
-state of the environment, which can limit access to state or provide a modified view of it.
+state of the environment, which can limit access to state a or provide a modified view of it.
 This has two advantages:
 
 Firstly, it provides a level playing field for all agents. Particularly if
 agents are being developed independently, they must agree on a level of
 observability that they would expect in the simulation context. By specifying a
-single \ac{API}, which both teams' agents will use it prevents any ambiguity,
-or `cheating' in terms of access to simulation state.
+single \ac{API}, which both teams' agents will use it, prevents any ambiguity
+or `cheating' in terms of access to a simulation state.
 
 Secondly, the underlying state representation may change, but if the \ac{API}
-is constant the agent will still be able to function. The \acp{API} expressing
+is consistent, the agent will still be able to function. The \acp{API} expressing
 reading and writing of state are therefore just connectors to an outside
-environment of any kind---not just a simulated one. Therefore we can take
+environment of any kind, not just a simulated one. Therefore, we can take
 agents out of simulation and into deployment by rewriting these \acp{API} for
 interaction with the target environment.
 
 The development of Presage2 also goes some way to addressing a limitation in
-the previous Presage implementation, given by~\citet{Neville2011}. Scalability is noted as an issue for their implementation, as a single-threaded
+the previous Presage implementation, given by~\citet{Neville2011}. Scalability is noted as an issue for their implementation, as it is a single-threaded
 program. Presage2 is designed to support multi-threaded simulation natively
 and seamlessly. However, we have yet to explore fully distributed simulation
 with the platform yet.
 
 The Presage2 platform has shown its usefulness and generality in its use in
-this thesis, as well as simulating several other models, including simulation
+this thesis, as well as in several other models, including simulation
 of resource-allocation systems, which our work is built upon (cf.
-\citet{Schaumeier2013,Pitt2014}).
+\citet{Schaumeier2013} and \citet{Pitt2014}).
 
-\subsection{Specification of Electronic Institutions}
+\subsection{Executable Specification of Electronic Institutions}
 
 We have shown the performance improvements available through the translation
 of \ac{EC} specifications into business rules. This enables fast, real-time
@@ -248,7 +259,7 @@ which used an electronic institution in a Presage2 simulation.
 
 Firstly, in their simulations, institutionalised power was only represented implicitly,
 using conditions in the agent logic. This approach precludes full listings of when
-powers, permissions and obligations occur, requires that the agent know of the
+powers, permissions and obligations occur, requires that the agent knows of the
 conditions which lead to its empowerment, and therefore also precludes dynamic
 institutionalised powers whose activating conditions change. With Drools-EInst
 we explicitly represent institutionalised power, and furthermore give software
@@ -298,35 +309,34 @@ protocols operating asynchronously on independent time scales.
 \subsection{Participatory sensing simulations}
 
 There are several limitations in our model of participatory sensing. As with
-any model, there multiple explicit and implicit assumptions and
+any model, there are multiple explicit and implicit assumptions and
 simplifications made in its creation and usage, which will affect the
 simulation results. We discuss these assumptions, how they might affect the
 results, and how we might accommodate them if we wish to test them.
 
 \paragraph{Parameters} Our simulation model has many degrees of freedom in the
-parameter specification, giving too many permutations to investigate
-exhaustively. We chose parameter sets to attempt to exemplify certain likely
+parameter specification, resulting in too many permutations to investigate
+exhaustively. We chose parameter sets that attempt to exemplify certain likely
 scenarios. The choice of these parameters have a significant influence on the
 results. For example, we only explore a small subset of the possible facility costs
-available in our model, which may lead to interesting results, however do not
-contribute towards our experimental agenda.
+available in our model. Some of the untested combinations of facility costs may lead to interesting results, but were outside of our experimental agenda.
 
 \paragraph{Explicit Assumptions}
 We make four explicit assumptions for our simulation model (\autoref{sec:modelimpl}). These are:
 \begin{enumerate}
 \item Rewards gained from an action is directly measurable by the agent.
 \item Rewards are a trade-able and divisible currency. This reduces complexity by preventing the need for a separate currency.
-\item The only flow of rewards into the system is that generated by agents' actions on the reinforcement learning problem. For example an \emph{analyst} cannot sell information elsewhere to generate rewards.
-\item Agents are working on the problem long-term, therefore we have repeated (inter)actions and thus can assume that agents are likely to be cooperative
+\item The only flow of rewards into the system is that generated by agents' actions on the reinforcement-learning problem. For example, an \emph{analyst} cannot sell information elsewhere to generate rewards.
+\item Agents are working on the problem long-term, therefore we have repeated (inter)actions and thus can assume that agents are likely to be cooperative.
 \end{enumerate}
 
-The first assumption is merely slightly tighter constraint on what must be true
+The first assumption is merely a slightly tighter constraint on what must be true
 for the model to be valid: that some kind of reward can be measured. When a
 direct reward measurement is not possible, a reward can be derived implicitly
 from the agent's overall progress towards a goal. If it is not possible to
 measure a reward, then it is impossible to apply learning to the problem, and
 there is also no sensing which can be done. Therefore the problem is neither a
-reinforcement learning problem, nor a participatory-sensing one.
+reinforcement-learning problem, nor a participatory-sensing one.
 
 The second assumption is a simplifying assumption and enables frictionless
 exchange of currency between agents. In real-world scenarios micropayments are
@@ -339,23 +349,24 @@ over-regulation in the future).
 The third assumption prevents external rewards from flowing into the system.
 Therefore all rewards are derived from strategies used on the learning
 problem. Due to assumption 1, this then necessitates that gatherers are also
-consumers, as if one consumes, one is also able to gather. However, there were
+consumers, as, if one consumes, one is also able to gather. However, there were
 cases in our review of participatory-sensing applications where the gatherer
 and consumer groups were disjoint or only partially intersecting. For example,
-OpenSignal sells the information and knowledge in generated from collected
+OpenSignal sells the information and knowledge generated from collected
 mobile phone coverage data to third-party companies. Having disjoint gatherer
 and consumer groups removes the reciprocity with analysts, and will change the
-dynamics of collective choice which we showed in our experiments. Therefore,
+dynamics of collective choice shown in our experiments. Therefore,
 our model is currently unable to tell us much about these kinds of sensing
 applications.
 
 Finally, the fourth assumption has important implications for the commons. If
-agents are only briefly using the commons and then will not use it ever again,
-then they will have no incentive to act sustainably in their use of it. All
-common-pool resource systems have the same assumption---that there is a core
-of parties who are interested in the maintenance of the resource for their
-long-term benefits from it. Depending on the level of churn of agents, we may
-still be able to sustain an institution, but that remains to be tested.
+agents are only briefly using the commons and  will not use it ever again
+afterwards, they will have no incentive to act sustainably in their use of it.
+All common-pool resource systems have the same assumption---that there is a
+core of parties who are interested in the maintenance of the resource for
+their long-term benefits from it.  In further work we may be able to test what
+level of agent turnover leads to the loss of stability and sustainability in
+the institution.
 
 \paragraph{Multiple Analysts}  In our simulations we use a single agent in the
 role of analyst. This leads to this agent having significant power over the
@@ -364,39 +375,80 @@ strategy. To address this we may consider having multiple analysts, and this
 would be a desirable scenario, giving more choice and competition to agents.
 
 However, our simulation model is ill-equipped for this configuration. As
-agents appropriate a single prediction each time-step, adding another
-analyst will reduce the number of appropriations per analyst by half. This has
-the implication that, in order to achieve equity, as we have defined it, the
+consumers appropriate a single prediction each time-step, adding another
+analyst will increase the number of predictions provided, but the number 
+of appropriations will not change. Therefore the number of appropriations 
+per analyst will be reduced by half. This has
+the implication that, in order to achieve equity as we have defined it, the
 institution must compensate analysts twice as much per prediction.
-Furthermore, if one analyst's predictions are `better' (\ie\ generate higher rewards) than the others, consumers will preferentially appropriate these
+Furthermore, if one analyst's predictions are `better' (\ie\ generate higher rewards) than the others', consumers will preferentially appropriate these
 predictions, and the second analyst brings no benefit to the institution.
 
 Therefore, this poses the question of whether it is worthwhile to have the
 redundancy of multiple analysts. With the simulated reinforcement-learning
-problem we use for our simulations it is not, however we see several cases when
+problem we use for our simulations this is not the case, however we see several possibilities when
 it may be:
 
 \begin{itemize}
-\item If predictions are specific to an individual consumer, and the analyst has limited computational capacity to generate them, then additional analysts will increase the capacity of the system to handle consumers' requests.
-\item If analysts' knowledge is comparatively better in different areas of the solution space then combined they will provide better knowledge than either would be able to individually.
-\item If analysts provision knowledge, in the form of their prediction algorithm, then the combination of multiple analysts' knowledge could lead to better knowledge as a result. 
+\item If predictions are specific to an individual consumer and the analyst has limited computational capacity to generate them, then additional analysts will increase the capacity of the system to handle consumers' requests.
+\item If analysts' knowledge is comparatively better in different areas of the solution space, then combined they will provide better knowledge than either would be able to individually.
+\item If analysts provision knowledge in the form of their prediction algorithm, then the combination of multiple analysts' knowledge could lead to better knowledge as a result. 
 \end{itemize}
-
-
 
 \paragraph{Voting and counting votes} Our institutional model used preference
 voting, and determined winners by a Borda count procedure. This is one of many
-possible permutations of voting method. The choice of voting protocol can have
+possible combinations of voting methods. The choice of voting protocol can have
 a significant effect on the result of a vote---as \citet{Pitt2011b}
 demonstrate, the same preferences can lead to a different result under each
-winner determination method. Furthermore, most winner determination methods
-are also open to exploitation via collusion.
+winner determination method. Furthermore, most winner-determination methods
+are also open to exploitation via collusion~\citep{Conitzer2007}.
 
-In our simulations we often encountered the problem of two groups with equal
-voting power, representing opposite views. Therefore, the Borda count was
+In our simulations, we often encountered the problem of two groups with equal
+voting power who are representing opposite views. Therefore, the Borda count was
 useful in this context to generate a fair winner in the mid-point between
 these views. Other methods, such as plurality and instant runoff would result
 in a deadlock in these situations.
+
+\paragraph{Reinforcement learning problem} We used a model of a 
+reinforcement-learning problem for our simulations in order to get determinism and
+repeatability in the results. However, the use of actual learning problems and
+policies would expose several other issues in the simulation. The inherent
+non-determinism of reinforcement learning, caused by random exploration of strategies,
+would have implications for equity,
+both coincidently or possibly due to malicious activity. These learning
+algorithms rely on occasionally `exploring' unknown actions to find possible
+better alternatives. Most times these exploration actions will give lower
+rewards than the current greedy strategy choice, therefore there is a question
+of how such actions should be allocated.
+
+If this allocation is done randomly, then an `unlucky' agent could end up with
+significantly lower accrued rewards purely through bad allocations. There are methods
+to make allocations fairly in such scenarios (cf.~\citet{Pitt2014}), however
+in this case the allocation may be at the discretion of the provider of prediction,
+and outside the boundaries of the institution. This opens the door for
+corruption in this allocation method.
+
+Alternatively, both exploitative and exploratory predictions could be
+provisioned to the pool and labelled as such, then additional incentives could
+be provided to those who chose to do exploration. With proper selection of the
+value of this incentive, this method would have the potential of finding an
+optimal exploration rate, while socialising the cost of exploration.
+
+Further work is required to test these issues.
+If a viable solution to this problem is found we would then be able
+to begin to investigate how the nature of the learning problem to be solved
+affects how the institution needs to be managed. This would also further test
+robustness in the presence of different levels of rewards and costs.
+
+\paragraph{External Resource flows}
+Our results show that, when the provision and appropriation system is tested in
+isolation, it is rarely possible to achieve the ideal of free \emph{and} libre
+access to the resource---the cost of the institution and incentivising users
+must be covered. In other knowledge commons, these costs are covered by
+exogenous utilities accrued, or by voluntary contributions to costs. However,
+within the bounds of an isolated system, paid access is required to encourage the
+rational agent to share. We do not yet have a model these external resource
+flows, and their effect on the system equilibrium.
 
 % \paragraph{Scalability} The provision and appropriation system we have
 % proposed is intended to be able to handle big data and large numbers of users,
@@ -417,10 +469,10 @@ platform particularly lacks graphical tools for the expression of models
 compared to other popular tools such as NetLogo and RePast.
 
 \paragraph{Modelling Libraries} As a relatively young project, Presage2 lacks
-the range of modules libraries of other simulation software. This means that
+the range of module libraries of other simulation software. This means that
 users will often have to implement certain features themselves for their
-models, where they may not need to if they were using other platforms.
-However, this is a property of software which improves over time as community
+models, which they may not need to if they were using other platforms.
+However, this is a property of software which improves over time as the community
 grows around the project.
 
 \subsection{Drools-EInst}
@@ -430,8 +482,8 @@ grows around the project.
 In \autoref{ch:droolseinst} we showed how the performance of Drools-EInst was
 significantly better than that of \ac{EC} implementations, and fair when
 compared to a fast, hard-coded implementation, when performing deductive tasks
-on a representative electronic institution specification with large numbers of
-actions. However, this test, which contained, as a maximum, thousands of
+on a representative electronic-institution specification with large numbers of
+actions. However, this test which contained, as a maximum, thousands of
 fluents and actions may not be representative of the kinds of conditions we
 may expect the rule engine to handle in large-scale electronic institutions.
 
@@ -460,42 +512,42 @@ work.
 
 \subsection{Further investigations with the simulation model}
 
-Our simulation model of participatory sensing as a knowledge commons is really
+Our simulation model of participatory sensing as a knowledge commons is only
 just beginning to explore the issues of self-organising management of
 information and knowledge. The implementation already has scope to begin
-investigating various other factors around this problem which we identified at
+investigating various other factors around this problem, which we identified at
 the analysis stage in \autoref{sec:iad}.
 
 % We firstly explore lines of work immediately available from the simulation model:
 
 \paragraph{The evaluator role} Our experiments do not explore the role of
 \emph{evaluator} in the participatory-sensing application. We envisage this
-role acting their in a monitoring position, detecting users provisioning low
+role acting in a monitoring position, detecting users provisioning low
 quality information to the pool, or as a reviewer, providing information about
-the quality of other information. This tasks are complementary, so could both
+the quality of other information. These tasks are complementary, so could both
 be performed by the same process. Execution of these tasks will improve the
 quality of information in the pool and better inform agents about which
-information will be most beneficial to them. We would like to explore,
+information will be most beneficial to them. We would like to explore
 firstly, how to integrate this role into the model as a method of implementing
 monitoring, and secondly, how collective evaluation of information quality
-compares to individual methods, which may use trust or social
+compares to individual methods which may use trust or social
 capital~\citep{Petruzzi2014} to access quality of provisions based on previous
 outcomes.
 
 \paragraph{Non-compliance} 
 In our experiments we did not explore non-compliance with the institutional rules.
 There exists significant scope for \emph{institutional non-compliance} within our
-simulation. This encompasses performing actions without institutionalised
+simulation. This encompasses performing actions without having the institutionalised
 power and/or permission to do so, and not performing an action which one is
-obliged to do.
+obliged to perform.
 
 This non-compliance has been explored in previous work, and principles
-4, 5 and 6 offer mechanisms to mitigate the effect of it. However, with the
+4, 5 and 6 offer mechanisms to mitigate the effect of it. However, the
 improved institutional representation offered by Drools-EInst allows for more
 subtle non-compliance than has been previously tested. For example, by solving
 the limitation of synchrony from previous work, we open up the possibility to
 examine the effect of delayed decision making on non-compliance. For example,
-if the chair of a vote expects the the result will not go in his favour, he
+if the chair of a vote expects that the result will not go in his favour, he
 can decide to not declare the result---even though he is obliged to---in order to delay
 the negative effect on himself. Even though this non-compliance should be
 caught and punished, the delay may be sufficient to do damage to the
@@ -503,13 +555,13 @@ institution.
 
 We could test the effect of
 institutional non-compliance, by introducing a behaviour which ignores certain
-obligations. This can be non-intentional non-compliance, where the agent
-breaks an institutional rule because of a fault or other problem, for example
+obligations. This can be non-intentional non-compliance where the agent
+breaks an institutional rule because of a fault or other problem. For example
 if there was a communication problem prevent the agent from being notified of
 an obligation. Alternatively, malicious non-compliance is where an agent will
 selectively break rules in order to maximise rewards for himself. Previously,
-these kinds of compliance have been address with Ostrom's Principles 4, 5 and
-6~\citep{Pitt2012b}.  
+these kinds of compliance have been addressed with Ostrom's Principles 4, 5 and
+6~\citep{Pitt2012b}. 
 
 \paragraph{Knowledge pools} So far we only used pools in the institution for
 information, in the form of information about how the problem works
@@ -523,36 +575,6 @@ learning algorithms~\citep{Opitz1999}, and we can model this process such
 that agents are able to iterate on a pool of knowledge to find the best
 composition for their target problem.
 
-\paragraph{Reinforcement learning problem} We used a model of a reinforcement
-learning problem for our simulations in order to get determinism and
-repeatability in the results. However, the use of actual learning problems and
-policies would expose several other issues in the simulation. The inherent
-non-determinism of reinforcement learning would have implications for equity,
-both coincidently, or possibly due to malicious activity. These learning
-algorithms rely on occasionally `exploring' unknown actions to find possible
-better alternatives. Most times these exploration actions will give lower
-rewards than the current greedy strategy choice, therefore there is a question
-of how such actions should be allocated.
-
-If this allocation is done randomly, then an `unlucky' agent could end up with
-significantly lower accrued rewards purely through bad allocations. There are methods
-to make allocations fairly in such scenarios (cf.~\citet{Pitt2014}), however
-in this case the allocation is at the discretion of the predictor provider,
-and outside the boundaries of the institution. This opens the door for
-corruption in this allocation method.
-
-Alternatively, both exploitative and exploratory predictions could be
-provisioned to the pool and labelled as such, then additional incentives could
-be provided to those who chose to do exploration. With proper selection of the
-value of this incentive, this method would have the potential of finding an
-optimal exploration rate, while socialising the cost of exploration.
-
-Further work is required to test these issues.
-If a viable solution to this problem is found we would then be able
-to begin to investigate how the nature of the learning problem to be solved
-affects how the institution needs to be managed. This would also further test
-robustness in the presence of different levels of rewards and costs.
-
 \paragraph{Long-term institutional change} In this work we only dealt with
 scenarios which started in a certain state and then observed how this state
 developed over time. We did not test how the system response to `shocks' or
@@ -562,21 +584,11 @@ on outcomes for the original population and the newcomers? Does the system and
 should the system favour those who were there at its inception, or is it
 better to join later? These are questions we would like to answer in the future.
 
-\paragraph{External Resource flows}
-Our results show that, when the provision and appropriation system is taken in
-isolation, it is rarely possible to achieve the ideal of free \emph{and} libre
-access to the resource---the cost of the institution and incentivising users
-must be covered. In other knowledge commons, these costs are covered by
-exogenous utilities accrued, or by voluntary contributions to costs. However,
-within the bounds of an isolated system, paid access is required to encourage the
-rational agent to share. We do not yet have a model these external resource
-flows, and their effect on the system equilibrium.
-
 \paragraph{Centralised Institution} In this work we have shown that
 centralisation, while good from an efficiency perspective, can lead to
-inequity, and by decentralising governance we can achieve similar efficiency,
-while being robust to attempts to reduce equity. While this governance is
-decentralised in terms of institutionalised powers, it is still centralised in
+inequity, and by decentralising governance we can achieve similar efficiency
+while being robust to attempts to reduce equity. This governance is
+decentralised in terms of institutionalised powers, but it is still centralised in
 administration. A criticism of centralisation in other fields is that it
 provides a single point of failure, or a bottleneck in a system. This system
 still has this flaw---all institutional state and rules are kept in the rule
@@ -584,17 +596,17 @@ engine and executed in one place.
 
 There are several technical solutions which would enable decentralisation of
 the institutional state, like those which can be used for decentralised
-facilities. For example distributed version control could be used for
-institutional rules, and/or peer-to-peer technology for synchronising state
+facilities. For example, distributed version control could be used for
+institutional rules, and/or peer-to-peer technology for synchronising states
 between agents. However, with a distributed system, conflicts may arise, for
 example if an agent applies an old version of the rules, or reasons with an
-old institutional state. This mandates a conflict resolution mechanism, as
-provided by Ostrom's Principle 7.
+old institutional state. This mandates a conflict-resolution mechanism, as
+provided by Ostrom's Principle 6.
 
-Furthermore, if we decentralise of the institution administration we must
-consider the possibility of groups separating from and later rejoining the
-institution. This may be unintentional, for example a break in communication
-leaves a group isolated. In this case the agents should be able to continue,
+Furthermore, if we decentralise the institution administration, we must
+consider the possibility of groups separating from, and later rejoining the
+institution. This may be unintentional, as for example a break in communication
+can leave a group isolated. In this case, the agents should be able to continue
 and then reconcile institutional state with the rest of the system once
 communication is restored (\citet{Sanderson2012} offer a protocol for such
 reconciliation of institutional facts). Here, Ostrom's Principle 8 (that
@@ -608,9 +620,9 @@ extreme form of collective choice which is enabled by having open rules. This
 model, applied to \ac{FOSS} repositories has been extremely successful in
 recent years, allowing one to have free reign over one's own \emph{fork} of a
 software repository, but also be able to push useful changes back up to the
-original repository, whose maintainers can then evaluate whether accept the
+original repository, whose maintainers can then evaluate whether to accept the
 changes. This model has also been adapted to \emph{federated wikis}, which
-allow personal wikis to be linked in a federated, with pages forked and merged
+allow personal wikis to be linked in a federation, with pages forked and merged
 in between them\footnote{The developer of the first wiki on the web, Ward
 Cunningham, has developed such a federated wiki, called the `Smallest
 Federated Wiki', according to these principles.}. The fork and merge approach
@@ -618,7 +630,7 @@ allows each individual to curate their own information and knowledge, but with
 the benefit of being able to incorporate the inputs of others into their
 repository.
 
-This presents a brief summary into the possible issues and lines of inquiry opened up by the problem of entirely decentralising an institution.
+This represents a brief summary into the possible issues and lines of inquiry opened up by the problem of decentralising an institution in administration as well as in power.
 
 \subsection{Deployment of the Knowledge Commons framework}
 
@@ -626,22 +638,22 @@ In addition to the lines of investigation we can take with the current
 simulation model, there are other aspects of development with respect to our
 knowledge commons framework.
 
-Firstly, as a framework for socio-technical systems, we would like to explore
+Firstly, as a framework for socio--technical systems, we would like to explore
 the interactions which the framework enables between human and computational
 actors and the institutional rules. While we have designed a framework to
-incentivise participation in the system on the operational level, for an
-effective institution we want high participation on the collective-choice and
+incentivise participation in the system on the operational level, 
+we also want high participation on the collective-choice and
 constitutional levels. Thus, for human actors, we envision enabling this
 participation through serious games and gamification, with an emphasis on the
-visualisation of the `state' of the common pool and the rule (for example
-\citet{Bourazeri12} use this approach to engage SmartMeter users). 
+visualisation of the `state' of the common pool and the rules (for example
+\citet{Bourazeri12} use this approach to engage smartmeter users). 
 
 We mentioned in \autoref{sec:iad} that the Open Mustard Seed
 platform~\citep{Hardjono2014a} was a possible target for deployment of our
-framework to real-world socio-technical systems. Providing solid foundations
+framework to real-world socio--technical systems. Providing solid foundations
 for data control and privacy, it would allow the introduction of our framework
-at the governance and information management level. Thus, moving forward, we
-still this integration as a primary implementation and deployment vehicle for
+at the governance and information-management level. Thus, moving forward, we
+see this integration as a primary implementation and deployment vehicle for
 the ideas expressed in this thesis.
 
 % gamification to encourage participation in governance
@@ -659,9 +671,9 @@ This includes the graphical support for modelling we outlined at the end of
 simulation with a \ac{GUI}, by connecting parameters to modules and agents.
 
 We have recently been exploring the use of the Groovy programming language\footnote{http://groovy-lang.org/} for
-the implementation of simulation components. This is a loosely typed language
+the implementation of such simulation components. This is a loosely typed language
 which has full integration with Java, allowing for more accessible code with
-less boilerplate which, none-the-less is able to integrate with all of
+less boilerplate which, none-the-less, is able to integrate with all of
 Presage2's features. A simpler to write language should have the effect of
 making the platform less intimidating for inexperienced programmers, and more
 productive for experienced ones.
@@ -672,21 +684,21 @@ model implementation, and reduces the amount of programming required for a
 working simulation.
 
 Finally, we hope to expand the use of the tool for the deployment of agents.
-We have said that our modular approach, and the abstraction layer between
-agents and environment state allow for agent implementations to be taking out
+We have said that our modular approach and the abstraction layer between
+agents and environment state, allow for agent implementations to be taken out
 of the simulation and into a real-world deployment without re-implementation.
 This is something we would like to explore and test in further work.
 
 \subsection{Continued development of Drools-EInst}
 
-Drools-EInst, as a fairly young project has significant scope for further
+Drools-EInst is a fairly young project, but has significant scope for further
 improvement work. As a library of specifications for electronic institutions,
-it only has the specifications described in this thesis implemented so far.
+it thus far only has the specifications described in this thesis implemented.
 Therefore, this library should be expanded to increase the number of available
 tools it provides.
 
 Additionally, while the tool's use in simulation has been demonstrated here,
-we would like to further test it in a real application. We see good candidate for
+we would like to further test it in a real application. We see a good candidate for
 this deployment is the Open Mustard Seed project, for which the current
 libraries are appropriate as a governance tool.
 

@@ -504,8 +504,7 @@ TuProlog engines}\label{fig:cec}
 As we are working with a Java-based simulation tool, Presage2, we would like
 to be able to interface with our electronic institution specification from
 Java. This can be done either with a bridge between the Java application and a
-Prolog interpreter, as offered by the JPL project
-\footnote{http://www.swi-prolog.org/packages/jpl/java\_api/index.html}; or with a pure Java Prolog
+Prolog interpreter, as offered by the JPL project\footnote{http://www.swi-prolog.org/packages/jpl/java\_api/index.html}; or with a pure Java Prolog
 engine. The former will offer comparable performance to the standalone Prolog
 implementation, as the overhead of the communication between Java and Prolog
 processes will be negligible (in relation to the runtime of the Prolog query).
@@ -522,8 +521,7 @@ identical narratives. The use of Java aids the automation of these tests, so
 we run 10 repeats for each narrative. Additionally, runtime optimisation by
 the Java Runtime Environment (JRE) means that the execution time will improve over
 time, thus we exclude the first results, only taking results after the JRE has
-`warmed-up'
-\footnote{This `warm-up' refers to the dynamic, just-in-time compilation, and run-time optimisation performed by the JRE, which causes slower performance early in the program life-cycle~\citep{Blackburn2008}}. 
+`warmed-up'\footnote{This `warm-up' refers to the dynamic, just-in-time compilation, and run-time optimisation performed by the JRE, which causes slower performance early in the program life-cycle~\citep{Blackburn2008}}. 
 Timing is calculated using the Java built-in function
 \texttt{System.nanoTime()}\footnote{http://docs.oracle.com/javase/7/docs/api/java/lang/System.html\#nanoTime()} 
 which provides up-to nano second accuracy for timing tasks.
