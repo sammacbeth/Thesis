@@ -67,31 +67,31 @@ achieve equity and sustainability.
 % This provides the foundations for engineering knowledge commons for the next generation
 % of participatory-sensing applications, in which the data generators are also the primary beneficiaries.
 
-\section{Preliminary Definitions and Assumptions}
+% \section{Preliminary Definitions and Assumptions}
 
-\subsection{Multi-agent systems \& Intelligent Agents}\label{sec:agents}
+% \subsection{Multi-agent systems \& Intelligent Agents}\label{sec:agents}
 
-The term \ac{MAS} is a broad term encompassing an array of different concepts and applications. While the meaning of the term can be decomposed to be a system of multiple agents, the definition of an agent remains to be settled~\citep{Wooldridge2002}. There is some consensus that, firstly agents are computer systems situated in an environment, and that they are autonomous. Other important features of agency are given as~\citep{Wooldridge1995,HayesRoth1995}:
-\begin{itemize}
-\item \emph{reactivity}---agents perceive their environment, including other agents, and react to changes in it.
-\item \emph{proactivity}---agents are able to exhibit goal-directed behaviour.
-\item \emph{communication}---agents can have some kind of social capacity to interact with other agents.
-\end{itemize}
+% The term \ac{MAS} is a broad term encompassing an array of different concepts and applications. While the meaning of the term can be decomposed to be a system of multiple agents, the definition of an agent remains to be settled~\citep{Wooldridge2002}. There is some consensus that, firstly agents are computer systems situated in an environment, and that they are autonomous. Other important features of agency are given as~\citep{Wooldridge1995,HayesRoth1995}:
+% \begin{itemize}
+% \item \emph{reactivity}---agents perceive their environment, including other agents, and react to changes in it.
+% \item \emph{proactivity}---agents are able to exhibit goal-directed behaviour.
+% \item \emph{communication}---agents can have some kind of social capacity to interact with other agents.
+% \end{itemize}
 
-Thus the requirements for agency are tied to both the capabilities of system, and the way in which it makes decisions (in contrast to agency in social sciences which only requires autonomy). These requirements act as a way of excluding basic systems, such that not all systems and programs would be classified as agents~\citep{Franklin1997}.
+% Thus the requirements for agency are tied to both the capabilities of system, and the way in which it makes decisions (in contrast to agency in social sciences which only requires autonomy). These requirements act as a way of excluding basic systems, such that not all systems and programs would be classified as agents~\citep{Franklin1997}.
 
-When in an environment, an agent reads the state of the environment via sensors, and performs actions to change the state of the environment. In most cases the control that the agent can exert on the environment will only be partial, in that it can influence the state of the environment. The effect of an action may not be deterministic, or it may not have any affect at all, depending on the properties of the environment~\citep{Wooldridge2002}.
+% When in an environment, an agent reads the state of the environment via sensors, and performs actions to change the state of the environment. In most cases the control that the agent can exert on the environment will only be partial, in that it can influence the state of the environment. The effect of an action may not be deterministic, or it may not have any affect at all, depending on the properties of the environment~\citep{Wooldridge2002}.
 
-The properties of an environment can be classified according to several relevant criteria~\citep[p.46]{Russell2003}:
-\begin{itemize}
-\item \emph{Accessible}---If an agent can perceive the complete environment state via its sensors, then the environment is accessible to this agent.
-\item \emph{Deterministic}---If the next state of the environment is determined purely from the current state and actions of agents, then it is deterministic.
-\item \emph{Episodic}---In an episodic environment the quality of actions do not depend on previous actions.
-\item \emph{Static} or \emph{dynamic}---If the environment can change while an agent is deciding on an action then the environment is dynamic for the agent; otherwise it is static.
-\item \emph{Discrete} or \emph{continuous}---If the set of possible environment states is finite, then the environment is discrete; otherwise it is continuous.
-\end{itemize}
+% The properties of an environment can be classified according to several relevant criteria~\citep[p.46]{Russell2003}:
+% \begin{itemize}
+% \item \emph{Accessible}---If an agent can perceive the complete environment state via its sensors, then the environment is accessible to this agent.
+% \item \emph{Deterministic}---If the next state of the environment is determined purely from the current state and actions of agents, then it is deterministic.
+% \item \emph{Episodic}---In an episodic environment the quality of actions do not depend on previous actions.
+% \item \emph{Static} or \emph{dynamic}---If the environment can change while an agent is deciding on an action then the environment is dynamic for the agent; otherwise it is static.
+% \item \emph{Discrete} or \emph{continuous}---If the set of possible environment states is finite, then the environment is discrete; otherwise it is continuous.
+% \end{itemize}
 
-\citet[pp.31--32]{Wooldridge2002} provides a formalisation of an abstract \ac{MAS}. This defines a \emph{run} of an agent in an environment as a sequence of interleaved environment states and actions, representing the history for that agent; a \emph{state transformer} function which defines the effect that agents actions have on the environment state; and an \emph{agent function} which maps a \emph{run} for an agent to an action, representing an agent's decision process.
+% \citet[pp.31--32]{Wooldridge2002} provides a formalisation of an abstract \ac{MAS}. This defines a \emph{run} of an agent in an environment as a sequence of interleaved environment states and actions, representing the history for that agent; a \emph{state transformer} function which defines the effect that agents actions have on the environment state; and an \emph{agent function} which maps a \emph{run} for an agent to an action, representing an agent's decision process.
 
 \section{Methodology}
 
@@ -177,8 +177,8 @@ This thesis has five main contributions. Three of these pertain to the problem o
 \item A review of governance in participatory-sensing applications, identifying a lack of governance consideration and user enfranchishment.
 \item An analysis of participatory sensing as a knowledge commons, using the \ac{IAD} framework, in conjunction with a framework for self-organising electronic institutions, which provides an architectural and algorithmic basis for governance of a knowledge commons.
 \item A general purpose simulation platform for agent-based simulation and modelling, Presage2, suitable of the principled operationalisation of a model of the participatory-sensing knowledge commons.
-\item A method of translating \acl{EC} into business rules, and an implementation for specification of electronic institutions, Drools-EInst, along with a suite of modules, with which we can implement a specification for a self-organising knowledge commons.
-\item An experimental model of the management of participatory sensing as a knowledge commons, through which we generate an experimental validation of the problem of supply of institutions, and the importance of proper enfranchisement of the data providers for equity in participatory sensing.
+\item A method of translating \acl{EC} into business rules, and an implementation for the specification of electronic institutions, Drools-EInst, along with a suite of modules, with which we can implement a specification for a self-organising knowledge commons.
+\item An experimental model of the management of participatory sensing as a knowledge commons, with which we validate the problem of supply of institutions, and identify the importance of proper enfranchisement of the data providers for equity in participatory sensing.
 \end{itemize}
 
 In total, this thesis shows that sustainable, collective, self-organising

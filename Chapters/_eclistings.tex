@@ -1,10 +1,19 @@
 %!TEX root =../MacbethThesis.tex
 
-\chapter{Event Calculus Benchmarking}
+\chapter{Voting Protocol Specifications}
 
-\section{RONR Implementation in Prolog}\label{sec:ronrcode}
+Here we list the specifications of the voting protocol from \ac{RONR} used in
+the benchmarks in \autoref{ch:droolseinst}. We have firstly a Prolog
+implementation from the original paper of \citet{Pitt2005a}. Secondly, we have
+the translation of this specification into Drools. This specification only
+contains the Drools code, and is missing the associated Java classes required
+to execute it. These classes, along with associated code for testing the
+specification can be found in the Drools-EInst source
+repository\footnote{https://github.com/sammacbeth/electronic-institutions}.
 
-\begin{prologinline}[caption=Implementation of RONR in Prolog]
+\section{RONR Voting Protocol Implementation in Prolog}\label{sec:ronrcode}
+
+\begin{prologinline}
 :- dynamic
     happens/2.
 
@@ -165,7 +174,7 @@ initially( status(_) = null ).
 initially( sitting(_) = false ).
 \end{prologinline}
 
-\section{RONR Implementation in Drools}\label{sec:ronrdrools}
+\section{RONR Voting Protocol Implementation in Drools}\label{sec:ronrdrools}
 
 \begin{droolsinline}
 /************
