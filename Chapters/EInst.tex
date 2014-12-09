@@ -5,7 +5,7 @@
 \lettrine[lines=3]{E}{lectronic} Institutions have been identified as a powerful
 tool for maintaining order and cooperation in `open' multi-agent
 systems~\citep{Esteva2001,Artikis2009}. Taking lessons from the development of
-institutions (defined as sets of rules which define what is permitted and
+institutions (defined as sets of rules which specify what is permitted and
 forbidden within a given context~\citep{Ostrom1990,North1990}) in human social and
 organisational systems, they aim to regulate interactions as norms---specifying
 expectations of behaviour---or concrete rules to say what is required and
@@ -21,7 +21,7 @@ some form of institutionalised power, permission and/or
 obligation (cf.~\citet{Jones1996}) for agents to perform certain actions (and it has
 been argued that this kind of assignment is essential to properly specify a system which extends beyond purely physical state~\citep{Artikis2009a}).
 In an open system any agent could perform any action (within its physical
-capabilities). An electronic institution used in the context is able to
+capabilities). An electronic institution used in this context is able to
 distinguish between actions which should and should not cause a change in
 institutional state, and actions which are allowed and forbidden.
 
@@ -58,9 +58,9 @@ and marking a cross on a piece of paper will count as an election vote. Outside
 of this window this action has no effect.
 
 Thus, an implementation of an electronic institution should be an executable
-specification which, firstly, holds some state of the institution, though which
-powers, permissions and obligations can be deduced, secondly, defines how
-actions may change the state of the institution at a given time, and, finally,
+specification which, firstly, holds some state of the institution, through which
+powers, permissions and obligations can be deduced; secondly, defines how
+actions may change the state of the institution at a given time; and finally,
 allows agents to query whether they are empowered, permitted or obliged to perform
 any given action.
 
@@ -69,20 +69,22 @@ formalised and specified in such a way that they can be reused in institutions
 as a tool for certain tasks. For example, \ac{RONR}~\citep{Robert2011} is a
 specification of a parliamentary authority for organisations. Organisations
 can take this specification and update their institutional rules accordingly
-to incorporate this robust protocol. The aim of electronic institutions is to
+to incorporate this robust\footnote{Robust, in that there is little or no ambiguity over which actions can be taken, and who can perform them; and the protocol is not vulnerable to manipulation. This means that the protocol will be able to function effectively in most circumstances.}
+ protocol. The aim of electronic institutions is to
 provide such tools for open, agent-based systems, and work has been done on
-specifying various protocols, include the a voting protcol from the aforementioned
+specifying various protocols, include the a voting protocol from the aforementioned
 \ac{RONR}~\citep{Pitt2005a}, floor control
 protocols~\citep{Artikis2004,Artikis2009b}, monitoring and sanctioning
 procedures~\citep{Pitt2012c}, argumentation~\citep{Artikis2003} and auctions~
-\citep{Rodriguez1997}. However, there has yet to emerge an integrated tool
-providing a suite of these protocols for use by institution designers.
+\citep{Rodriguez1997}. However, an integrated tool
+providing a suite of these protocols for use by institution designers 
+is yet to emerge.
 
 We are concerned with how to implement electronic institutions for both
 simulated applications and real-time system monitoring. This implementation
-should therefore meet the following requirements:
+should therefore meet the following loose requirements:
 \begin{itemize}
-\item Fast-enough for real-time systems;
+\item Fast enough for real-time systems;
 \item Expressive, such that complex rules and relationships can be implemented;
 \item Readable, such that the behaviour is apparent from the specification;
 \item Modular, such that institutions can be built up from the composition of smaller modules.
@@ -90,7 +92,7 @@ should therefore meet the following requirements:
 
 In this chapter we investigate the specification and execution of electronic
 institutions. We review languages for specification of institutional rules.
-Taking the Event Calculus as an example, we assess its use for the execution of
+Taking the Event Calculus~\citep{Kowalski1986} as an example, we assess its use for the execution of
 voting as per Robert's Rules of Order. By profiling the performance in this representative task, we show how performance can be drastically
 improved using a naive rule-based implementation of the Event Calculus. Finally,
 we argue that a business rule engine has the necessary features to implement
@@ -101,7 +103,7 @@ translated to the JBoss Drools rule engine, using the \ac{RONR} example.
 
 \section{Defining Electronic Institutions}\label{sec:instdefn}
 
-To this point we have yet to formally define what we mean by an Electronic
+We are yet to formally define what we mean by an Electronic
 Insitution, beyond saying that they are an instantiation of what economists
 define as an Institution, but in a computational domain. \citet{North1990}
 defines Institutions thusly: 
@@ -134,7 +136,7 @@ actors. The distinction between a human and electronic institution is that the
 latter is specified and executed in a computational domain.
 
 \citet{Esteva2001} specify electronic institutions with a similar definition,
-also derived from the definition of \citet{North1990}. Their specification allows
+also derived from that of \citet{North1990}. Their specification allows
 the institution to dictate how and when interactions occur via a
 \emph{dialogic framework} (a common language of communication) and
 \emph{scenes}, which define subgroups where dialogues occur. These
@@ -175,7 +177,7 @@ agents do physically. On the other hand, institutionalised powers and
 permissions, prohibitions and obligations are obviously within the
 institution. We argue that the final set of constraints---sanctions and
 enforcement policies---are actually a feature which the institution \emph{may}
-provide, but not part of its definition.
+provide, but are not part of its definition.
 
 \citet{North1990} also states that a defining feature of human institutions is
 that they can be changed by the organisations which use them. This
@@ -204,9 +206,9 @@ executable, we now re-visit electronic institution specifications, and
 particularly, their operationalisation. 
 
 Work on specification of constraints, or norms, for multi-agent
-systems often focuses on the use of logics for specification. Logical
+systems often focuses on the use of Logics for specification. Logical
 specifications have the advantage of enabling model checking and formal proofs
-of validity. Logics typically also support deductive, adductive and inductive
+of validity. Logics typically also support deductive, abductive and inductive
 reasoning:
 
 \begin{itemize}
@@ -238,10 +240,10 @@ translation, starting with high level abstractions of statutes and norms which
 eventually are translated into computationally efficient procedures.
 
 \citet{Chopra2006} use the action language \emph{C+}~\citep{Giunchiglia2004}
-to specify their commitment protocols. \citet{Artikis2009} also use this
+to specify their \emph{commitment protocols}. \citet{Artikis2009} also use this
 language in their specification. This language allows the representation of
 the properties of actions, including those with conditional and indirect
-effects. There is also an implementation of the \emph{C+} language, the Causal
+effects. There is an implementation of the \emph{C+} language, the Causal
 Calculator\footnote{http://www.cs.utexas.edu/users/tag/ccalc}, which
 translates \emph{C+} action descriptions into propositional logic then allows
 querying of the compiled system. Queries can perform deductive and abductive
@@ -260,10 +262,10 @@ specifications from an algorithmic perspective.
 
 We chose the \ac{EC} for our work for several reasons. It is easy-to-use and
 intuitive. As Prolog compiles specifications very quickly, one can very
-quickly test implementations, avoiding some of the longer development cycles
+quickly test implementations, avoiding some of the longer development cycles of the languages
 we introduced above. Furthermore, the majority of the protocols and
 specifications we wish to use already have implementations in \ac{EC}.
-Therefore, it appears, to us, a good starting point for a library of tools for
+Therefore, for us, it is a good starting point for a library of tools for
 electronic institutions.
 
 % There are several methods of specifying electronic institutions. In their
@@ -306,8 +308,8 @@ electronic institutions.
 
 \section{The Problem with the Event Calculus}\label{sec:ecperf}
 
-The \acl{EC}\footnote{We gave a brief primer on the \ac{EC} and its predicates in \autoref{sec:ecprimer}. A more detailed introduction to the concepts can be found in \citet{Shanahan1999}.} is a good formalism for executable specification of electronic
-institutions, as evidenced by its widespread use. It also has a rich feature
+The \acl{EC}\footnote{We gave a brief primer on the \ac{EC} and its predicates in \autoref{sec:ecprimer}. A more detailed introduction to the concepts can be found in \citet{Shanahan1999}.} is a widely used formalism for executable specification of electronic
+institutions. It also has a rich feature
 set, enabling verification of specifications, deductive, abductive and
 inductive tasks~\citep{Shanahan1999}. However, like with other declarative
 logic specifications, this richness comes at the cost of performance and
@@ -323,7 +325,7 @@ listed in \autoref{sec:ronrcode}). This is a slightly reduced specification
 from the original, omitting obligations and sanctions, leaving just
 institutionalised power and the voting protocol. This problem, coupled with a
 suitable narrative, is a representative example of an electronic institution
-specification. Therefore, benchmark results with it are an indicator of the
+specification. Therefore, benchmark results obtained using it are an indicator of the
 general performance of \ac{EC} implementations for electronic institutions. We
 test two implementations of \ac{EC}: the Simple Event Calculus and Cached
 Event Calculus. We then show that significantly faster execution can be
@@ -337,7 +339,7 @@ with the same specifications and with the same narratives. We start with a
 common initial state, defining an initial population of agents as per the voting protocol
 implementation. We define seven agents, one occupying the role of \emph{chair}
 and two who qualify for \emph{proposer} and \emph{seconder} roles. All agents
-also occupy the \emph{voter} role. This state is encoded in prolog as shown in
+also occupy the \emph{voter} role. This state is encoded in Prolog as shown in
 \autoref{lst:ronrinitially}.
 
 \begin{prolog}[caption=Initial state of voting protocol in Prolog,label=lst:ronrinitially]
@@ -401,7 +403,7 @@ the time to, firstly, process the provided narrative, and secondly, perform a
 deductive query on the institution state. The former is done via a \texttt{doUpdate}
 function, which will be different for each \ac{EC} implementation. The latter
 performs a \texttt{holdsAt} query to check which resolutions are asserted at a
-time after the session has been closed.
+time after the voting session has been closed.
 
 \begin{prologinline}
 test :-
@@ -413,7 +415,7 @@ test :-
 
 The Simple Event Calculus is the most basic form of the \ac{EC}~\citep{Shanahan1999}.
 This version was used in the original \ac{RONR} voting protocol implementation, and is shown in \autoref{lst:secpl}. To this we add a \texttt{doUpdate} implementation which simply asserts each
-\texttt{happens} tuple:
+\texttt{happens} tuple.
 
 \begin{prolog}[caption=Prolog implementation of the Simple Event Calculus,label=lst:secpl]
 holdsAt(Fluent, T) :-
@@ -437,16 +439,16 @@ terminates(Event, Fluent = V, T) :-
 	\+ (V = V2).
 \end{prolog}
 
-\begin{prologinline}
-doUpdate :-
-	narrative(D),
-	update(D).
+% \begin{prologinline}
+% doUpdate :-
+% 	narrative(D),
+% 	update(D).
 
-update([]).
-update([H|T]):-
-	assertz(H),
-	update(T).
-\end{prologinline}
+% update([]).
+% update([H|T]):-
+% 	assertz(H),
+% 	update(T).
+% \end{prologinline}
 
 We test the execution time, as reported by the SWIProlog profiler, with
 an increasing number of motions to pass. These results are shown in \autoref{tab:ronrsec}.
@@ -456,13 +458,13 @@ that with just three motions in the narrative the query did not terminate.
 
 \begin{table}
 \caption[Runtime of voting protocol with the Simple Event Calculus]{Runtime of voting protocol with the Simple Event Calculus. With three motions the
-code failed to terminate in the given time. Note, narrative time is reported as 0 as the timing method does not report times less than $1$ms.}\label{tab:ronrsec}
+code failed to terminate in the given time. Note, narrative time is reported as <$1$ ms as the timing method does not report times less than this.}\label{tab:ronrsec}
 \centering
 \begin{tabular}{c|c|r|r}
 Motions & Actions & Narrative time /s & Query time /s \\ \hline
-1 & 13 & 0.000 & 0.005 \\
-2 & 24 & 0.000 & 13.849 \\
-3 & 35 & 0.000 & >24 hours \\
+1 & 13 & $<1$ ms & 0.005 \\
+2 & 24 & $<1$ ms & 13.849 \\
+3 & 35 & $<1$ ms & >24 hours \\
 \end{tabular}
 \end{table}
 
@@ -475,25 +477,25 @@ each event is processed when it is created, and a resulting state calculated.
 Subsequent queries can then be processed extremely quickly, without having to
 consult the specification.
 
-As event processing in the CEC is done via an \texttt{update/1} procedure, we
-must modify the \texttt{doUpdate} procedure to pass the event list directly to
-\texttt{update/1}:
+% As event processing in the CEC is done via an \texttt{update/1} procedure, so we
+% must modify the \texttt{doUpdate} procedure to pass the event list directly to
+% \texttt{update/1}.
 
-\begin{prologinline}
-doUpdate :-
-	narrative(D),
-	update(D).
-\end{prologinline}
+% \begin{prologinline}
+% doUpdate :-
+% 	narrative(D),
+% 	update(D).
+% \end{prologinline}
 
 In this case performance is significantly better, as shown in
 \autoref{fig:cec_swipl}. However as the number of motions increases, execution
-time is non-linear.
+time is exponential.
 
 \begin{figure}
 \centering
 \subfloat[SWIProlog]
 {\label{fig:cec_swipl}\includegraphics{gfx/ec/cec_swipl}}
-\subfloat[TuProlog]
+\subfloat[tuProlog]
 {\label{fig:cec_tupl}\includegraphics{gfx/ec/cec_tupl}}
 \caption{Execution time of voting protocol using Cached Event Calculus with SWIProlog and
 TuProlog engines}\label{fig:cec}
@@ -513,8 +515,8 @@ available to the Java runtime.
 
 Java Prolog engines offer a portable implementation which integrates natively
 with Java code. tuProlog~\citep{Denti2005} is a lightweight Prolog
-implementation in Java. We perform another performance test using this Prolog
-engine to compare to those in the previous section.
+implementation in Java. We run another performance test using this Prolog
+engine to compare with those in the previous section.
 
 We orchestrate the same testing scenario as before, with
 identical narratives. The use of Java aids the automation of these tests, so
@@ -530,7 +532,7 @@ which provides up-to nano second accuracy for timing tasks.
 \autoref{fig:cec_tupl} shows the performance of the Cached Event Calculus running on
 TuProlog. It shows that this engine is significantly slower than running the
 same Prolog code in SWIProlog. However it scales slightly better, with the
-performance going from 60 times slower with one motion,to 30 times at 30
+performance going from 60 times slower with one motion, to 30 times slower at 30
 motions.
 
 %Despite this, given the significant runtime with relatively small
@@ -540,13 +542,13 @@ motions.
 
 The Prolog implementations of the \ac{EC} provide deductive, abductive and
 inductive reasoning capabilities. This allows for a broad range of tasks, such
-as planning and monitoring. However, the cost of catering for all this tasks
+as planning and monitoring. However, the cost of catering for all these tasks
 in a single logic engine is shown in the computational complexity of seemingly
 simple deductive tasks. If we wish to use an electronic institution, in a
-simulation or application, purely for deductive tasks (to know what's true
+simulation or application, purely for deductive tasks (to know what is true
 when, given what has happened), then Prolog is not a very efficient solution.
 We test this hypothesis by creating a proof-of-concept implementation of a
-rule-based approach of the processing of \ac{EC} axioms, and testing its
+rule-based approach of the processing of \ac{EC} axioms, and analyse its
 performance with the same \ac{RONR} voting specification.
 
 A purely deductive \ac{EC} implementation will only need to be able to query
@@ -556,7 +558,7 @@ that t), whether a fluent is true \emph{initially}, whether an event happens
 at a time t, or whether an event \emph{initiates} or \emph{terminates} a
 fluent. We can specify this as a Java interface as shown in
 \autoref{lst:iecquery}. This interface supports fluents with non-boolean
-values, and also implicit inference of these values when passed a placeholder
+values, and also implicit inference of these values when a placeholder is passed
 object as the value.
 
 \begin{java}[label=lst:iecquery,caption=Java interface for deductive queries on an EC Specification]
@@ -581,8 +583,8 @@ This functionality is exploited in order to implement Prolog-style anonymous
 and inferred variables in fluent names.
 
 We also give a programmatic interface through which an \ac{EC} specification
-can be given, shown in \autoref{lst:iecspec}. This interface also allows for
-the assertion of facts at runtime, allowing the specification to manipulate
+can be provided, shown in \autoref{lst:iecspec}. This interface also allows for
+the assertion of facts at runtime, letting the specification manipulate
 fluent values. The specification is given in terms of objects representing
 rules, which define either what an event initiates, or whether a fluent holds.
 An \emph{initiates} rule can define a fluent change by calling
@@ -609,7 +611,7 @@ objects with anonymous and infered variables. For example we could match a
 Prolog predicate \texttt{pow(V, vote(V,M,\_))}, inferring the values of
 \texttt{V} and \texttt{M} in the process. Examples of both types of rule
 specification are shown in \autoref{lst:initiates} and \autoref{lst:holdsAt}.
-Note, this method achieves a one-to-one correspondance between \ac{EC} axioms
+Note, this method achieves a one-to-one correspondence between \ac{EC} axioms
 and rules. However, the verbose nature of Java results in a long, and
 difficult to read specification.
 
@@ -667,7 +669,7 @@ events after and including those at $\mathit{t1}$ are then processed. An event i
 processed by triggering all initiates rules with the event and time pair. The
 fluent cache is dynamically expanded for new timesteps by simply copying the
 cache for the previous time. Deductive queries are handled by firstly looking
-for a matching fluent in the cache. If non is found, each \texttt{Matcher} in
+for a matching fluent in the cache. If none is found, each \texttt{Matcher} in
 the set of \emph{HoldsAt} rules is checked to find a candidate rule to infer the value
 with. If one is found, we use the \texttt{Binder} to return, or check the value
 of the fluent.
@@ -691,9 +693,9 @@ the \ac{EC} will scale much better than with Prolog.
 
 However, we note that this is a simple, and fairly naive implementation of a
 rule-based approach to the \ac{EC}. It omits features such a forward-chaining,
-which would be required to probably handle multiple actions per timestep. In
-particular this implementation requires a verbose translation of the Prolog
-specification, a process which is likely to introduce errors. The format of
+which would be required to properly handle multiple actions per timestep. In
+particular this implementation requires a verbose manual translation of the Prolog
+specification, a process which is error-prone. The format of
 these translated rules is fairly structured and uniform, therefore it would be
 possible to write a compiler from \ac{EC} axioms to these programmatic rule
 implementations. However, there already exist Java rule engines which have
@@ -703,7 +705,7 @@ Engines in the next section.
 
 An additional issue when using Prolog-like syntax for axioms is the
 limitations of tuple- and predicate-based variables. This variable system is
-readable and expressive with simple constructs, however lacks robust mechanisms to
+readable and expressive with simple constructs, however lacks reliable mechanisms to
 reference other objects, and as the size and depth of nested tuples increases
 readability is lost. This is in contrast to Java where we can have many member
 variables in an object, and complex reference trees from these variables. This
@@ -713,12 +715,12 @@ Java one would have a single object with multiple attributes.
 
 \subsection{Summary of \acl{EC} Performance}
 
-In summary, this section has outlined the issues with using direct prolog
+In summary, this section has outlined the issues with using direct Prolog
 implementations of the \ac{EC} when dealing with primarily deductive tasks,
 and interfacing these with a Java runtime. Furthermore, by implementing a
 simple version of rule-based deduction of fluents from translated \ac{EC}
-axioms we observe an improvement in performance of several orders of
-magnitude. Thus we propose that we can achieve a fast and robust deductive
+axioms we observe an improvement in performance of two orders of
+magnitude faster than the best Prolog implementation. Thus we propose that we can achieve a fast and robust deductive
 \ac{EC} engine using a standard rule engine.
 
 There is still ongoing work in implementing faster Prolog \ac{EC}
@@ -734,9 +736,9 @@ which is a significant hurdle to the implementation of specifications.
 
 The use of time windows has also been proposed by \citet{Carr2010} to speed up
 the \ac{EC}. This method specifies a cut-off time point before which one can
-no longer perform \emph{holdsAt} queries. In doing so the number of relevant
-events can be reduced, and so, more linear scaling can be achieved. There is
-then a trade-off to be made between the amount of history to be kept, and
+no longer perform \emph{holdsAt} queries. In doing so, the number of relevant
+events can be reduced, and so, more linear scaling can be achieved. Still, there is
+ a trade-off to be made between the amount of history to be kept, and
 query/event processing run time.
 
 \section{A Rule-Engine Implementation of Event Calculus Specifications}
@@ -749,7 +751,7 @@ verification and the other non-deductive reasoning tasks, for runtime
 deductive reasoning with large number of incoming events we advocate a 
 rule-based implementation. Therefore, if we are specifying in \ac{EC}, but
 implementing in a different paradigm we require a robust translation process
-so that we can be confident of maintaining correctness.
+so the specifications will be consistent.
 
 In this section we present a method of translating \ac{EC} axioms into a
 declarative rule form, using the language of a \acl{PRS} system, JBoss Drools.
@@ -761,10 +763,10 @@ using the same \ac{RONR} voting protocol example as in the previous section.
 
 \subsection{JBoss Drools}
 
-JBoss Drools\footnote{http://www.drools.org/} is a \ac{BRMS}, a software framework through which Knowledge
-Representation and Reasoning can be done. The core component of this is a \ac{PRS}
+JBoss Drools\footnote{http://www.drools.org/} is a \ac{BRMS}, a software framework use for Knowledge
+Representation and Reasoning. The core component of this is a \ac{PRS}
 which provides an ontology for knowledge representation and rules which the system
-uses to reason with. This system is then fed data, through which it determines a
+reasons with. This system is then fed data, through which it determines a
 knowledge state. Drools' \ac{PRS} has a rule engine which employs hybrid reasoning,
 enabling both forward-chaining and backward-chaining reasoning.
 
@@ -779,7 +781,7 @@ nodes. Drools has developed various extensions to the original algorithm to
 improve performance, properly integrate Java objects, and fuzzy reasoning\footnote{A full description of the algorithm is given in the software
 documentation, available at \url{http://docs.jboss.org/drools/release/6.1.0.Final/drools-docs/html/HybridReasoningChapter.html}}.
 
-The Drools \ac{PRS} then consists of the following at runtime:
+The Drools \ac{PRS} then has the following runtime components:
 \begin{itemize}
 	\item Production Memory, which contains the production rules;
 	\item Working Memory, which contains the state of the system, also called `facts';
@@ -806,7 +808,8 @@ to trigger the rule. This consists of object types with constraints which match
 to facts. These conditional elements can be combined with various logical
 operators to form a matching tuple. Furthermore, variables can be bound with the
 unification operator (\texttt{:}), which can then be referred to in a later
-conditional element, and/or in the consequence. The consequence of the rule,
+conditional element, and/or in the consequence. Note that the convention is that variables bound in this way are prefixed with a \texttt{\$} in Drools.
+The consequence of the rule,
 specified in the `then' section, is written in Java, with some syntactic
 shortcuts given for convenience. Namely, one can \texttt{insert}, \texttt{update}
 and/or \texttt{retract} facts with shorthand functions.
@@ -843,7 +846,7 @@ Coupled with the event processing tools it enables logical and temporal
 constraints for rules, coupled with native integration of Java objects.
 Furthermore, it allows multiple state changes as a consequence of a rule, unlike
 the \ac{EC} in which multiple clauses must be written to update multiple
-fluents, even if they are caused by the same event. Therefore, we consider it as
+fluents, even if they are caused by the same event. Consequently, we consider it as
 a viable platform for the construction of a Electronic Institution engine.
 
 However, there are several main design challenges to overcome to be able to transfer
@@ -869,10 +872,11 @@ are often defined multiple times for different input fluents. In Drools we would
 only be able to have a single query definition which must handle all cases.
 \end{enumerate}
 
-\citet{Bragaglia2012} overcome these issues by requiring that a specification
+\citet{Bragaglia2012} overcame these issues by requiring that a specification
 only consists of \emph{initiates} clauses, defined in Java code. These clauses
-are then compiled into Drools rules which assert the internal events
-\texttt{Clip} and \texttt{Declip}. Validity intervals can then be calculated
+are then compiled into Drools rules which assert the internal predicates
+\texttt{Clip} and \texttt{Declip}\footnote{\texttt{Clip} and \texttt{Declip} are \ac{EC} predicates which determine if a fluent is terminated or initiated within a time interval.}. 
+Validity intervals can then be calculated
 in order to determine when fluents are true. This implementation therefore only
 utilises Drools' rule language for the specification of \ac{EC} axioms, and the
 actual domain specification must be done in Java code.
@@ -895,7 +899,7 @@ actual domain specification must be done in Java code.
 % trade-off to be made between the readability of rules, and the features we can
 % achieve in the engine.
 
-For these reasons we take a different approach. Rather than implementing \ac{EC}
+For these reasons, we take a different approach. Rather than implementing \ac{EC}
 axioms in Drools, we instead follow a process to translate \ac{EC}
 specifications to work within a Drools workflow. Therefore instead of \emph{initiaties}
 and \emph{holdsAt} axioms, we simply write Drools rules, and follow Drools
@@ -920,7 +924,7 @@ of the third.
 
 The remaining issue is that of enabling the loose matching of
 actions. The particular use-case here is granting institutionalised power,
-permission or obligation to perform an action, where we wish to specify a range
+permission or obligation to perform an action---where we wish to specify a range
 of possible actions. We can create a fact to represent the agent-action tuple in
 an object. For example we have a class \texttt{Pow} with \texttt{actor} and
 \texttt{action} fields. A naive usage of this power would be to just check that
@@ -983,9 +987,9 @@ public class OpenSession extends Action {
 
 \subsubsection*{Representation of fluents}
 
-We can simplify the state representations of electronic institutions by collected
+We can simplify the state representations of electronic institutions by collecting
 related fluents into objects. For example, in the voting protocol there are separate
-fluents for the status of a motion and the number of votes each way on it.
+fluents for the status of a motion and the number of votes in favour and against.
 Furthermore there is no fluent expressing the link between a motion and the
 session it is occurring in. We can easily encapsulate all this information in a
 \texttt{Motion} object. 
@@ -1024,17 +1028,17 @@ end
 The first line of the Drools rule matches an event when it occurs. As well as
 constraints on the event we can also bind attributes of the event to variables
 to use later in the \emph{when} or \emph{then} clauses. The subsequent lines
-in the \emph{when} clause perform two purposes: Firstly they test for fluents
+in the \emph{when} clause perform two purposes: firstly they test for fluents
 matching the given constraints at the current time. Secondly, they gather any
 other information from fluents, including the fluent to be modified itself,
 which are needed in the \emph{then} clause. The \emph{then} clause then
 performs the desired change in value to the fluent. Note that in Drools we can
 perform multiple modifications to the working memory during a \emph{then}
-clause, so it some cases, where there are multiple fluents to be updated from
+clause. So in some cases, where there are multiple fluents to be updated from
 a single event with the same conditions, we can reduce several \ac{EC} axioms
 into one Drools rule.
 
-With \emph{initiates} rules, we must also consider when a rule be activated. A
+With \emph{initiates} rules, we must also consider when a rule should be activated. A
 change to any object in the set of conditions on a rule may cause it to be
 activated. While, with such a rule, we only want an activation to occur when the
 event is inserted and the conditions are true, if the event remains in the
@@ -1045,7 +1049,7 @@ processing.
 We provide two such mechanisms, which work for different use-cases. Firstly, a
 \texttt{valid} attribute is attached to actions. This attribute is false
 initially, and should be set to true when the action is processed by a rule.
-This means that the rule can be prevented from re-activated for this event by
+This means that the rule can be prevented from being re-activated for a specific event by
 using a \texttt{valid==false} constraint. The engine will then clean up any
 invalid actions each timestep to prevent activations. The second method uses a
 fact \texttt{T} which gives the most recent timestep. This can then be
@@ -1127,7 +1131,7 @@ holdsAt( fluent=value, T) :-
 These can also be simply implemented with rules in Drools. As the resulting fluent is only true when the conditions hold, we use the \texttt{insertLogical} feature of Drools. This ensures that if the conditions no longer hold, the fact will be automatically retracted. The translated clause is therefore as follows:
 
 \begin{droolsinline}
-rule "Holdsat example"
+rule "HoldsAt example"
 when
 	Fluent(condition1)
 	...
@@ -1183,6 +1187,9 @@ for a conflicting session is then done in the second rule, once the action has
 been performed.
 
 \begin{drools}[label=lst:droolsanon,caption=Drools translation of RONR open session.]
+//	holdsAt( pow(C, open_session(C,S))=true, T ) :-
+//		holdsAt( sitting(S)=false, T ),
+//		holdsAt( role_of(C,chair)=true, T ).
 rule "Pow open session"
 	when
 		RoleOf($c : actor, $i : inst, role == "chair")
@@ -1190,6 +1197,8 @@ rule "Pow open session"
 		insertLogical(new Pow($c, new OpenSession($c, $i, null)));
 end
 
+//	initiates( open_session(C,S), sitting(S)=true, T ) :-
+//		holdsAt( pow(C, open_session(C,S))=true, T ).
 rule "Open Session"
 	when
 		$open : OpenSession($a : actor, $i : inst, $name : name, $t : t, valid == false)
@@ -1203,7 +1212,7 @@ rule "Open Session"
 end
 \end{drools}
 
-This approach is not ideal, as it could lead to an agent thinking it has power to do something when it does not. However, this is a limitation of the Drools rule language. For situations when this feature is critical, it may be possible to assert a negated power, \ie that the agent explicitly does not have the power to do an action. Using a query, this could be given precedence over the original \emph{Pow}, such that $\mathtt{power(Ag,Act) \leftarrow \mathtt{Pow(Ag,Act)} \land \lnot \mathtt{NotPow(Ag,Act)}}$. However, we have not yet implemented or tested such a feature, and it is left for future work.
+This approach is not ideal, as it could lead to an agent thinking it has power to do something when it does not. However, this is a limitation of the Drools rule language. For situations when this feature is critical, it may be possible to assert a negated power, \ie\ that the agent explicitly does not have the power to do an action. Using a query, this could be given precedence over the original \emph{Pow}, such that $\mathtt{power(Ag,Act) \leftarrow \mathtt{Pow(Ag,Act)} \land \lnot \mathtt{NotPow(Ag,Act)}}$. However, we have not yet implemented or tested such a feature, and it is left for future work.
 
 \subsection{Drools-EInst}
 
@@ -1238,11 +1247,13 @@ To compare the performance of the Drools-EInst engine to those tested in
 implementation. We extend the test to 100 motions and compare the performance
 to that of our simple rule-based \ac{EC} implementation. The results are shown
 in \autoref{fig:droolsperf}. We see that the performance is several times
-slower than this benchmark, but this is to be expected when going from a hard-coded
-implementation to a dynamic rule engine with forward and backward
+slower than this benchmark, but this is to be expected when going from a hard-
+coded implementation to a dynamic rule engine with forward and backward
 chaining. However, the performance hit is negligible when compared to the
-Prolog implementations, and for longer narrative the performance gap to the
-benchmark reduces.
+Prolog implementations, and for longer narratives the performance gap to the
+benchmark reduces. With 30 motions it is 350 times faster than the faster
+Prolog implementation, and with 100 motions it is already less than half the
+speed of the rule-based \ac{EC}.
 
 \begin{figure}
 \centering
@@ -1261,7 +1272,7 @@ The deductive portion of the \ac{EC} can be characterised as a function which
 maps a state (being a set of fluents), and a narrative (a set of actions) to a
 new state. Similarly, we use Drools to do this same mapping from a state in
 the rule-engine and a set of actions to a new state. Therefore a proof of
-correctness must proof the equivalence of these two functions.
+correctness must prove the equivalence of these two functions.
 However, there are significant hurdles to such a proof:
 
 Firstly, our translation process may cause some changes to the representation
@@ -1283,7 +1294,7 @@ equivalent. We do not yet have such a proof, and we leave this for future work.
 
 However, instead of attempting to prove equivalence for all possible inputs,
 we can instead test a subset thereof with unit testing. Using the same
-framework as we did for benchmarking we can test a series of input state and
+framework as we did for benchmarking, we can test a series of input state and
 narratives in both specifications, and compare the output states between
 \ac{EC} and with translated Drools rules. These input combinations can be
 chosen to test each rule in isolation, and combined, and thus give a high
@@ -1294,15 +1305,17 @@ for all specifications implemented in Drools-EInst.
 
 In this chapter we have investigated the operationalisation of electronic
 institutions for specification of procedure and institutionalised power in
-open agent systems. Existing methods, based on logics and action languages,
+open agent systems. Existing methods, based on Logics and action languages,
 are rich in reasoning capabilities and expressive, however implementations
 suffer from poor performance and scalability. Therefore, we advocate an
 approach whereby such representations are still used for specification, but
 for operationalisation a translation to production rules is made, allowing for
-significantly faster event processing while maintaining expressiveness. We demonstrate this approach by
-describing the translation of \ac{EC} axioms into rules for the Drools rule
-engine, and the implementation of the Drools-EInst library for the processing
-of institutional actions.
+significantly faster event processing while maintaining expressiveness. We
+demonstrate this approach by describing the translation of \ac{EC} axioms into
+rules for the Drools rule engine, and the implementation of the Drools-EInst
+library for the processing of institutional actions. With this library we
+achieve a speed-up of two orders of magnitude over the Prolog baseline when
+running a representative voting protocol.
 
 This approach is similar to that of \citet{Arcos2005} and
 \citet{Aldewereld2006} in that logic-based specifications are translated into
@@ -1320,14 +1333,19 @@ induction this first loss is expected. The second is mitigated by the fact
 that with Drools we can still explicitly store fluents describing historical
 states, and therefore keep history in a more efficient manner.
 
-Currently there are only a small number of modules implemented in the 
-Drools-EInst library. We expect this to increase as it is used by more simulations
+Though there is only a relatively small number of modules implemented in the 
+Drools-EInst library, we expect this to increase as it is used by more simulations
 and applications. The modularity of the library's design enables it to be used
 for rapid development and prototyping of Electronic Institutions. A user can
 easily test various different module permutations, as well as rich
 configuration options provided by each module itself. Thus, this library can
 be seen as a toolkit for deploying Electronic Institutions into socio-technical 
 systems.
+
+The performance of the Drools-EInst tool enables its use for the simulation of
+larger agent populations than has been previously possible with Prolog
+implementations. This allows for the integration of an electronic institution
+into a Presage2 simulation, which we do in the next chapter.
 
 % EC: 
 % Combination of protocols (but slow)~\citep{Carr2012}. 
