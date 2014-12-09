@@ -803,8 +803,14 @@ In our analysis of participatory sensing using the \ac{IAD} framework, we finish
 discussing five evaluative criteria which can be used to assess the efficacy
 of a knowledge commons. We revisit these within the context of our model to
 obtain quantitative measures of system performance. We can then use these as
-tools for objective comparison of difference approaches to managing
+tools for objective comparison of different approaches to managing
 information and knowledge resources.
+
+We define these criteria in the context of our experimental model. We then
+describe how we use these criteria in our simulations in order to present
+comparisons between simulation runs.
+
+\subsection{Definition}
 
 \begin{enumerate}
 \item \emph{Increase in knowledge} evaluates the extent to which the system has
@@ -812,51 +818,85 @@ generated new knowledge. In our model, reward gained is a direct measure of the
 quality of knowledge. Therefore, we can give a metric of the knowledge generated
 by the system as the sum of all agent accrued rewards.
 
-% \begin{equation}
-% \mathit{knowledge} = \sum^{a\in A} u
-% \end{equation}
+The knowledge generated in a time-step $t$, $\mathcal{K}(t)$, can therefore be expressed as the sum of the rewards accrued by all agents in the system within this time-step:
+\begin{equation*}
+\mathcal{K}(t) := \sum_{\mathit{ag}\in A} \mathit{rewardAccrued}(\m{ag}, t)
+\end{equation*}
+where $A$ is the set of all agents in the system.
 
 \item \emph{Sustainability} measures whether a system endures in the the long term.
 This can be simply measured by testing whether the institution has not shut down 
 due to bankruptcy after a fixed period of time.
 
-% \begin{equation}
-% \mathit{endures} = \mathit{account}(i) > 0
-% \end{equation}
+We can express this as whether the institutional account, which pays for facility costs, is positive at a time-step $t$. This function $\mathcal{S}(i,t)$ returns a boolean of whether the institution $i$ has endured until time $t$:
+\begin{equation*}
+\mathcal{S}(i,t) := \left( \sum_{t^\prime=0}^{t} \mathit{rewardAccrued}(i, t^\prime)\right) > 0
+\end{equation*}
+Where $i$ is the institutional account, such that $\mathit{rewardAccrued}(i, t)$ returns the rewards received for the running of the institution at time $t$, minus the cost of running it.
 
 \item \emph{Participation standards} measures the level of participation within the 
 institution. As our agents are implemented such that they will resign roles they 
 no longer need, the number of occupied roles is a good measure of participation.
 
+Thus, we express this metric, $\mathcal{P}(i,t)$ as the number of roles occupied in the institution $i$ at the time $t$:
+\begin{align*}
+\mathcal{P}(i,t) &:= \sum_{\m{ag}\in A,r\in R} x \\
+\text{where\ \ } x &= \begin{cases} 1 & \text{if} \holdsAt(\m{role\_of}(\m{ag},i,r),t) = \true \\
+0 & \text{otherwise} \end{cases}
+\end{align*}
+Where $A$ is the set of agents and $R$ is the set of possible roles.
+
 \item \emph{Efficiency} determines the economic cost of the system relative to its productive output. In this case the cost is purely measured by facility cost and the output is the accumulated rewards.
+
+We express this metric by measuring the fractional proportion of output used on facility costs, and subtracting this from 1. This expression can be written as follows:
+\begin{equation*}
+\eta(i,t) := \frac{\sum_{t^\prime=0}^{t} \mathcal{K}(t^\prime)}{\sum_{t^\prime=0}^{t} \left( \mathcal{K}(t^\prime) + \m{facilityCost}(i,t^\prime) \right)} 
+\end{equation*}
+Where $\mathcal{K}(t)$ is accumulated knowledge, from metric 1, and $\m{facilityCost}(i,t)$ returns the cost of the facility for institution $i$ in time-step $t$.
 
 \item \emph{Equity} measures the whether agents are compensated according to
 their efforts.  Given that all agents have the potential to achieve the same,
 we can expect that an equitable system will result in all agents achieving the
 same total rewards. Therefore the equity can be measured as the standard
-deviation of all agents' accrued rewards.  In order to match the other
+deviation of all agents' accrued rewards. 
+
+This is expressed by $\mathcal{E}(t)$ which constructs the set of accrued rewards for all agents for the time window $0-t$, then calculates the standard deviation over this set:
+\begin{equation*}
+\mathcal{E}(t) := \sigma ( S_t ) \text{, where } S_t = \left\{ \mathit{ag}\in A : \sum_{t^\prime=0}^{t} \mathit{rewardAccrued}(\m{ag}, t^\prime) \right\}
+\end{equation*}
+
+In order to match the other
 criteria, which all have the property that a higher value represents better
 performance, we instead measure the ratio of the standard deviation and mean,
-which gives a unitless measure of inequity, then subtract it from 1. This
-gives a measure where 1 means everyone got the same rewards, values less than
-this indicate increasing inequity.
+which gives a unitless measure of inequity, then subtract it from $1$. This
+gives a measure where $1$ means everyone received the same rewards, values less than
+this indicate increasing inequity:
+\begin{equation*}
+\mathcal{E}^\prime(t) := 1 - \frac{\sigma ( S_t )}{\overline{S_t}}
+\end{equation*}
+
 \end{enumerate}
 
-\subsection*{Presentation of criteria in the results}
+% TODO usage?
 
-For the purposes of the presentation of results, we normalise these criteria
-to remove units and allow us to compare results across all of the criteria.
-This normalisation is done relative to the evaluation of other simulations, to
-create a set of comparative criteria. As the best values for certain criteria
-will vary significantly with environmental conditions this method allows the
-comparison of a set of simulations relative to each other, and be able to
-determine the best institutional configuration, given some environmental
-conditions.
+\subsection{Presentation in the results}\label{sec:criteriapres}
 
-The normalisation is calculated simply by dividing the criteria by the highest
-value for this criteria in the set of compared simulations. This gives a value
-in the range $[0,1]$. Averaging the normalised criteria for each simulation
-gives a total score, representing performance across all criteria. 
+The criteria which we have defined can all be measured at various time-points
+in the simulation. For the purposes of our simulations we use the criteria for comparison between simulation runs, to determine if one run is `better' than another. We measure the defined criteria as follows:
+
+\begin{itemize}
+\item \emph{Increase in knowledge} is measured as the cumulative sum over the whole simulation time: $\sum_{t=0}^{t_{\m{max}}} \mathcal{K}(t)$.
+\item \emph{Sustainability} is measured at the end of the elapsed simulation time, thus we measure $\mathcal{S}(i,t_{\m{max}})$.
+\item \emph{Participation Standards} are measured by comparing the institution membership at the start and end of the simulation: $\frac{\mathcal{P}(i,t_{\m{max}})}{\mathcal{P}(i,0)}$
+\item \emph{Efficiency} is measured at the end of simulation time: $\eta(i, t_{\m{max}})$
+\item \emph{Equity} is also measured at the end of simulation time: $\mathcal{E}^\prime(t_{\m{max}})$
+\end{itemize}
+
+When comparing a group of simulations we also normalise the total rewards
+(increase in knowledge) by dividing all values by the largest in the set. This
+therefore leads to all criteria being specified in the range $[0,1]$.
+Averaging the normalised criteria for each simulation gives a total score,
+representing performance across all criteria.
 
 When performing parameter sweeps we display the resulting evaluative criteria
 in heatmaps. These visualise where optimal parameter configurations lie. Our
@@ -917,6 +957,8 @@ problems we outlined in \autoref{ch:kc}.
 
 \subsection{The Problem of Supply}\label{sec:supply}
 
+\subsubsection*{Experimental Setup}
+
 In these experiments we investigate how a static institution (one without
 collective-choice to change its parameters during operation) performs
 according to our evaluative criteria. We construct an institution as follows:
@@ -948,7 +990,31 @@ in \autoref{tab:scenarios}. We have two facility cost profiles:
 $0.1$; and \emph{fixed} costs, where the facility costs a fixed fee of $2.0$ per
 time-step. We also test with no cost for measuring, and with a small cost of
 $0.1$. Finally, we test the introduction of three \texttt{PlayerAgent}s who are in
-\emph{greedy} mode, replacing three of the sustainable agents.
+\emph{greedy} mode, replacing three of the sustainable agents. These scenarios aim to test increasingly difficult environmental conditions, and how they affect the performance, in particular participatory levels and sustainability of the institution.
+
+The first scenario has low facility costs, no cost of
+measuring, and all agents behaviour in a way which aims to lead to
+sustainability. Therefore the institution simply needs to cover the facility
+costs allocate rewards suitability to ensure that all agents can effectively
+contribute.
+
+The second scenario introduces a measuring cost into the previous
+configuration. This tests whether the institutional configuration is able to
+handle the additional cost incurred for the gathering of information.
+
+The third scenario modifies the second configuration, changing the nature of
+the facility costs. This aims to test if the nature of these costs will affect
+the system performance, even when the total facility costs over the course of
+the simulation will not be significantly different.
+
+Finally, the forth configuration introduces greedy agents into the conditions
+from scenario 2. This will test firstly, whether greedy agents will negatively
+affect the system as a whole, and secondly, whether greed is beneficial for
+the individual, in terms of higher accrued rewards.
+
+In this experiment we aim to firstly, determine the effect of the values of
+the fees charged for different arfifacts in the institution, and secondly, how
+these effects change under differing environmental conditions.
 
 % We also alter environmental conditions, to create different scenarios, as follows:
 
@@ -971,6 +1037,8 @@ Scenario & Facility cost & Measuring cost & Greedy agents \\
 \end{tabular}
 \end{table}
 
+\subsubsection*{Results}
+
 \begin{table}
 \centering
 \caption[Evaluation of institution configurations in scenario 1.]{Evaluation of institution configurations in scenario 1. Shows only best and worst five parameter combinations.}\label{tab:static0}
@@ -991,7 +1059,7 @@ Meas. & Pred. & Rewards & Endures? & Partic. & Efficiency & Equity & Total \\
 \end{tabular}
 \end{table}
 
-\autoref{fig:static0} shows heatmaps for the first scenario: flexible
+\autoref{fig:static0} shows heatmaps for the first scenario\footnote{A description of how data is displayed in the heatmaps was given in \autoref{sec:criteriapres}}: flexible
 facility costs and no measuring cost. As can be seen also in
 \autoref{tab:static0}, there are several configurations which all give high
 scores. Firstly, the participation standards graph shows that there are many
@@ -1060,6 +1128,8 @@ less than the cost.
 \includegraphics{gfx/kc/static_1_3nc.pdf} 
 \caption[Comparison of scores between configurations in scenario 4 (3 greedy agents).]{Comparison of scores between configurations in scenario 4 (3 greedy agents). Darker/higher is better.}\label{fig:static3nc}
 \end{figure}
+
+\subsubsection*{Discussion}
 
 From these experiments we see that, firstly, if the right balance between
 costs and benefits for agents in each role is not achieved, we will not get
@@ -1227,6 +1297,19 @@ in a market situation agents act individually in their best interests, and the
 balance between supply and demand should result in an optimal equilibrium.
 Finally, we have a collective approach, where we apply Ostrom's third principle and enfranchise all individuals who
 are affected by a rule in its modifications.
+
+We firstly present how these self-organisational paradigms are implemented
+with our institution specification. We then provide an initial benchmark of
+these approaches, under the same scenarios as in the previous round of
+experiments. This provides an initial evaluation of the relative benefits of
+these paradigms under different conditions. We then perform a series of
+experiments to test the power of individuals under each paradigm. This power
+is measured as the extent to which agents can benefit themselves by switching
+to a greedy profile. This provides a measure of the system's robustness to
+manipulation by self-interested parties, and exploitation of certain groups of
+agents.
+
+\subsubsection*{Institutional Configurations}
 
 We can implement all three of these paradigms through correct configuration of the institution. 
 
@@ -1449,8 +1532,16 @@ In turn, we tested each of the follow groups in greedy mode:
 \end{figure}
 
 We then measure the change in utilities accrued over the simulation for each
-agent type between each configuration and the baseline. \autoref{fig:powerbar}
-shows this data, indicating a gain or loss of overall utility for each group.
+agent type between each configuration and the baseline. With this experiment
+we aim to measure the benefit to individuals, or groups of individuals, who
+utilise a greedy strategy. We also test the effect on the institution, and on
+its self-organisation mechanisms, of these greedy agents. The first test is a
+measure of how the institutional mechanisms encourage sustainable behaviour.
+The second tests the robustness of the institution to greedy behaviour, and
+that a greedy minority cannot significantly negatively impact the outcomes of
+well behaved agents.
+
+\autoref{fig:powerbar} how individual rewards change for each group of greedy agents, when compared to the baseline.
 We see that in a centralised system the \emph{initiator} is able to extract
 significant benefit at the cost of the other agents, while these others have
 no impact on the system at all from their non-compliance. In both of the other

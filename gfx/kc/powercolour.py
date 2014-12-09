@@ -88,7 +88,7 @@ labels = [('Initiator','initpower:1:{}:mc'),
           ('Analyst', 'analystpower:1:{}:mc'),
           ('3 Pros.','prosumerpower:1:{}:3:mc'),
           ('6 Pros.','prosumerpower:1:{}:6:mc'),
-          ('10 Pros.','prosumerpower:1:{}:6:mc')]
+          ('10 Pros.','prosumerpower:1:{}:10:mc')]
 
 e1 = utils.rankSimulations(scores, rankFn=utils.proportion, ascending=False)
 
@@ -160,3 +160,4 @@ fig.text(0.5, 0.02, 'Greedy Agents', ha='center', va='center')
 
 plt.subplots_adjust(left=0.10,bottom=0.16,right=0.90,top=0.94,wspace=0.10,hspace=0.22)
 plt.savefig('powercolour.pdf')
+#plt.show()
