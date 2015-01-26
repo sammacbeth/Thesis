@@ -97,7 +97,7 @@ implementation of evaluation and analysis algorithms.
 % former are not addressed, and are issues we intend to address in this chapter.
 
 The spread of `Big Data' and participatory sensing, as well as the abundance
-of information on the Web, has led to serious privacy concerns with the
+of information on the Web, has led to privacy concerns with the
 processes of data mining and predictive analytics. There is a balance to be
 found between the benefits of having information available with as little
 restriction as possible, and preventing too much personal information about a
@@ -131,7 +131,7 @@ stakeholders can be sustained. % TODO: one more sentence?
 
 %What is a commons (shared resource system) + Hardin tragedy.
 The commons is a term generally used to describe shared resource systems. They are often also called \ac{CPR} systems. These systems are characterised as systems where the ownership of the resource system (land, air etc.) and resource units (trees, radio frequencies, etc.) are shared, public property, or not covered by any property rights; and it is difficult to exclude access to the resource and resource units to others. 
-\citet{Hardin1968} theorised that these properties would inevitably lead to overuse and depletion of the resource, a `Tragedy of the Commons', and that enclosure (via privatisation or centralisation) of the resource system was the only solution.
+\citet{Hardin1968}\label{hardin} theorised that these properties would inevitably lead to overuse and depletion of the resource, a `Tragedy of the Commons', and that enclosure (via privatisation or centralisation) of the resource system was the only solution.
 %Among the first areas where the commons phenomenon was identified were in fisheries and forestries. In these industries the ownership of the land (or sea) was shared or public property, the resource (fish and trees) were not owned by anyone, and it was difficult to prevent access to the resource by others. 
 
 \subsection{Governing the commons}
@@ -220,7 +220,7 @@ Irrigation systems} \\[0.6cm]
 \end{table}
 
 % Why information as a commons - exclusion undesirable, alienability.
-The shift that has occurred in information and knowledge due to technology is that its distribution has become non-rivalrous\footnote{\ie\ low rivalry/subtractability}~\citep{Ostrom2003,Bollier2007}.
+The shift that has occurred in information and knowledge due to technology is that its distribution has become non-rivalrous\footnote{\ie\ Having low rivalry/subtractability}~\citep{Ostrom2003,Bollier2007}.
 Previously information and knowledge would have to be put into tangible form, for example a book, to allow others to use it. 
 In this form it has high subtractability: by owning a book you prevent someone else owning that copy of the book, and the supply of books is limited by the publisher. 
 This meant that information and knowledge goods were either common-pool or private goods depending on whether they were distributed by a library (difficult exclusion) or sold (easy exclusion). 
@@ -258,7 +258,7 @@ The premise of the information and knowledge commons is that a method of collect
 The creation of an institution in order to manage knowledge and information in practical scenarios is certainly non-trivial. 
 There is a problem of supply~\cite[p. 42]{Ostrom1990}---that someone must provide the initial organisational structure and institutional rules---and, as we will see in the next section, there is a fine distinction between the emergence of centralised and collective governance. 
 Rules which satisfy Ostrom's eight principles are often very specific to the resource characteristics so we don't have a pre-existing `library' of rules available when looking to `supply' an institution with which to manage a new resource. 
-The difficulty of implementing effective collective governance structures is arguably a contributing factor to why in many cases initiators decide to follow Hardin's advice---privatisation seems to be the only way.
+The difficulty of implementing effective collective governance structures is arguably a contributing factor to why in many cases initiators decide to follow Hardin's advice (see \autopageref{hardin})---privatisation seems to be the only way.
 
 % anticommons
 
@@ -397,7 +397,7 @@ Their aggregated data set is then made open to the public via their websites and
 While the app is performing navigation for the user, data is fed back to Waze in order to improve the navigation performance. 
 Through its design the app implicitly enforces a reciprocal relationship where information on traffic and road conditions is exchanged for optimised travel directions. 
 The app encourages additional explicit contributions in the form of tagging roadwork locations etc., which is then provided to other users to alert them about hazards or to improve routing. 
-While access to the real-time travel map is made publicly available through the Waze website, it does not provide the navigation available in the app. Therefore the application sustains itself simply by providing accurate navigation via the app which in turn causes users to implicitly contribute information to improve the service.
+While access to the real-time travel map is made publicly available through the Waze website, it does not provide the navigation functionality available in the app. Therefore the application sustains itself simply by providing accurate navigation via the app which in turn causes users to implicitly contribute information to improve the service.
 
 %These two examples show different methods on approaching the incentivisation of 
 
@@ -416,7 +416,7 @@ In \ac{FOSS} we have a general framework which has enabled anyone in the world t
 We have tested both of these systems against the same criteria we used previously, and the results are again in \autoref{table:litsurvey} (Social Systems section).
 
 % Review KC applications
-Under our survey criteria, Wikipedia is classified as gathering information explicitly. Contributions are new articles, modifications to existing ones, or moderations of others' submissions, and therefore users generating this content are aware that they are provisioning it to Wikipedia. The result of these contributions is a knowledge resource which is available to anyone, and no specific rewards are reserved to encourage editing or moderation actions. While its architecture is centralised under one website, Wikipedia has a complex community governance which allows policies on the site to change provided consensus is behind the change. This governance has developed over time to become more open in response to criticism and concerns over possible involvement from commercial organisations~\citep{MayoFusterMorell2011}. The need for dynamic governance is in part driven by the permissive licence given to content on the site, which allows anyone to publish the content elsewhere, and has in the past let to the forking of whole sections to separate sites~\citep{Famiglietti2011}.
+Under our survey criteria, Wikipedia is classified as gathering information explicitly. Contributions are new articles, modifications to existing ones, or moderations of others' submissions, and therefore users generating this content are aware that they are provisioning it to Wikipedia. The result of these contributions is a knowledge resource which is available to anyone, and no specific rewards are reserved to encourage editing or moderation actions. While its architecture is centralised under one website, Wikipedia has a complex community governance which allows policies on the site to change provided consensus is behind the change. This governance has developed over time to become more open in response to criticism and concerns over possible involvement from commercial organisations~\citep{MayoFusterMorell2011}. The need for dynamic governance is in part driven by the permissive licence given to content on the site, which allows anyone to publish the content elsewhere, and has in the past led to the forking of whole sections to separate sites~\citep{Famiglietti2011}.
 
 Like Wikipedia, contributions to \ac{FOSS} are explicit. Contributions take the form of code commits, code review, bug reporting, mailing-list discussion and general project administration. 
 There are some cases of open-source software which gather anonymised usage information, a process which would count as implicit information gathering, however currently this is quite rare (although increasingly common in commercial software). 
@@ -430,7 +430,7 @@ For both Wikipedia and \ac{FOSS}, analyses have been done with respect to Ostrom
 It offers a middle ground between the copyright extremes of `all rights reserved' and public domain. 
 \citeasnoun{Schweik2007} also advocates that the \ac{FOSS} collaborative paradigm can be applied to any collaboration around intellectual property. 
 These two examples show that successful systems have been built to develop and manage shared resources of information and knowledge using decentralised, community governance. 
-Like in physical commons the governance system can be shown to conform to Ostrom's principles, and further analysis can identify some particular features which contribute to their success.
+As in physical commons, the governance system can be shown to conform to Ostrom's principles, and further analysis can identify some particular features which contribute to their success.
 
 From our survey of participatory sensing applications we have identified the
 prevalence of centralised control and no governance consideration. When we
