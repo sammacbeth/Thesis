@@ -241,10 +241,17 @@ presentation.
 \subsection{Framework Description}
 
 The Presage2 framework is a result of an iterative improvement to that of the
-original Presage framework~\citep{Neville:2009}. We build on the same concepts
-in order to achieve the desired feature-set.
+original Presage framework~\citep{Neville:2009}. 
+%We build on the same concepts in order to achieve the desired feature-set.
+We take several of the most useful concepts and features from Presage, and build our new framework from that base, namely:
 
-At its core, the framework uses a discrete-time driven simulation loop. This
+\begin{itemize}
+\item A simulation platform as a black box, with simulation parameters and specification of agents and environmental processes as input, and results as the output.
+\item A time-driven mode of execution.
+\item A layer of separation between agents and environment state, preventing direct modification of the latter by the former.
+\end{itemize}
+
+At its core, our framework uses a discrete-time driven simulation loop. This
 is similar to the discrete-event models used in platforms such as MASON and
 Repast, except that every agent is given the opportunity to submit actions at
 each discrete time-step. This method establishes a minimum unit of time within
@@ -344,7 +351,10 @@ shared states} and sets of actions:
 This framework purely specifies what can be implemented, and how state should
 be controlled. There are many other criteria for a platform beyond this, as we
 outlined previously. In this section we describe how this framework is
-transformed into a platform architecture and an implementation in Java.
+transformed into a platform architecture and an implementation in Java.  The
+Presage2 platform is a complete rewrite of the original Presage platform,
+although in some cases we reuse class names from Presage for consistency of
+terminology.
 
 Our framework states that a simulation consists of four components: a set of
 agents, an environment state, a state transformer function, and a state
