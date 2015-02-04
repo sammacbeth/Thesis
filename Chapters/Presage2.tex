@@ -3,7 +3,7 @@
 \chapter{Principled Operationalisation using Presage2}\label{ch:presage}
 
 \lettrine[lines=3]{B}{efore} we can test our hypothesis about a participatory-sensing knowedge commons we require a suitable tool for principled operationalised.
-This is the process of transforming a symbolic or formal representation of a system (often written in some kind of calculus) into a computer model of the system in question~\citep{Jones2013}. This process varies greatly in difficulty depending on the complexity of the system to be modelled and the requirements of the computer model. Models can range from small prolog programs~\citep{Pitt2005a} to significant software engineering undertakings~\citep{Timm2005}.
+This is the process of transforming a symbolic or formal representation of a system (often written in some kind of calculus) into a computer model of the system in question~\citep{Jones2013}. This process varies greatly in difficulty depending on the complexity of the system to be modelled and the requirements of the computer model. Models can range from small Prolog programs~\citep{Pitt2005a} to significant software engineering undertakings~\citep{Timm2005}.
 
 \ac{ABM} and \ac{MABS} are approaches to modelling and simulating complex systems as multi-agent systems~\citep{Macal2010,Moss2001}.
 This is a form of micro-simulation, where by modelling low-level interactions from the `ground up' we can observe macro level behaviours such as self-organisation, self-adaptation and so on.
@@ -11,7 +11,7 @@ Simulation models are therefore composed of an environment or arena which models
 \citet{Axelrod1997} identifies the usefulness of \ac{MABS} as a means to understand social systems. 
 This approach fits naturally to the principled operationalisation phase of the \ac{SIC} methodology, as we are observing desirable macro-level performance in social systems (which are multi-agent in nature), and aiming to reproduce this performance in a socio-technical system. 
 
-It should be noted that principled operationalisation, \ac{ABM} and \ac{MABS} do not aim to create an exact model of a social or socio-technical system, particularly in regards to human behaviour. Both the \ac{SIC} methodology and \ac{MABS} methods stress the appropriate use of abstraction and/or compartmentalisation in order to simplify the model while being able to draw valid conclusions from the model's behaviour~\citep{Edmonds2001}.
+It should be noted that neither principled operationalisation, \ac{ABM} nor \ac{MABS} aim to create an exact model of a social or socio-technical system, particularly in regards to human behaviour. Both the \ac{SIC} methodology and \ac{MABS} methods stress the appropriate use of abstraction and/or compartmentalisation in order to simplify the model while being able to draw valid conclusions from the model's behaviour~\citep{Edmonds2001}.
 
 Work in \ac{ABM} and \ac{MABS} has led to creation of many software packages and platforms to ease the development of simulation testbeds~\citep{CynthiaNikolaiandGregoryMadey2009}. These aim to reduce the engineering effort required to implement agent models, providing reusable components, user-interface based design and/or prescriptive frameworks. In particular, they aim to ensure simulation validity while maintaining usability and extendibility~\citep{Axelrod1997}.
 
@@ -61,7 +61,7 @@ The properties of an environment can be classified according to several relevant
 
 There are many software tools and platforms available for the simulation of agent societies: A comprehensive survey by \citet{CynthiaNikolaiandGregoryMadey2009} includes 53 different toolkits. In this section we discuss the state of the art of \ac{MABS} toolkits and software platforms.
 
-The afore-mentioned survey by \citet{CynthiaNikolaiandGregoryMadey2009} is an exhaustive survey of platforms documenting programming languages, software licenses, targeted research domains, presence of tutorials and support, and more for each platform. There are several other more focused reviews of simulation platforms: \citet{Railsback2006} describes and compares the implementation of several, gradually increasing complexity, models on four platforms, Netlogo, MASON, Repast and Swarm. \citet{Castle2006} reviews six platforms (Swarm, MASON, Repast, Starlogo, Netlogo and OBEUS) with a particular focus on geospatial simulations. \citet{Tobias2004} compares four platforms for `social-scientific' agent-based simulation (Repast, Swarm, Quicksilver and VSEit).
+The afore-mentioned survey by \citet{CynthiaNikolaiandGregoryMadey2009} is an exhaustive survey of platforms documenting programming languages, software licenses, targeted research domains, presence of tutorials and support, and more for each platform. There are several other more focused reviews of simulation platforms: \citet{Railsback2006} describes and compares the implementation of several models of gradually increasing complexity on four platforms: Netlogo, MASON, Repast and Swarm. \citet{Castle2006} reviews six platforms (Swarm, MASON, Repast, Starlogo, Netlogo and OBEUS) with a particular focus on geospatial simulations. \citet{Tobias2004} compares four platforms for `social-scientific' agent-based simulation (Repast, Swarm, Quicksilver and VSEit).
 
 There are several reasons for using specific software tools for \ac{ABM} and \ac{MABS}, rather than bespoke software:
 \begin{itemize}
@@ -82,11 +82,11 @@ We derive a set of review criteria based on a selection of relevant criteria fro
 From~\citet{CynthiaNikolaiandGregoryMadey2009} we take generial criteria which affect platform uptake, usability and verifiability:
 
 \begin{itemize}
-\item Programming Language---The programming language required to use a platform has an affect on user uptake, quality of available development tools, code readability and succinctness, and ease of debugging~\citep{Railsback2006}. Use of custom programming languages my appear to limit the possible models which can be implemented on the platform, while general-purpose languages such as Java have known capabilities. These languages also come with a rich array of development suites to choose from to ease the development process.
+\item Programming Language---The programming language required to use a platform has an affect on user uptake, quality of available development tools, code readability and succinctness, and ease of debugging~\citep{Railsback2006}. Use of custom programming languages may appear to limit the possible models which can be implemented on the platform, while general-purpose languages such as Java have known capabilities. These languages also come with a rich array of development suites to choose from to ease the development process.
 \item Software License---Open source licenses are preferable as they allow the platform's code to be scrutinised, allowing both users and reviewers to verify that simulation output will be correct~\citep{Polhill2007}.
 \end{itemize}
 
-\citet{Castle2006} identifies criteria for ease-of-use:
+\citet{Castle2006} identify criteria for ease-of-use:
 
 \begin{itemize}
 \item Required programming experience---Expertise needed in general programming and/or the language of the platform in order to correctly use the software.
@@ -94,16 +94,16 @@ From~\citet{CynthiaNikolaiandGregoryMadey2009} we take generial criteria which a
 \item Tutorials/Documentation available---Presence of tutorials and documentation to allow one to train oneself to use the platform correctly and proficiently.
 \end{itemize}
 
-\citet{Tobias2004} provides several useful general criteria and criteria specific for the modelling requirements of socio-technical systems:
+\citet{Tobias2004} provide several useful general criteria and criteria specific for the modelling requirements of socio-technical systems:
 
 \begin{itemize}
 \item Support for modelling---\ac{GUI} or other tools for reducing programming work and visualising output.
 \item Support for experimentation---Tools for generation of simulations and data recording.
-\item Large number of complex agents---The ability of the platform to efficiency run complex agents to intensive reasoning.
+\item Large number of complex agents---The ability of the platform to efficiently run complex agents with intensive reasoning.
 \item Inter-agent communication---The possibility of sending messages between agents, and for communication network topologies to be simulated.
 \item Generating agent populations---Automatic generation of agent populations from input parameters or data.
 \item Generating networks---Automatic generation of networks based on various characteristics.
-\item Management of spatial arrangements---Ability to simulation situated agents.
+\item Management of spatial arrangements---Ability to simulate situated agents (\ie\ agents who are spatially located in an environment).
 \item Dynamically changing model structure---Whether the model can be changed during simulation execution.
 \end{itemize}
 
@@ -156,11 +156,11 @@ This is how well the platform supports experimentation over multiple simulations
 
 None of the platforms impose a hard constraint on the number of agents in a simulation, though depending on the efficiency of the software, practical limits will be reached when either computational resources are exhausted, or the simulation takes too long to run.
 
-Netlogo's simulation times have been shown to scale more with the size of the environment state to be modelled, while Repast and MASON scales with the number of agents~\citep{Railsback2006}.  However the agent models tested were fairly basic. More complex agent architectures are likely to be impossible in Repast. MASON is designed with the intention of accommodating complex agents by being fast and lightweight. Similarly Presage has been demonstrated simulating complex agents~\citep{Pitt2011}.
+Netlogo's simulation times have been shown to scale more with the size of the environment state to be modelled, while Repast and MASON scales with the number of agents~\citep{Railsback2006}.  However the agent models tested were fairly basic. More complex agent architectures are likely to be impossible in Netlogo. MASON is designed with the intention of accommodating complex agents by being fast and lightweight. Similarly Presage has been demonstrated simulating complex agents~\citep{Pitt2011}.
 
 All but one of the platforms run their main simulation in a single thread. Repast uses a multi-threaded discrete-event scheduler to run some events in parallel, however this performance boost is only available to certain background tasks, and not appropriate for agent execution. MASON also allows for some parallelisation within a simulation step, which the users must add themselves. Thus these simulators have limited capabilities to exploit modern, multi-core processors.
 
-There is, however, more options for scaling simulations to distributed architectures. The Repast developers also distribute a C++ platform for \ac{HPC} clusters~\citep{Collier2013}, but this is separate from the Java platform. There have also been several attempts to provide an automatic scaling of normal Repast models to \ac{HPC} clusters~\citep{Minson2008,Cicirelli2011}.
+There are, however, more options for scaling simulations to distributed architectures. The Repast developers also distribute a C++ platform for \ac{HPC} clusters~\citep{Collier2013}, but this is separate from the Java platform. There have also been several attempts to provide an automatic scaling of normal Repast models to \ac{HPC} clusters~\citep{Minson2008,Cicirelli2011}.
 However, this work has yet to lead to the availability of easy scaling of models for these platforms, generally imposing some model limitations and requiring additional programming care in order to achieve a distributed simulation.
 
 \subsubsection*{Inter-agent communication}
@@ -173,7 +173,7 @@ All platforms support generation of agents from data and parameters.
 
 \subsubsection*{Generating networks}
 
-Presage is able to simulation several types of dynamic network between agents, and these can be based on several agent characteristics. Similarly Repast is able to generate multiple network types. MASON and Netlogo do not explicitly support networks.
+Presage is able to simulate several types of dynamic network connecting agents, and these can be based on several agent characteristics (such as communication range). Similarly Repast is able to generate multiple network types. MASON and Netlogo do not explicitly support networks.
 
 \subsubsection*{Management of spatial arrangements}
 
@@ -185,7 +185,7 @@ Repast and Netlogo allow for changes to agents and models during simulation exec
 
 \subsubsection*{Rule Engine}
 
-None of the platforms feature Declarative rule-engines as core features, however there have been some success in integrating rule-engines with Repast~\citep{Lotzmann2011}. 
+None of the platforms feature declarative rule-engines as core features, however there have been some successes in integrating rule-engines with Repast~\citep{Lotzmann2011}. 
 
 \subsection{Summary}
 
@@ -255,7 +255,7 @@ simulators. However, in practice, this performance hit is negligible as,
 firstly, most agents have reactive components which require constant
 monitoring of the environment state, and secondly, a waiting agent can simply
 return immediately when queried for actions by the simulator, wasting very
-little resources. The advantage of time-driven over event-driven simulation is
+few resources. The advantage of time-driven over event-driven simulation is
 that the former is simpler to parallelise~\citep{Ferscha1995}.
 
 Beyond the discrete-time driven constraint, the framework does not specify how
@@ -356,7 +356,7 @@ shared state, while also defining observability. The state transformer
 function consists of two sets of functions: firstly a set of \emph{action
 handlers} which define state changes for specific actions, and secondly, a set
 of \emph{environment} functions which define general state changes, for
-example for persistent effects on agents (momentum or current), or periodic
+example for persistent effects on agents (\eg\ momentum or current), or periodic
 (either random or triggered) events.  As we do not constrain the agent
 architecture, the agent function is not decomposed. Through specification of
 these sets of components one can define arbitrarily complex environments.
@@ -381,7 +381,7 @@ state by returning limited or modified results from these queries.
 Conceptually, these \emph{environment services} simulate the behaviour of a
 perception device for an agent. In a real-world scenario an agent would have
 some interface for perceiving the state of the environment. By using this
-abstraction we aim to enable the writing of agents who are not tied too closely
+abstraction we aim to enable the writing of agents that are not tied too closely
 to the simulation platform, and whose simulated perception can be
 replaced with real perception for rapid transition from simulation to
 deployment.
@@ -393,7 +393,7 @@ deployment.
 
 \autoref{fig:p2envsequence} shows the interactions between environment
 service, action handler and state engine for an example scenario. When an
-agent is invoked by the simulation scheduler he can retrieve his state (in
+agent is invoked by the simulation scheduler it can retrieve its state (in
 this case a location) via an environment service. This service, in turn,
 queries the state values from the state engine and returns them to the agent.
 Using this information the agent chooses to do a `move' action, submitting it
@@ -413,6 +413,12 @@ an agent's state, via the appropriate environment service, and the
 functions. In this case, the agent function reads the agent's current
 location, then constructs a move action to a target location and submits it to
 the environment.
+
+If there is more than one agent function specified for an agent they will be
+all executed in parallel. Java's concurrency features can be used to ensure
+serial execution, if required, using the \texttt{synchronized} keyword on each
+function. Function execution order may be controlled by specifying precedence
+arguments in the \texttt{@Step} annotation.
 
 \begin{java}[caption={Presage2 agent implementation},label=alg:agentimpl]
 class Agent extends AbstractParticipant {
@@ -434,7 +440,7 @@ class Agent extends AbstractParticipant {
 \end{java}
 
 The final component required to implement the Presage2 framework is a
-simulation loop to execute these functions correctly. The use of a immutable
+simulation loop to execute these functions correctly. The use of an immutable
 shared state during a time-step simplifies this process, as state cannot be
 corrupted by out-of-order operations. As we show in
 \autoref{fig:p2envsequence}, environment services are triggered by requests
@@ -451,7 +457,7 @@ utilisation\footnote{We use the \texttt{ThreadPoolExecutor} implementation
 provided in the Java libraries.}. This enables multi-threaded simulation which
 is transparent to the model implementer.
 
-\autoref{alg:simloop} shows this simulation loop. Note object types and function names have been changed for illustrative purposes.
+\autoref{alg:simloop} shows this simulation loop. Note object types and function names have been simplified for illustrative purposes. The \texttt{threadpool} object here extracts and executes step functions from objects submitted to it.
 
 \begin{java}[caption={Presage2 multi-threaded simulation loop},label=alg:simloop]
 do {
@@ -538,8 +544,8 @@ public class MySimulation extends RunnableSimulation {
 
 The Presage2 platform allows for a simulation to specify a series of simulation
 parameters. These are named variables which should be specified when executing a
-simulation, and can take on any valid number, boolean, string, or enumerated
-type value. These variables can be then used my the model implementer to control
+simulation, and can take on any valid number, Boolean, string, or enumerated
+type value. These variables can be then used by the model implementer to control
 the creation of initial agents and state. Agents are then connected to the
 environment, through which they can attempt to load environment services they
 require and perform actions.
@@ -557,7 +563,7 @@ modules, which we present here.
 
 \subsubsection*{Situated Agents}
 
-A commonly used concept in \ac{ABM} is that of agents who are situated within a
+A commonly used concept in \ac{ABM} is that of agents that are situated within a
 physical environment. This is used in the modelling of scenarios where agents
 must use their physical mobility to complete tasks and achieve goals. We provide
 a module for this functionality.
@@ -596,33 +602,36 @@ connected, peer-to-peer and mobile ad-hoc networks.
 
 The network simulation is achieved by three entities:
 \begin{itemize}
-	\item The sending agent's interface to the network---This takes the set
+	\item The sending agent's interface to the network---this takes the set
 	of messages it wishes to send and determines how to send them. For
 	example in an ad-hoc network the user may wish to forward messages
 	via a specific forwarding algorithm. 
-	\item The message action handler---This takes messages which each agent
+	\item The message action handler---this takes messages which each agent
 	wished to send and determines whether to send them based on a set
 	of constraints. These reflect environmental constraints on messaging
 	such as wireless range and/or random message loss.
-	\item The receiving agent's network interface---This takes messages delivered
+	\item The receiving agent's network interface---this takes messages delivered
 	from the global controller and decides what to do with them. This
 	device may be forwarding messages in an ad-hoc network, dropping messages
 	if it can't afford to forward them, or making messages intended for
 	itself available to the underlying agent.
 \end{itemize}
 
-This architecture allows for flexible networks simulations and topology
+This architecture allows for flexible network simulations and topology
 constraints can be pushed to the appropriate level. For example if the user
 wants to simulate an ad-hoc network but without having to write a specific
 forwarding algorithm we can create a constraint in the global controller to
-simulate how optimal forwarding would perform.
+simulate how optimal forwarding would perform. Rather than constraining
+messaging to physically connected agents (\ie\ within direct communication
+range), this constraint would generate a network topology, and allow messages
+to be directly delivered to logically connected agents.
 
 On top of this low level messaging we have built support for defining
 messaging protocols as finite state machines. The user can specify
 states and transitions, where moving to a state triggers a custom
 action for the agent, and transitions are governed by composite rules
 triggered by the arrival of messages. This framework allows complex
-protocols to be defined and trivialises the often complex task of
+protocols to be defined and simplifies the often complex task of
 managing multiple conversations with large numbers of agents simultaneously.
 
 \subsubsection*{Social Capital}
@@ -689,7 +698,7 @@ must be a \texttt{Move} action from an agent for whom there also exists a
 \texttt{Location}. The colon represents a variable assignment or unification
 to the name on the left-hand side of the operator. The \emph{then} clause
 defines the consequence when a tuple matching the condition is found. In this
-case the agent's location is updated and the action removed (to prevent
+case the agent's location object is updated and the action removed (to prevent
 subsequent matches of the same rule).
 
 \begin{drools}[caption={Drools rule example.},label=lst:ruleexample]
@@ -736,7 +745,7 @@ returning the correct results given a range of sample inputs. An integration
 test would load an entire simulation and test whether the agent is able to
 move as expected. The former test ensures that individual components are
 implemented correctly, while the latter ensures the components are properly
-composed and interact correctly.
+composed and interact correctly. Tests such as these have been implemented for Presage2.
 
 The use of this unit-testing method in the platforms development has a knock-on
 benefit for verification of user-defined models. With the platform's test-suite,
@@ -769,7 +778,7 @@ sources, such as FindBugs\footnote{http://findbugs.sourceforge.net} and
 PMD\footnote{http://pmd.sourceforge.net}. These tools aim to detect common
 programming errors, or problematic patterns. For Presage2, the use of a
 language with a rich ecosystem of static analysis tools, Java, aids us in
-regards to this kind of verification.
+regards to this kind of verification, and we have used these tools to improve the code quality of the platform).
 
 Model checking and theorem proving are more formal and stringent methods for
 checking an algorithm and its implementation. Generally, these methods require
@@ -779,8 +788,9 @@ violations. This requires finite and deterministic state, and a separate model
 to describe the system to be checked. Therefore significant extra work is
 required to take this approach.
 
-Thus, the verification of an implemented model should be largely left to the
-model implementer, but we do have tools to leave all options open. In
+The verification of an implemented model is largely left to the
+model implementer, but, as we have described, we enable a variety of testing and static analysis methods for this purpose. 
+In
 addition, in Presage2 we encourage design practices aimed at increasing the
 robustness and reliability. Modularisation and component re-use attempts to
 prevent individual components becoming overly complex. The Presage2 state
@@ -813,7 +823,7 @@ to ease the use of the platform for controlled experimentation.
 
 Like MASON, and in contrast to Netlogo and Repast, Presage2 separates
 visualisation from simulation. Visualisation is driven purely by gathered data,
-in that rather than probing a running simulation in order to visualise we use
+in that rather than probing a running simulation in order to visualise it we use
 gathered and stored data. This approach allows real-time and post-simulation
 analysis to be done using the same tools, when visualising we can always go back
 as well as forward in time, and the simulation will always run at maximum speed.
@@ -828,17 +838,17 @@ also specify an agent and/or time-step for this data. Thus the following tuples
 can be stored:
 \begin{align*}
 &(\mathtt{key},\mathtt{value})\\
-&(\mathtt{key},\mathtt{t},\mathtt{value})\\
+&(\mathtt{key},\mathtt{timestep},\mathtt{value})\\
 &(\mathtt{key},\mathtt{agent},\mathtt{value})\\
-&(\mathtt{key},\mathtt{agent},\mathtt{t},\mathtt{value})
+&(\mathtt{key},\mathtt{agent},\mathtt{timestep},\mathtt{value})
 \end{align*}
 
 This \ac{API} is paired with implementations for several popular storage
-engines. These can be defined in configuration files such that the appropriate
+methods. These can be defined in configuration files such that the appropriate
 database is loaded when the simulation starts. The current implementations
 include the following:
 \begin{itemize}
-	\item JSON---Javascript Object Notation is a human-readable, machine parsable
+	\item JSON files---Javascript Object Notation is a human-readable, machine parsable
 	data-interchange format\footnote{http://json.org} which is supported by many
 	programming languages. JSON data is stored in standard files so is easy to use
 	with zero installation or configuration. This implementation is suitable for
@@ -875,14 +885,14 @@ support for automated experiment generation and execution.
 \begin{figure}
 \centering
 \includegraphics[width=0.8\linewidth]{gfx/presage2/simulation_process}
-\caption{Presage2 simulation process diagram}\label{fig:presage2process}
+\caption[Presage2 simulation process diagram]{Presage2 simulation process diagram. The dashed box shows that Drools is an optional component.}\label{fig:presage2process}
 \end{figure}
 
 We provide an \ac{API} for the specification of a set of values for each
 parameter in the simulation. The tool can then automatically generate the set
 of all parameter permutations, and create an experimental schedule from this
 specification. The tool is also able to include a specified number of repeats
-for each parameter set. Experimental schedules can then be run in batch by the
+for each parameter set. Experimental schedules can then be run in batches by the
 batch executor tool. This tool can be configured to exploit multiple machines
 running experiments across a local area network, including using \ac{HPC}
 facilities where available.
@@ -910,11 +920,11 @@ modelling for serious games or decision making:
 
 \begin{itemize}
 \item The LPG' game is a variant of a linear public good game, and was first defined
-in \citet{Pitt2012c}. It has been used to explore the issue of non-compliance
+by \citet{Pitt2012c}. It has been used to explore the issue of non-compliance
 in resource appropriation, and later to demonstrate a method of fairly
 allocating resources based on Nicholas Rescher's theory of Distributive
 Justice~\citep{Pitt2014}. The game was implemented using Presage2, utilising
-the rule-engine to specify the game rules~\citep{Macbeth2012}.
+the rule engine to specify the game rules~\citep{Macbeth2012}.
 
 This implementation of the LPG' game has been integrated with an Autonomous
 Power Management system to apply Distributive Justice to the power grid~\citep{Kohler2014}.
@@ -930,8 +940,8 @@ determine the effect of changes they intend to propose.
 \item \citet{Petruzzi2014} test their social capital framework with a simple
 cooperation game, implemented with Presage2.
 
-\item \citet{Petruzzi2013} models a market for exchange of energy allocations
-in a SmartGrid, utilising Social capital to encourage cooperation.
+\item \citet{Petruzzi2013} model a market for exchange of energy allocations
+in a SmartGrid, utilising social capital to encourage cooperation.
 
 \item \citet{Schaumeier2013} models an exogenous common-pool resource, with
 rules implemented to test each of \possessivecite{Ostrom1990} principles
@@ -948,8 +958,8 @@ common-pool resource, and exploring the effect of the Kyoto Protocol on these
 emissions~\citep{Macbeth2014}. This work provides an example case of 
 policy-based modelling with Presage2.
 
-\item The Social Mpower game is a Serious game to inform, raise awareness and motivate
-consumers of energy efficiency~\citep{Bourazeri2014}. Presage2 is used as a
+\item The Social Mpower game is a serious game to inform, raise awareness and motivate
+consumers about energy efficiency~\citep{Bourazeri2014}. Presage2 is used as a
 background simulation component of the game, communicating with a graphical game
 frontend, which sends actions triggered by both humans playing the game and
 computational agents within the game.
@@ -970,8 +980,7 @@ for these parts to be easier to understand for non-programmers than standard
 Java code. So far the platform has not given significant focus to integration of
 graphing and visualisation options, instead taking a data-driven approach and
 letting users choose their preferred data-visualisation tool. Finally, tutorials
-and documentation are readily available from the Presage2 webpage\footnote{http
-://www.presage2.info}.
+and documentation are readily available from the Presage2 webpage\footnote{http://www.presage2.info}.
 
 \begin{table}[h]
 \begin{minipage}{1\textwidth}
@@ -1028,7 +1037,7 @@ bring graphical model development to Presage2.
 
 The use of the platform over a range of projects has shown its effectiveness
 as a simulation and modelling tool. The focus of the current applications on
-situations with a strong rule or governance mechanic is largely due to the
+scenarios with a strong rule or governance mechanic is largely due to the
 uptake of the platform. It has been adopted in this domain due to the ease of
 working with rule-based specifications and implementing adaptive and 
 self-organising agents. However, we have shown in this chapter that the platform's
