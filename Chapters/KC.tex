@@ -624,7 +624,7 @@ interactions with the resource such that we can talk about different
 approaches to management of \ac{CPR} systems in a uniform manner. A fisherman
 taking a particular location in a lake for the day, and a user running a
 process on a particular core of a shared processor are both appropriations of
-resource which can be compared.
+resources which can be compared.
 
 \citet{Pitt2012c} propose an abstract game for reasoning about provision and
 appropriation of homogeneous, endogenous resources, using a variant of the
@@ -633,7 +633,7 @@ how the institutional rules affect outcomes in an abstract way. In the same
 work they use this approach to test how agents can be encouraged to comply
 with the rules through the use of monitoring.
 
-Participatory sensing, and knowledge commons in general differ from this
+Participatory sensing, and knowledge commons in general, differ from this
 representation in two key ways. Firstly, the resources are heterogeneous. Not
 all knowledge and information is of equal utility, and nor is its utility
 constant for each user. Therefore, we need to distinguish between each
@@ -642,7 +642,7 @@ artifact in a pool.
 Secondly, the resources are non-rivalrous. Normally in provision and
 appropriation systems an appropriation action will remove resources from the
 pool, thus the focus on achieving compliance in this aspect such that the pool
-is not depleted. Begin non-rivalrous, information and knowledge can be
+is not depleted. Being non-rivalrous, information and knowledge can be
 appropriated without negatively affecting the pool or other users.
 
 In participatory sensing there are multiple resource pools in a single system.
@@ -710,7 +710,7 @@ contextualised sensor information, algorithms for the analysis of data, and
 rich information generated from these algorithms. Some of these artifacts will
 be protected by copyright law, and this will affect what control the
 organisation is able to have over them. The status of data and information (as
-we have defined them) with regards to copyright is currently ambiguous,
+we have defined them) with regards to copyright is currently ambiguous;
 traditionally it was not copyrightable, however databases are
 copyrightable~\citep{Miller2008}. This copyright protection is important as it
 affects how easily the organisation can protect its assets. Bad protection
@@ -737,7 +737,7 @@ robust replicated system where every user has a copy of the whole data set
 (cf. decentralised version-control system Git\footnote{http://git-scm.com} and
 crypto-currency Bitcoin\footnote{http://bitcoin.org}), or anywhere between
 these extremes.  We may also have different facilities for different artifact
-types within a single organisation if the artifact quantity and transitivity
+types within a single organisation if the artifact quantity and use
 differ.
 
 We can furthermore consider computational resources as facilities. Evaluators
@@ -863,7 +863,7 @@ In \ac{EC} we formalise these powers as fluents which indicate whether an agent 
 An institutionalised power for an agent to perform an action signifies that
 the institution has granted the agent the power that performing the designated
 action will lead to a change in institutional state. The absence of this power
-does not preclude the agent from perform this action however, it just means
+does not preclude the agent from performing this action however, it just means
 that, as the institution does not recognise it as a valid action, it will not
 result in the same change in institutional state as when the empowered agent
 did the action. This power differs from physical capability, as one can still
@@ -882,7 +882,7 @@ sanctions from the institution for non-compliance. They can often be used to
 define protocol. For example a polling period for a vote can be defined by
 setting an obligation for when the ballot must be closed.
 
-To take an example of voting in an election. The state will
+Take an example of voting in an election. The state will
 give \emph{permission} for a subset of the population to vote. However, the
 people are not empowered to do so until they receive a valid polling card. At
 the polling station, the staff are \emph{obliged} to give a citizen a voting
@@ -927,6 +927,22 @@ In the case of information and knowledge, a key feature which we identified in \
 The formal characterisation consists of a set of actions which agents can perform in the action arena of the participatory-sensing application, a set of fluents which describe the state of the system at discrete time points, and rules which describe how the agents' actions affect the fluents. Through this characterisation we enumerate how certain rules can satisfy some of Ostrom's principles, and may lead to certain outcomes. The rules are sourced from both social systems that we have reviewed and from technical solutions which are available for the virtual domain. \autoref{table:agact} lists agent actions, \autoref{table:fluents} lists fluents and \autoref{table:predicates} lists the
 predicates and function symbols.
 
+The specification we present here is that of the institution governing the
+described provision and appropriation system. Agents may interact with the
+institution through the defined institutional actions without limitation or
+compulsion. Thus, the use of institutionalised power is a method of
+instructing agents what they are able to do (via \emph{empowerment}), what
+they are allowed to do (via \emph{permission}), and what they ought to do (via
+\emph{obligation}). Whether they do as that should is a matter for the
+institution to encourage and enforce, and is the subject of several of
+Ostrom's principles.
+
+Note that this specification is not complete. We present axioms in cases where
+we must adapt parts of the previous specification by \citeasnoun{Pitt2012b}
+for this new context, and where new mechanisms are required. The purpose at
+this point is to explore potential issues and the possible mechanisms to solve
+them, rather than propose a full institution specification.
+
 \begin{table}
 \centering
 \caption{Agent actions}\label{table:agact}
@@ -939,6 +955,7 @@ $\m{appropriate}(A,I,\m{Obj})$ & Agent $A$ appropriates object $\m{Obj}$ from in
 $\m{apply}(A,I,\m{Role})$ & Agent $A$ applies for the role $\m{Role}$ in institution $I$. \\
 $\m{assign}(G,A,I,\m{Role})$ & Gatekeeper agent $G$ assigns the role of $\m{Role}$ in institution $I$ to agent $A$. \\
 $\m{report}(M,A,I,\m{Reason})$ & Monitor agent $M$ reports agent $A$ in institution $I$ for the reason given by $\m{Reason}$. \\
+$\m{sanction}(H,I,A,O)$ & Head agent $H$ sanctions agent $A$ in institution $I$ for the offence $O$.\\
 $\m{appeal}(A,I,S)$ & Agent $A$ appeals the sanction level $S$ in institution $I$. \\
 $\m{uphold}(C,A,I,S)$ & Head agent $C$ upholds the appeal by agent $A$ for the sanction level $S$ in institution $I$.
 \end{tabular}
@@ -1010,7 +1027,7 @@ $\B{pow}(G,\m{assign}(G,A,I,\Role))=\true \holdsAt T \pad \leftarrow$ \\[0mm]
 \end{tabbing}
 }}
 
-The axioms above give the example of discretionary assignment, where the gatekeeper can decide whether to assign a role or not. 
+The axioms above give the example of discretionary assignment\footnote{This is an extension of \citeapos{Pitt2012b} axioms, which only handles a single \emph{member} role, to handle multiple different roles.}, where the gatekeeper can decide whether to assign a role or not. 
 An Agent $A$ performing the $\m{apply}$ action initiates a period of time during which the fluent $\m{applied}(A,I,\Role)$ is $\true$ if
 it is empowered to perform that action; it is empowered to perform that action if the agent does not already occupy this role.
 Similarly, an agent $G$ can make the institutional fact (fluent) true that an agent $A$ is assigned to a role $\Role$ if
@@ -1113,7 +1130,7 @@ Secondly, individuals can be incentivised to monitor for violations. Unlike in t
 This incentivisation can be in the form of a reward for finding violations or payment for performing audits. 
 Finally, the institution can arrange for an independent third party to monitor the system, and pay for this by collecting contributions from members.
 
-In the participatory-sensing scenario our access-control procedures provide protection over access to the resource, therefore monitoring is more concerned with the content of provisions: The quality of information and knowledge provided, and whether a user is permitted to provision a particular artifact. 
+In the participatory-sensing scenario our access-control procedures provide protection over access to the resource, therefore monitoring is more concerned with the content of provisions: the quality of information and knowledge provided, and whether a user is permitted to provision a particular artifact. 
 These requirements touch on different concepts and thus need to be handled differently. 
 
 In the case of the quality of provisioned information and knowledge, the actions of \emph{evaluators} can be a form of monitoring. 
@@ -1223,7 +1240,7 @@ $\B{pow}(H,\m{uphold}(H,A,I,S))=\true \holdsAt T \leftarrow$ \\[0mm]
 \end{tabbing}
 }}
 
-An appeal which is upheld could also initiate review and retraction of the monitored offence (axioms not specified here).
+An appeal which is upheld could also initiate review and retraction of the monitored offence (axioms not specified here)\footnote{The \emph{sanction}, \emph{appeal} and \emph{uphold} axioms presented here are largely the same as in \citeasnoun{Pitt2012b}. They are shown to illustrate the application of this principle.}.
 
 % Maybe mention Pitt2012 conflict resolution or *-justice.
 
@@ -1254,6 +1271,7 @@ We can also formalise aspects of some open-source licences. For example: the rig
 \begin{tabbing}
 \hspace*{.5cm}\=\hspace*{.5cm}\=\hspace*{.5cm}\=\kill
 $\m{provision}(A,I,\m{Obj}) \initiates \B{obl}(A, \m{provision}(A,I,\m{Alg})) \pad$ at $\pad T \pad \leftarrow$ \\
+\>$\B{pow}(A, \provision(A,I,\Obj))=\true \holdsAt T \pad \land$ \\
 \>$\m{derivedFrom}(\_,\m{Alg},\m{Obj})=\true \pad \land$ \\
 \>$\m{licence}(\m{Obj})=\m{copyleft} \holdsAt T \pad \land$ \\
 \>$\m{provisioned}(\_,I,\m{Alg})=\false \holdsAt T$ \\
@@ -1279,11 +1297,11 @@ We now move on to the evaluative aspects of the \ac{IAD}. We perform this evalua
 
 \subsection{Outcomes}
 
-We have talked of some current outcomes seen in participatory-sensing applications, namely enclosure and inequity. 
+We have talked in \autoref{sec:review} of some current outcomes seen in participatory-sensing applications, namely enclosure and inequity. 
 This analysis should help us understand why we see these, but we will also look at other potential outcomes we may observe from different organisational approaches. 
 
 \paragraph{Enclosure}
-What we see in often participatory sensing and other applications based around information collection is the enclosure of the database. 
+What we see often in participatory sensing and other applications based around information collection is the enclosure of the database. 
 The data collector wants to keep the information to try and derive as much value from it themselves as possible. 
 This is firstly inefficient; when data is made open much more total value is derived than any individual could achieve by themselves~\citep{Shadbolt2012}. 
 Secondly, it deprives the original information provider, the user, from their own property. 
@@ -1402,6 +1420,14 @@ The \ac{OMS} architecture is peer-to-peer, enabling sharing of facility costs by
 %For these reasons we see \ac{OMS} as an implementation avenue for our framework.
 
 %TODO may concluding statement.
+
+The \ac{OMS} platform therefore provides the capabilities needed to deploy an
+institution for participatory sensing, with an appropriate technical
+infrastructure for decentralisation of stored artifacts and providing
+individuals with control over their information and its use. However, before
+we can effectively supply an institution with this platform, we require a more
+empirical understanding of the effect of the rules-in-use we have discussed in
+a participatory-sensing context.
 
 \section{Summary}\label{sec:conclude}
 
