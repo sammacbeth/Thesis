@@ -548,8 +548,8 @@ in a single logic engine is shown in the computational complexity of seemingly
 simple deductive tasks. If we wish to use an electronic institution, in a
 simulation or application, purely for deductive tasks (to know what is true
 when, given what has happened), then Prolog is not a very efficient solution.
-We test this hypothesis by creating a proof-of-concept implementation of a
-rule-based approach of the processing of \ac{EC} axioms, and analyse its
+We tested this hypothesis by creating a proof-of-concept implementation of a
+rule-based approach of the processing of \ac{EC} axioms, and analysed its
 performance with the same \ac{RONR} voting specification.
 
 A purely deductive \ac{EC} implementation will only need to be able to query
@@ -637,7 +637,7 @@ ec.initiates(new InitiatesRule() {
 });
 \end{java}
 
-\begin{java}[label=lst:holdsAt,caption={[Example of \emph{holdsAt} rule]Example of \emph{holdsAt} rule. The \texttt{matches} function filters fluents which match the form we're looking for. If the fluent matches, \texttt{inferValue} determines the value based on the status of other fluents and using matched values from the specified fluent.}]
+\begin{java}[label=lst:holdsAt,caption={[Example of \emph{holdsAt} rule]Example of \emph{holdsAt} rule. The \texttt{matches} function filters fluents which match the form we are looking for. If the fluent matches, \texttt{inferValue} determines the value based on the status of other fluents and using matched values from the specified fluent. A \texttt{MultiStringMatcher} is used to match multiple strings in an expression against to a `master' string, which is also bound during expression parsing. This is used to unify the C variable in this example.}]
 // holdsAt( pow(C, open_session(C,S))=true, T ) :-
 //    holdsAt( sitting(S)=false, T ),
 //    holdsAt( role_of(C,chair)=true, T ).
@@ -653,6 +653,7 @@ ec.holdsAt(new HoldsAt() {
 				return pow_open_session.matches(o);
 			}
 
+	// Binder method
 	public Object inferValue(Object fluent, int t, ECQuery ec) {
 		return !ec.holdsAt(new Predicate("sitting", S.getLastMatch()), t)
 				&& ec.holdsAt(new Predicate("role_of",
@@ -676,7 +677,7 @@ with. If one is found, we use the \texttt{Binder} to return, or check the value
 of the fluent.
 
 We can translate the \ac{RONR} voting protocol specification to run with this implementation,
-and then again run our test-suite to determine performance. As before, we
+and then again run our test suite to determine performance. As before, we
 perform 50 repeats of each narrative and allow for the Java Runtime
 Environment to `warm-up' before collecting results. The results are shown in \autoref{fig:rulec}.
 
@@ -693,7 +694,7 @@ conclusion that, if only deduction is required, a rule-based implementation of
 the \ac{EC} will scale much better than with Prolog.
 
 However, we note that this is a simple, and fairly naive implementation of a
-rule-based approach to the \ac{EC}. It omits features such a forward-chaining,
+rule-based approach to the \ac{EC}. It omits features such as forward chaining,
 which would be required to properly handle multiple actions per timestep. In
 particular this implementation requires a verbose manual translation of the Prolog
 specification, a process which is error-prone. The format of
@@ -706,7 +707,7 @@ Engines in the next section.
 
 An additional issue when using Prolog-like syntax for axioms is the
 limitations of tuple- and predicate-based variables. This variable system is
-readable and expressive with simple constructs, however lacks reliable mechanisms to
+readable and expressive with simple constructs; however it lacks reliable mechanisms to
 reference other objects, and as the size and depth of nested tuples increases
 readability is lost. This is in contrast to Java where we can have many member
 variables in an object, and complex reference trees from these variables. This
@@ -721,7 +722,7 @@ implementations of the \ac{EC} when dealing with primarily deductive tasks,
 and interfacing these with a Java runtime. Furthermore, by implementing a
 simple version of rule-based deduction of fluents from translated \ac{EC}
 axioms we observe an improvement in performance of two orders of
-magnitude faster than the best Prolog implementation. Thus we propose that we can achieve a fast and robust deductive
+magnitude compared to the best Prolog implementation. Thus we propose that we can achieve a fast and robust deductive
 \ac{EC} engine using a standard rule engine.
 
 There is still ongoing work in implementing faster Prolog \ac{EC}
@@ -749,9 +750,9 @@ Prolog implementations of the \ac{EC}, and showed that for purely deductive
 reasoning a rule-based approach is significantly faster. While specification
 of an Electronic Institution in \ac{EC} is still worthwhile, particularly for
 verification and the other non-deductive reasoning tasks, for runtime
-deductive reasoning with large number of incoming events we advocate a 
+deductive reasoning with a large number of incoming events we advocate a 
 rule-based implementation. Therefore, if we are specifying in \ac{EC}, but
-implementing in a different paradigm we require a robust translation process
+implementing in a different paradigm, we require a robust translation process
 so the specifications will be consistent.
 
 In this section we present a method of translating \ac{EC} axioms into a
@@ -797,7 +798,9 @@ are part of the rule-engine implementation.
 
 Drools allows the user to control the execution of rules through a \texttt{fireAllRules} method.
 This procedure will start recursively executing the consequences of matched
-rules until there are none remaining. Each consequence will cause insertion,
+rules sequentially until there are none remaining. 
+Matched rules are ordered in descending order of a user-specified `salience' property on a rule, with tie-breaks resolved arbitrarily.
+Each consequence will cause insertion,
 retraction or modification of facts in the working memory, which in turn may
 cause matched rules to be added or removed from the agenda. Thus this enables
 forward-chaining reasoning.
@@ -826,13 +829,16 @@ end
 \end{drools}
 
 The rule-engine also supports what is called `logical' insertion of a fact. If a
-fact is inserted `logically' then its truth is dependant on the truth of the
+fact is inserted `logically' then its truth is dependent on the truth of the
 `when' clause that led to its assertion. This means that the fact will be
 automatically retracted if this conditional becomes false.
 
 Backward-chaining reasoning and state checking is done through \emph{queries}.
-These are written in the same syntax as when conditions and are able to unify
-matching fact tuples, or sets of fact tuples using full or partial input data. 
+These are written in the same syntax as `when' conditions and are able to
+unify matching fact tuples, or sets of fact tuples using full or partial input
+data. Queries allow for questions to be asked about the current facts in the
+system, for example returning all facts matching a given constraint, or
+unifying a set of facts which hold specific relationships between each other.
 
 Drools also has support for Complex Event Processing. This extension allows for
 special facts, called events. These events are attached with temporal properties
@@ -853,24 +859,24 @@ a viable platform for the construction of a Electronic Institution engine.
 However, there are several main design challenges to overcome to be able to transfer
 \ac{EC} specifications into Drools:
 \begin{enumerate}
-\item The \ac{EC} allows reasoning of the state of the system in the past. This is
+\item The \ac{EC} allows reasoning about the state of the system in the past. This is
 done either by holding a cache of all the previous states of fluents, or being
 able to re-calculate this state from first principles. Drools' working memory
 has no concept of \emph{when} a fact is true, only that the fact's current
 state is true at the present point in time.
 \item Facts in Drools must be concrete. Unlike in the \ac{EC}, where fluents can
-hold with anonymous or fuzzily defined values, in Drools every fact is an
-instantiated object. By default this object will then only match a object with
+hold with anonymous values, in Drools every fact is an
+instantiated object. By default this object will then only match an object with
 the same values in all of its member variables. Particularly when dealing with
 institutionalised power it is important to be able to specify that an agent is
 empowered to perform a particular \emph{type} of action, but with some specifics
 omitted.
-\item Nested fact matching. Drools does not support nesting of pattern within
+\item Nested fact matching. Drools does not support nesting of a pattern within
 another pattern. For this kind of matching we require separate patterns and a
 constraint to show that the first match should be nested in the second pattern.
-\item Queries cannot be overloaded. In the \ac{EC} queries such as \texttt{holdsAt}
+\item Queries cannot be overloaded. In the \ac{EC}, predicates such as \texttt{holdsAt}
 are often defined multiple times for different input fluents. In Drools we would
-only be able to have a single query definition which must handle all cases.
+only be able to have a single query definition which must handle all cases. For example, if we wished to write a \emph{holdsAt} query in Drools, this single query would have to be able to provide the answer for every possible fluent which we wish to ask about. It is not possible to write multiple queries with the same name, each of which handles a different portion of the domain of inputs.
 \end{enumerate}
 
 \citet{Bragaglia2012} overcame these issues by requiring that a specification
@@ -949,8 +955,7 @@ the range of actions specified in this \texttt{Pow} object. This range of
 actions is defined by an object of the desired action type which may have some
 fields set to \texttt{null}. The \emph{matches} method returns true if and only
 if both actions are of the same type, and for each non-null field the values are
-equal. Note, as this equality is defined on a per-object basis, it can be
-overridden to provide nested dynamic matching. This method allows simple
+equal. This method allows simple
 specification of a range of allowed actions, and simple use of institutionalised
 power in rules. To amend the previous example:
 
@@ -958,6 +963,11 @@ power in rules. To amend the previous example:
 $act : Action($a : actor)
 Pow(actor == $a, action.matches($act))
 \end{droolsinline}
+
+As this \emph{matches} method equality is defined on a per-object basis, it
+can be overridden to provide nested dynamic matching. In the above example the
+\texttt{Action} class has been modified to use this concept of equality with
+other objects, but also member fields of the class can do the same.
 
 \subsection{Translation of EC Electronic Institution Specifications}
 
@@ -972,7 +982,7 @@ Events should be declared as Java objects, extending the provided base
 \texttt{Action} class. This base class allows the engine to distinguish
 actions from fluents, and attach time and other metadata to the action. The
 event object should be immutable, when possible, as it is a constant. \autoref{lst:ClOpenSession}
-shows the \emph{open\_session} event from \ac{RONR} as a Java object. 
+shows the \emph{open\_session} event from \ac{RONR} as a Java object.
 
 \begin{java}[label=lst:ClOpenSession,caption=OpenSession action as a Java object]
 public class OpenSession extends Action {
@@ -985,6 +995,8 @@ public class OpenSession extends Action {
 	}
 }
 \end{java}
+
+A narrative is then constructed by inserting event objects into the rule engine in ascending timestamp order, and triggering rules each timestep to update the state of the system fluents.
 
 \subsubsection*{Representation of fluents}
 
@@ -1048,14 +1060,14 @@ Therefore we require a mechanism to falsify the event condition after initial
 processing.
 
 We provide two such mechanisms, which work for different use-cases. Firstly, a
-\texttt{valid} attribute is attached to actions. This attribute is false
+\texttt{valid} attribute is attached to actions\footnote{This attribute is named `valid' primarily as the main use-case of this mechanism is the validation of events when they are inserted into the rule engine.}. This attribute is false
 initially, and should be set to true when the action is processed by a rule.
 This means that the rule can be prevented from being re-activated for a specific event by
-using a \texttt{valid==false} constraint. The engine will then clean up any
+using a \texttt{valid==false} constraint. Another rule can then clean up any
 invalid actions each timestep to prevent activations. The second method uses a
 fact \texttt{T} which gives the most recent timestep. This can then be
 compared to the attribute \texttt{t} of the action to ensure that the clause
-can only be activated in this timestep. These two methods are shown below:
+can only be activated in this timestep. The value of the fact \texttt{T} is updated by a rule each timestep. These two methods are shown below:
 
 \begin{droolsinline}
 rule "Validity check"
@@ -1088,7 +1100,7 @@ power again, as it is implicitly true by virtue of the action being
 \emph{valid}. Note also the additional clause in this rule to retrieve the
 \texttt{RoleOf} fluent we wish to retract.
 
-\begin{drools}[label=lst:ronrinitiates,caption={[Example of translated initiates clauses.]Example of translated initiates clauses. Original Prolog specification is shown in the comment above each rule.}]
+\begin{drools}[label=lst:ronrinitiates,caption={[Example of translated initiates clauses.]Example of translated initiates clauses. The original Prolog specification is shown in the comment above each rule.}]
 //	initiates( second(B,M), status(M)=seconded, T ) :-
 //		holdsAt( pow(B, second(B,M))=true, T ).
 rule "Second"
@@ -1146,7 +1158,7 @@ end
 condition from Prolog becomes a Drools condition, and the bound variables are
 used to construct the relevant institutionalised power.
 
-\begin{drools}[label=lst:droolsholdsat,caption={[Example of a translated holdsAt clause.]Example of a translated holdsAt clause. Original Prolog specification is shown in the comment above the rule.}]
+\begin{drools}[label=lst:droolsholdsat,caption={[Example of a translated holdsAt clause.]Example of a translated holdsAt clause. The original Prolog specification is shown in the comment above the rule.}]
 //	holdsAt( pow(B, second(B,M))=true, T ) :-
 //		holdsAt( status(M)=proposed, T ),
 //		holdsAt( role_of(B,seconder)=true, T ).
@@ -1168,7 +1180,7 @@ specify that a field may be any value \emph{except} ones within a certain set.
 This cannot currently be implemented, however it can be overcome with a simple
 workaround.
 
-Returning to the \ac{RONR} example, we can see a case where this problem arise in the following clause:
+Returning to the \ac{RONR} example, we can see a case where this problem arises in the following clause:
 
 \begin{prologinline}
 holdsAt( pow(C, open_session(C,S))=true, T ) :-
@@ -1177,7 +1189,7 @@ holdsAt( pow(C, open_session(C,S))=true, T ) :-
 \end{prologinline}
 
 This specifies that an agent is empowered to perform the \emph{open\_session}
-action for any session which is \emph{not} sitting (\ie an infinite set of
+action for any session which is \emph{not} sitting (\ie\ an infinite set of
 actions, minus a finite set of exceptions). In Drools we can only specify that
 the agent is empowered to open \emph{any} session. Therefore, in order to
 maintain this condition, and so that we do not process an action incorrectly,
@@ -1213,7 +1225,7 @@ rule "Open Session"
 end
 \end{drools}
 
-This approach is not ideal, as it could lead to an agent thinking it has power to do something when it does not. However, this is a limitation of the Drools rule language. For situations when this feature is critical, it may be possible to assert a negated power, \ie\ that the agent explicitly does not have the power to do an action. Using a query, this could be given precedence over the original \emph{Pow}, such that $\mathtt{power(Ag,Act) \leftarrow \mathtt{Pow(Ag,Act)} \land \lnot \mathtt{NotPow(Ag,Act)}}$. However, we have not yet implemented or tested such a feature, and it is left for future work.
+This approach is not ideal, as it could lead to an agent thinking it has power to do something when it does not. However, this is a limitation of the Drools rule language. For situations when such constructs are critical, it may be possible to assert a negated power, \ie\ that the agent explicitly does not have the power to do an action. Using a query, this could be given precedence over the original \emph{Pow}, such that $\mathtt{power(Ag,Act) \leftarrow \mathtt{Pow(Ag,Act)} \land \lnot \mathtt{NotPow(Ag,Act)}}$. However, we have not yet implemented or tested such a feature, and it is left for future work.
 
 \subsection{Drools-EInst}
 
@@ -1231,8 +1243,8 @@ We have implemented six modules from \ac{EC} specifications:
 \begin{itemize}
 \item Institutionalised Power -- Our implementation of institutionalised power, as has been used above. This enables powers, permissions and obligations to be specified for agents. Queries can then be done to check what power exists for agents. Additionally, we use a Drools feature called `LiveQuery' to allow for immediate notification when certain powers become true or false.
 \item Access Control -- Assigns \texttt{RoleOf} facts according to the protocol from \citet{Pitt2012b}. This includes multiple role assignment methods.
-\item Micro Payments -- A simple implementation of micro-payments within an institution.
-\item Provision and Appropriation -- Manages provision and appropriation of heterogeneous resources to a pool, as set out in \autoref{sec:formalchar}. Enables the creation of multiple \emph{pools} which can specify certain types of resource which can be provisioned to them. Agents can request resources from the pool and appropriate them. Additionally allows for retraction/removal of resources. Power to do these actions is role-based, using the Access Control module for this.
+\item Micro Payments -- A simple implementation of micro-payments within an institution. Allows for issuing of invoices which agents should pay, and for virtual currency transfers between agents.
+\item Provision and Appropriation -- This module manages the provision and appropriation of heterogeneous resources to a pool, as set out in \autoref{sec:formalchar}. It enables the creation of multiple \emph{pools} which can specify certain types of resource which can be provisioned to them. Subsequently, agents can request resources from the pool and appropriate them. Additionally allows for retraction/removal of resources. The power to do these actions is role-based, using the Access Control module for this.
 \item \ac{RONR} voting protocol -- The voting protocol specification from \ac{RONR} as given in \autoref{sec:ronrcode}.
 \item Voting -- A more general voting protocol which enables multiple different vote types and winner determination methods.
 \end{itemize}
