@@ -6,8 +6,8 @@
 tool for maintaining order and cooperation in `open' multi-agent
 systems~\citep{Esteva2001,Artikis2009}. Taking lessons from the development of
 institutions (defined as sets of rules which specify what is permitted and
-forbidden within a given context~\citep{Ostrom1990,North1990}) in human social and
-organisational systems, they aim to regulate interactions as norms---specifying
+forbidden within a given context) in human social and
+organisational systems~\citep{Ostrom1990,North1990}, they aim to regulate interactions as norms---specifying
 expectations of behaviour---or concrete rules to say what is required and
 forbidden.
 
@@ -17,8 +17,8 @@ however these `norms' are analogous to institutional rules, in that they are
 social constraints on the actions of agents within an arena. Similarly, an
 institutional rule can be called a `policy', as often seen in network
 management ~\citep{Sloman1999}. In all cases, the institution is assigning
-some form of institutionalised power, permission and/or
-obligation (cf.~\citet{Jones1996}) for agents to perform certain actions (and it has
+some form of institutionalised power, permission, obligation and/or
+prohibition (cf.~\citet{Jones1996}) for agents to perform certain actions (and it has
 been argued that this kind of assignment is essential to properly specify a system which extends beyond purely physical state~\citep{Artikis2009a}).
 In an open system any agent could perform any action (within its physical
 capabilities). An electronic institution used in this context is able to
@@ -53,7 +53,7 @@ An institution may also make agents aware of when they have the power,
 permission or obligation to do an action. This aids in the planning of actions,
 so that agents do not waste energy with ineffectual actions, or worse, forbidden
 actions which may lead to sanctions. For example, most governments will notify
-their citizens of the time window in which going to ones local polling station
+their citizens of the time window in which going to one's local polling station
 and marking a cross on a piece of paper will count as an election vote. Outside 
 of this window this action has no effect.
 
@@ -61,7 +61,7 @@ Thus, an implementation of an electronic institution should be an executable
 specification which, firstly, holds some state of the institution, through which
 powers, permissions and obligations can be deduced; secondly, defines how
 actions may change the state of the institution at a given time; and finally,
-allows agents to query whether they are empowered, permitted or obliged to perform
+allows agents to query whether they are empowered, permitted, obliged or forbidden to perform
 any given action.
 
 Furthermore, in human organisations, certain useful procedures have been
@@ -69,10 +69,10 @@ formalised and specified in such a way that they can be reused in institutions
 as a tool for certain tasks. For example, \ac{RONR}~\citep{Robert2011} is a
 specification of a parliamentary authority for organisations. Organisations
 can take this specification and update their institutional rules accordingly
-to incorporate this robust\footnote{Robust, in that there is little or no ambiguity over which actions can be taken, and who can perform them; and the protocol is not vulnerable to manipulation. This means that the protocol will be able to function effectively in most circumstances.}
+to incorporate this robust\footnote{It is robust, in that there is little or no ambiguity over which actions can be taken, and who can perform them; and the protocol is not vulnerable to manipulation. This means that the protocol will be able to function effectively in most circumstances.}
  protocol. The aim of electronic institutions is to
 provide such tools for open, agent-based systems, and work has been done on
-specifying various protocols, include the a voting protocol from the aforementioned
+specifying various protocols, include a voting protocol from the aforementioned
 \ac{RONR}~\citep{Pitt2005a}, floor control
 protocols~\citep{Artikis2004,Artikis2009b}, monitoring and sanctioning
 procedures~\citep{Pitt2012c}, argumentation~\citep{Artikis2003} and auctions~
@@ -83,11 +83,12 @@ is yet to emerge.
 We are concerned with how to implement electronic institutions for both
 simulated applications and real-time system monitoring. This implementation
 should therefore meet the following loose requirements:
+It should be:
 \begin{itemize}
-\item Fast enough for real-time systems;
-\item Expressive, such that complex rules and relationships can be implemented;
-\item Readable, such that the behaviour is apparent from the specification;
-\item Modular, such that institutions can be built up from the composition of smaller modules.
+\item fast enough for real-time systems;
+\item expressive, such that complex rules and relationships can be implemented;
+\item readable, such that the behaviour is apparent from the specification; and
+\item modular, such that institutions can be built up from the composition of smaller modules.
 \end{itemize}
 
 In this chapter we investigate the specification and execution of electronic
@@ -106,7 +107,7 @@ translated to the JBoss Drools rule engine, using the \ac{RONR} example.
 We are yet to formally define what we mean by an Electronic
 Insitution, beyond saying that they are an instantiation of what economists
 define as an Institution, but in a computational domain. \citet{North1990}
-defines Institutions thusly: 
+defines Institutions as follows: 
 
 \begin{quote}
 ``Institutions are the rules of the
@@ -172,7 +173,7 @@ give a specification of social constraints which expresses:
 
 This specification represents a superset of an electronic institution
 specification. Physical capabilities are obviously outside of the scope of the
-electronic institution, being a social construct it cannot constrain what
+electronic institution: being a social construct it cannot constrain what
 agents do physically. On the other hand, institutionalised powers and
 permissions, prohibitions and obligations are obviously within the
 institution. We argue that the final set of constraints---sanctions and
@@ -183,7 +184,7 @@ provide, but are not part of its definition.
 that they can be changed by the organisations which use them. This
 institutional change allows the organisation to adapt to changing conditions
 and/or optimise inefficiencies (although it can also make things worse), and as such,
-is an important property to translate. \citet{Artikis2012a} extend their
+is an important property to translate. \citet{Artikis2012a} extends his
 specification of open agent systems to enable the specification, which
 contains the institutional rules, to change over time as a result of agent's
 actions.
@@ -206,7 +207,7 @@ executable, we now re-visit electronic institution specifications, and
 particularly, their operationalisation. 
 
 Work on specification of constraints, or norms, for multi-agent
-systems often focuses on the use of Logics for specification. Logical
+systems often focuses on the use of logics for specification. Logical
 specifications have the advantage of enabling model checking and formal proofs
 of validity. Logics typically also support deductive, abductive and inductive
 reasoning:
@@ -306,7 +307,7 @@ electronic institutions.
 % Casual calculator: Prediction, planning, postdiction.
 % Model checking - cannot be fordidden and obliged at the same time.
 
-\section{The Problem with the Event Calculus}\label{sec:ecperf}
+\section{Event Calculus Performance}\label{sec:ecperf}
 
 The \acl{EC}\footnote{We gave a brief primer on the \ac{EC} and its predicates in \autoref{sec:ecprimer}. A more detailed introduction to the concepts can be found in \citet{Shanahan1999}.} is a widely used formalism for executable specification of electronic
 institutions. It also has a rich feature
@@ -314,7 +315,7 @@ set, enabling verification of specifications, deductive, abductive and
 inductive tasks~\citep{Shanahan1999}. However, like with other declarative
 logic specifications, this richness comes at the cost of performance and
 scalability. This problem is particularly acute when we wish to use a
-specification in real-time or in simulation, with a constant stream of events,
+specification in real-time or in a simulation, with a constant stream of events,
 and many deductive tasks to query the state of the institution.
 
 In this section we will quantify this performance, using an example electronic
@@ -395,7 +396,7 @@ narrative([happens(open_session(cAgent0,s0), 1),
 \end{prolog}
 
 The Prolog \ac{EC} implementations were tested using SWIProlog\footnote{http://www.swi-prolog.org}.
-This is a standard, up-to-date, and fast implementation. It also contains useful
+This is a commonly-used, up-to-date, and fast implementation. It also contains useful
 profiling functions which we can use to test performance. In particular we use
 the \texttt{time/1} function which calculates the required execution time of the
 specified goal. We can then define a test procedure which will profile
@@ -414,7 +415,7 @@ test :-
 \subsection{The Simple Event Calculus}
 
 The Simple Event Calculus is the most basic form of the \ac{EC}~\citep{Shanahan1999}.
-This version was used in the original \ac{RONR} voting protocol implementation, and is shown in \autoref{lst:secpl}. To this we add a \texttt{doUpdate} implementation which simply asserts each
+This version was used in the original \ac{RONR} voting protocol implementation, and is shown in \autoref{lst:secpl}. To this we added a \texttt{doUpdate} implementation which simply asserts each
 \texttt{happens} tuple.
 
 \begin{prolog}[caption=Prolog implementation of the Simple Event Calculus,label=lst:secpl]
@@ -450,7 +451,7 @@ terminates(Event, Fluent = V, T) :-
 % 	update(T).
 % \end{prologinline}
 
-We test the execution time, as reported by the SWIProlog profiler, with
+We tested the execution time, as reported by the SWIProlog profiler, with
 an increasing number of motions to pass. These results are shown in \autoref{tab:ronrsec}.
 As inferences are made at query time, the narrative has a negligible process
 time, and in fact the timing method used is unable to measure it. Query times scale very badly as the total number of action increases, such
@@ -497,8 +498,8 @@ time is exponential.
 {\label{fig:cec_swipl}\includegraphics{gfx/ec/cec_swipl}}
 \subfloat[tuProlog]
 {\label{fig:cec_tupl}\includegraphics{gfx/ec/cec_tupl}}
-\caption{Execution time of voting protocol using Cached Event Calculus with SWIProlog and
-TuProlog engines}\label{fig:cec}
+\caption{Execution time of voting protocol using the Cached Event Calculus with SWIProlog and
+tuProlog engines}\label{fig:cec}
 \end{figure}
 
 \subsection{Integration with Java}
@@ -515,16 +516,16 @@ available to the Java runtime.
 
 Java Prolog engines offer a portable implementation which integrates natively
 with Java code. tuProlog~\citep{Denti2005} is a lightweight Prolog
-implementation in Java. We run another performance test using this Prolog
+implementation in Java. We ran another performance test using this Prolog
 engine to compare with those in the previous section.
 
-We orchestrate the same testing scenario as before, with
+We orchestrated the same testing scenario as before, with
 identical narratives. The use of Java aids the automation of these tests, so
-we run 10 repeats for each narrative. Additionally, runtime optimisation by
+we ran 10 repeats for each narrative. Additionally, runtime optimisation by
 the Java Runtime Environment (JRE) means that the execution time will improve over
-time, thus we exclude the first results, only taking results after the JRE has
+time, thus we excluded the first results, only taking results after the JRE had
 `warmed-up'\footnote{This `warm-up' refers to the dynamic, just-in-time compilation, and run-time optimisation performed by the JRE, which causes slower performance early in the program life-cycle~\citep{Blackburn2008}}. 
-Timing is calculated using the Java built-in function
+Timing was calculated using the Java built-in function
 \texttt{System.nanoTime()}\footnote{http://docs.oracle.com/javase/7/docs/api/java/lang/System.html\#nanoTime()} 
 which provides up-to nano second accuracy for timing tasks.
 
@@ -557,7 +558,7 @@ whether a fluent \emph{holdsAt} a time \emph{t} (or what value it holds at
 that t), whether a fluent is true \emph{initially}, whether an event happens
 at a time t, or whether an event \emph{initiates} or \emph{terminates} a
 fluent. We can specify this as a Java interface as shown in
-\autoref{lst:iecquery}. This interface supports fluents with non-boolean
+\autoref{lst:iecquery}. This interface supports fluents with non-Boolean
 values, and also implicit inference of these values when a placeholder is passed
 object as the value.
 
