@@ -1260,12 +1260,12 @@ To compare the performance of the Drools-EInst engine to those tested in
 implementation. We extend the test to 100 motions and compare the performance
 to that of our simple rule-based \ac{EC} implementation. The results are shown
 in \autoref{fig:droolsperf}. We see that the performance is several times
-slower than this benchmark, but this is to be expected when going from a hard-
-coded implementation to a dynamic rule engine with forward and backward
+slower than this benchmark, but this is to be expected when going from a 
+hard-coded implementation to a dynamic rule engine with forward and backward
 chaining. However, the performance hit is negligible when compared to the
-Prolog implementations, and for longer narratives the performance gap to the
+Prolog implementations, and for longer narratives the performance gap between it and the
 benchmark reduces. With 30 motions it is 350 times faster than the faster
-Prolog implementation, and with 100 motions it is already less than half the
+Prolog implementation, and with 100 motions it is already more than half the
 speed of the rule-based \ac{EC}.
 
 \begin{figure}
@@ -1319,7 +1319,7 @@ for all specifications implemented in Drools-EInst.
 In this chapter we have investigated the operationalisation of electronic
 institutions for specification of procedure and institutionalised power in
 open agent systems. Existing methods, based on Logics and action languages,
-are rich in reasoning capabilities and expressive, however implementations
+are rich in reasoning capabilities and expressive; however implementations
 suffer from poor performance and scalability. Therefore, we advocate an
 approach whereby such representations are still used for specification, but
 for operationalisation a translation to production rules is made, allowing for
@@ -1336,23 +1336,23 @@ faster constraint or rule specifications, however our method maintains a much
 closer correspondence between logic and rule specifications. There is a 
 one-to-one correspondence between \ac{EC} axioms and Drools rules, with each
 \ac{EC} query becoming a single Drools condition. We believe this relation is
-apparent when comparing between the specifications.
+apparent when comparing the specifications.
 
 The cost of this performance improvement from \ac{EC} to Drools is the loss of
 abductive and inductive reasoning over the specification, and the loss of the
 cache of past values of fluents. As the implementation using rules is
-primarily aimed at speeding up deductive at the cost of abduction and
+primarily aimed at speeding up deduction at the cost of abduction and
 induction this first loss is expected. The second is mitigated by the fact
 that with Drools we can still explicitly store fluents describing historical
 states, and therefore keep history in a more efficient manner.
 
-Though there is only a relatively small number of modules implemented in the 
+Though there are only a relatively small number of modules implemented in the 
 Drools-EInst library, we expect this to increase as it is used by more simulations
 and applications. The modularity of the library's design enables it to be used
-for rapid development and prototyping of Electronic Institutions. A user can
+for rapid development and prototyping of electronic institutions. A user can
 easily test various different module permutations, as well as rich
 configuration options provided by each module itself. Thus, this library can
-be seen as a toolkit for deploying Electronic Institutions into socio-technical 
+be seen as a toolkit for deploying electronic institutions into socio-technical 
 systems.
 
 The performance of the Drools-EInst tool enables its use for the simulation of
