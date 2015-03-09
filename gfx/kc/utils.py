@@ -88,7 +88,7 @@ def proportion(it):
             yield x / best
 def rankSimulations(e1, rankFn = rank, ascending=True):
     rankings = []
-    for a in [('totalut', False), ('endures', False), ('participation', False), ('equity', False)]:
+    for a in [('totalut', False), ('endures', False), ('participation', False), ('equity', False), ('efficiency', False)]:
         sort = e1.sort(a[0], ascending=a[1])
         rankings.append(pd.DataFrame({a[0]: list(rankFn(sort[a[0]]))}, index=sort.index))
     #sort = e1.sort('equity', ascending=True)

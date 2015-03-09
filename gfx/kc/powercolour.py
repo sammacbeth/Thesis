@@ -75,12 +75,13 @@ if usedb == True:
            pd.DataFrame({'participation': part['endroles'] / part['startroles']}),
            pd.DataFrame({'efficiency': ut['totalut'] / (ut['totalut'] + facility['facilityInvoices'])}),
            equity], axis=1)
-	scores.loc[scores.efficiency > 1, 'efficiency'] = 0
+	#scores.loc[scores.efficiency > 1, 'efficiency'] = 0
 	scores.loc[scores['equity'] < 0,'equity'] = 0
 
 	scores.to_csv('powerscores.csv')
 else:
 	scores = pd.read_csv('powerscores.csv', index_col='name')
+	scores.loc[scores.efficiency >= 1, 'efficiency'] = 0
 
 ## Data processing
 base = 'basepower:1:{}'
@@ -97,6 +98,8 @@ Cols = [('None','basepower:1:{}')] + labels
 part = np.zeros((len(Rows), len(Cols)))
 ut = np.zeros((len(Rows), len(Cols)))
 equi = np.zeros((len(Rows), len(Cols)))
+sust = np.zeros((len(Rows), len(Cols)))
+eff = np.zeros((len(Rows), len(Cols)))
 total = np.zeros((len(Rows), len(Cols)))
 for i, p in enumerate(Rows):
         for j, g in enumerate(Cols):
@@ -107,6 +110,8 @@ for i, p in enumerate(Rows):
             part[i][j] = max(e1.loc[key,'participation'], 0.0)
             ut[i][j]   = max(e1.loc[key,'totalut'], 0.0)
             equi[i][j] = max(e1.loc[key,'equity'], 0.0)
+            sust[i][j] = max(e1.loc[key,'endures'], 0.0)
+            eff[i][j] = max(e1.loc[key,'efficiency'], 0.0)
             total[i][j] = max(e1.loc[key,'totals'], 0.0)
 
 ## Plotting
@@ -122,29 +127,43 @@ RowLabels = ['Centralised','Collective','Market']
 ColLabels = [l[0] for l in Cols]
 fig, axes = plt.subplots(2,2)
 
-plt.subplot(2,2,1)
+plt.subplot(3,2,1)
 plt.pcolor(part, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
 plt.xticks(np.arange(0, len(Cols))+0.5, ['' for l in ColLabels])
 plt.yticks(np.arange(0, len(Rows))+0.5, RowLabels, rotation=45)
 plt.ylim(0,len(Rows))
 plt.title('Participation Standards')
 
-plt.subplot(2,2,2)
+plt.subplot(3,2,2)
 im = plt.pcolor(ut, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
 plt.xticks(np.arange(0, len(Cols))+0.5, ['' for l in ColLabels])
 plt.yticks(np.arange(0, len(Rows))+0.5, ['' for l in Rows])
 plt.ylim(0,len(Rows))
 plt.title('Total Rewards')
 
-plt.subplot(2,2,3)
+plt.subplot(3,2,3)
 plt.pcolor(equi, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
-plt.xticks(np.arange(0, len(Cols))+0.5, ColLabels, rotation=45)
+plt.xticks(np.arange(0, len(Cols))+0.5, ['' for l in ColLabels])
 plt.yticks(np.arange(0, len(Rows))+0.5, RowLabels, rotation=45)
 plt.ylim(0,len(Rows))
 #plt.xlabel('Non-compliant Agents')
 plt.title('Equity')
 
-plt.subplot(2,2,4)
+plt.subplot(3,2,4)
+plt.pcolor(sust, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
+plt.xticks(np.arange(0, len(Cols))+0.5, ['' for l in ColLabels])
+plt.yticks(np.arange(0, len(Rows))+0.5, ['' for l in Rows])
+plt.ylim(0,len(Rows))
+plt.title('Sustainability')
+
+plt.subplot(3,2,5)
+plt.pcolor(eff, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
+plt.xticks(np.arange(0, len(Cols))+0.5, ColLabels, rotation=45)
+plt.yticks(np.arange(0, len(Rows))+0.5, RowLabels, rotation=45)
+plt.ylim(0,len(Rows))
+plt.title('Efficiency')
+
+plt.subplot(3,2,6)
 plt.pcolor(total, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
 plt.xticks(np.arange(0, len(Cols))+0.5, ColLabels, rotation=45)
 plt.yticks(np.arange(0, len(Rows))+0.5, ['' for l in Rows])

@@ -15,6 +15,8 @@ def heatmaps(e1):
     part = np.zeros((len(Rows), len(Cols)))
     ut = np.zeros((len(Rows), len(Cols)))
     equi = np.zeros((len(Rows), len(Cols)))
+    sust = np.zeros((len(Rows), len(Cols)))
+    eff = np.zeros((len(Rows), len(Cols)))
     total = np.zeros((len(Rows), len(Cols)))
     for i, dc in enumerate(Rows):
         for j, kc in enumerate(Cols):
@@ -22,6 +24,8 @@ def heatmaps(e1):
             part[i][j] = max(max(r[r.index == index]['participation']), 0.0)
             ut[i][j]   = max(max(r[r.index == index]['totalut']), 0.0)
             equi[i][j] = max(max(r[r.index == index]['equity']), 0.0)
+            sust[i][j] = max(max(r[r.index == index]['endures']), 0.0)
+            eff[i][j] = max(max(r[r.index == index]['efficiency']), 0.0)
             total[i][j] = max(max(r[r.index == index]['totals']), 0.0)
     cmap = plt.get_cmap('pink_r')
     #cmap = utils.truncate_colormap(plt.get_cmap('cubehelix'), 0.0, 0.8)
@@ -39,7 +43,7 @@ def heatmaps(e1):
     xlabel = 'Cost of Prediction artifact'
     ylabel = 'Cost of Measured artifact'
 
-    plt.subplot(2,2,1)
+    plt.subplot(3,2,1)
     plt.pcolor(part, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
     plt.xticks(np.arange(0, len(Cols))+0.5, Cols)
     plt.yticks(np.arange(0, len(Rows))+0.5, Rows)
@@ -47,14 +51,14 @@ def heatmaps(e1):
     #plt.ylabel('Measured Cost')
     plt.title('Participation Standards')
 
-    plt.subplot(2,2,2)
+    plt.subplot(3,2,2)
     im = plt.pcolor(ut, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
     plt.xticks(np.arange(0, len(Cols))+0.5, Cols)
     plt.yticks(np.arange(0, len(Rows))+0.5, Rows)
     plt.ylim(0,len(Rows))
     plt.title('Total Rewards')
 
-    plt.subplot(2,2,3)
+    plt.subplot(3,2,3)
     plt.pcolor(equi, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
     plt.xticks(np.arange(0, len(Cols))+0.5, Cols)
     plt.yticks(np.arange(0, len(Rows))+0.5, Rows)
@@ -63,7 +67,21 @@ def heatmaps(e1):
     #plt.ylabel('Measured Cost')
     plt.title('Equity')
     
-    plt.subplot(2,2,4)
+    plt.subplot(3,2,4)
+    plt.pcolor(sust, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
+    plt.xticks(np.arange(0, len(Cols))+0.5, Cols)
+    plt.yticks(np.arange(0, len(Rows))+0.5, Rows)
+    plt.ylim(0,len(Rows))
+    plt.title('Sustainability')
+
+    plt.subplot(3,2,5)
+    plt.pcolor(eff, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
+    plt.xticks(np.arange(0, len(Cols))+0.5, Cols)
+    plt.yticks(np.arange(0, len(Rows))+0.5, Rows)
+    plt.ylim(0,len(Rows))
+    plt.title('Efficiency')
+
+    plt.subplot(3,2,6)
     plt.pcolor(total, cmap=cmap, edgecolors='k', vmin=0.0, vmax=1.0)
     plt.xticks(np.arange(0, len(Cols))+0.5, Cols)
     plt.yticks(np.arange(0, len(Rows))+0.5, Rows)
@@ -81,7 +99,7 @@ def heatmaps(e1):
 args = {'db': 'kc_static2'}
 
 w = 5.27
-h = 3.8
+h = 5.7
 #h = 9.3 / 2
 
 mpl.rc('text', usetex=True)
