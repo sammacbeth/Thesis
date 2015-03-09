@@ -97,7 +97,7 @@ Taking the Event Calculus~\citep{Kowalski1986} as an example, we assess its use 
 voting as per Robert's Rules of Order. By profiling the performance in this representative task, we show how performance can be drastically
 improved using a naive rule-based implementation of the Event Calculus. Finally,
 we argue that a business rule engine has the necessary features to implement
-electronic institutions, and show how Event Calculus specifications can be
+electronic institutions, and show how Event Calculus specifications can be manually
 translated to the JBoss Drools rule engine, using the \ac{RONR} example. 
 
 % Distinction between physical and other capabilities (Artikis2009)
@@ -240,6 +240,9 @@ framework, \citet{Vazquez-Salceda2003} go further, proposing four levels of
 translation, starting with high level abstractions of statutes and norms which
 eventually are translated into computationally efficient procedures.
 
+%\citet{Fornara2008} give a framework for the specification of electronic institutions directly as event-condition-action rules. 
+% + SWRL
+
 \citet{Chopra2006} use the action language \emph{C+}~\citep{Giunchiglia2004}
 to specify their \emph{commitment protocols}. \citet{Artikis2009} also use this
 language in their specification. This language allows the representation of
@@ -254,6 +257,8 @@ In addition to \emph{C+}, \citet{Artikis2009} employ the \ac{EC}. Like
 \emph{C+} it is a formalism for representing and reasoning about actions and
 their effects in a logic programming framework. It has an implementation in
 Prolog which is capable of deduction, abduction and induction.
+
+%There is also an extension, the Object Event Calculus, which has been used for EI
 
 Finally, \citet{Cliffe2006} use answer set programs~\citep{Baral2003} to model
 institutions, using a specification language semantically very similar to the
@@ -755,7 +760,7 @@ rule-based implementation. Therefore, if we are specifying in \ac{EC}, but
 implementing in a different paradigm, we require a robust translation process
 so the specifications will be consistent.
 
-In this section we present a method of translating \ac{EC} axioms into a
+In this section we present a method of rewriting \ac{EC} axioms in a
 declarative rule form, using the language of a \acl{PRS} system, JBoss Drools.
 We also present our implementation of a framework, and module library, 
 Drools-EInst, to enable the use of specifications translated with this method within
@@ -1222,10 +1227,18 @@ rule "Open Session"
 		modify($open) {
 			setValid(true);
 		}
-end
+end//$
 \end{drools}
 
 This approach is not ideal, as it could lead to an agent thinking it has power to do something when it does not. However, this is a limitation of the Drools rule language. For situations when such constructs are critical, it may be possible to assert a negated power, \ie\ that the agent explicitly does not have the power to do an action. Using a query, this could be given precedence over the original \emph{Pow}, such that $\mathtt{power(Ag,Act) \leftarrow \mathtt{Pow(Ag,Act)} \land \lnot \mathtt{NotPow(Ag,Act)}}$. However, we have not yet implemented or tested such a feature, and it is left for future work.
+
+\subsubsection*{Rule execution order}
+
+In the EC, state transitions are atomic. In Drools a state transition consists of the sequential application of rules. This means that in some cases EC and Drools could come to different conclusions with the same specification. This would be the case if rule initiated an intermediate state in Drools, which then triggered another rule. In the EC, as the first rule initiated a state for the next timestep, the second rule would not yet have an effect.
+
+These kinds of issues may be addressed in Drools using two mechanisms. Firstly, \emph{salience}, a rule annotation which controls the ordering of rule-consequence execution. Secondly, \emph{control} facts---facts in the working memory whose primary purpose is to control the execution of rules. These facts can be used to, for example, block activation of a rule for a time after the execution of another.
+
+This is a limitation arising from the use of a different reasoning engine, and requires extra care in the process of writing Drools rules in order to address.
 
 \subsection{Drools-EInst}
 
@@ -1276,7 +1289,7 @@ speed of the rule-based \ac{EC}.
 
 \subsection{Correctness of Specification Translation}
 
-In this section we have presented a method of translating \ac{EC}
+In this section we have presented a method of manually translating \ac{EC}
 specifications in to Drools ones. Having performed this translation we want to
 verify that the two specifications we have now are equivalent, that the
 translation is provably \emph{correct}.
