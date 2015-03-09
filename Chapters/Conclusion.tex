@@ -48,15 +48,15 @@ This thesis makes the following contributions:
 \item A review of governance in participatory-sensing applications, identifying a lack of governance consideration and user enfranchishment.
 \item An analysis of participatory sensing as a knowledge commons, using the \ac{IAD} framework in conjunction with a framework for self-organising electronic institutions, which provides an architectural and algorithmic basis for governance of a knowledge commons.
 \item A general purpose simulation platform for agent-based simulation and modelling, Presage2, suitable of the principled operationalisation of a model of the participatory-sensing knowledge commons.
-\item A method of translating \acl{EC} into business rules, and an implementation for the specification of electronic institutions, Drools-EInst, along with a suite of modules, with which we can implement a specification for a self-organising knowledge commons.
+\item A method of manually translating \acl{EC} into business rules, and an implementation for the specification of electronic institutions, Drools-EInst, along with a suite of modules, with which we can implement a specification for a self-organising knowledge commons.
 \item An experimental model of the management of participatory sensing as a knowledge commons, with which we validated the problem of supply of institutions, and identified that proper enfranchisement of users can be used to counter greed and self-interest in participatory-sensing.% incentivises good behaviour?? TODO
 \end{itemize}
 
 \section{Conclusions}
 
-We conclude on the three distinct sets of contributions made by this thesis
-individually. First, we\hl{ }\marginpar{conclude}on the main topic of this thesis: the management of
-participatory-sensing applications\hl{ }\marginpar{as}a knowledge commons. From both our analysis
+We conclude with the three distinct sets of contributions made by this thesis
+individually. First, we conclude on the main topic of this thesis: the management of
+participatory-sensing applications as a knowledge commons. From both our analysis
 and experimentation we derive rough guidelines for the application of Ostrom's
 principles to these applications. Second, we conclude the contributions of the
 Presage2 platform. Finally, we discuss the specification of electronic
@@ -70,7 +70,7 @@ knowledge commons. Much like the \ac{FOSS} model provides a framework for
 starting an open-source software project, we are providing a framework for
 providing provision and appropriation systems for participatory sensing.
 \citet{Ostrom1990} described the problem of providing suitable institutions,
-which tends to lead to simpler to manage centralised solutions. Our analysis
+which tends to lead to centralised solutions that are simpler to manage. Our analysis
 demonstrates why this is the case: there are many factors to consider which,
 if not handled correctly can lead to a failure of the institution.
 
@@ -81,7 +81,7 @@ with highly subtractable resources, while the knowledge commons is an
 endogenous provision and appropriation system with no subtractability. This
 means that the specifications differ significantly, and we can no longer
 assume some of the previous conclusions with respect to Ostrom's principles.
-\citet{Pitt2012b} described the effect of six of of Ostrom's principles, and this was extended to all eight by \citet{Schaumeier2013}. These benefits are shown in \autoref{tab:principlebenefit}.
+\citet{Pitt2012b} described the effect of six of Ostrom's principles, and this was extended to all eight by \citet{Schaumeier2013}. These benefits are shown in \autoref{tab:principlebenefit}.
 
 \begin{table}[ht]
 \centering
@@ -91,7 +91,7 @@ assume some of the previous conclusions with respect to Ostrom's principles.
 \hline
 1 & Clearly defined boundaries & robustness to intentional violation by outsiders/overpopulation \\
 2 & Provision and appropriation rules & robustness to environmental variation \\
-\multirow{2}{*}{3} & \multirow{2}{*}{Collective-choice} & robustness to environmental variation \\
+\multirow{2}{*}{3} & \multirow{2}{*}{Collective choice} & robustness to environmental variation \\
  & & robustness to `unfair' behaviour \\
 4 & Monitoring & robustness to non-compliant behaviour \\
 \multirow{2}{*}{5} & \multirow{2}{*}{Graduated sanctions} & mitigation of intentional violation \\
@@ -130,7 +130,7 @@ metrics. We show similarly, that we can reduce inequitable outcomes through
 this principle, which, for some definitions of fairness, is the same
 result\footnote{\citet{Schaumeier2013} initially measures fairness using the
 concept of utilitarian social welfare, which is equivalent to our `equity'
-metric. They later explore alternative, individual and self-aware fairness
+metric. She later explores alternative, individual and self-aware fairness
 measures.}. Furthermore, we demonstrated that this principle is able to mitigate the
 effect of agents with greedy strategies gaining self-benefit. This is an
 important property, as over time it will lead to greater levels of compliance
@@ -219,13 +219,13 @@ While there exist multiple simulation platforms for multi-agent systems and
 agent-based systems, we argued that an important and oft ignored feature of
 a platform is an environment-level specification of the observability of the
 simulation state. This is an intermediary in between an agent and the raw
-state of the environment, which can limit access to state a or provide a modified view of it.
+state of the environment, which can limit access to state or provide a modified view of it.
 This has two advantages:
 
 Firstly, it provides a level playing field for all agents. Particularly if
 agents are being developed independently, they must agree on a level of
 observability that they would expect in the simulation context. By specifying a
-single \ac{API}, which both teams' agents will use it, prevents any ambiguity
+single \ac{API}, which both teams' agents will use it prevents any ambiguity
 or `cheating' in terms of access to a simulation state.
 
 Secondly, the underlying state representation may change, but if the \ac{API}
@@ -324,13 +324,13 @@ results, and how we might accommodate them if we wish to test them.
 parameter specification, resulting in too many permutations to investigate
 exhaustively. We chose parameter sets that attempt to exemplify certain likely
 scenarios. The choice of these parameters have a significant influence on the
-results. For example, we only explore a small subset of the possible facility costs
+results. For example, we only explored a small subset of the possible facility costs
 available in our model. Some of the untested combinations of facility costs may lead to interesting results, but were outside of our experimental agenda.
 
 \paragraph{Explicit Assumptions}
 We make four explicit assumptions for our simulation model (\autoref{sec:modelimpl}). These are:
 \begin{enumerate}
-\item Rewards gained from an action is directly measurable by the agent.
+\item Rewards gained from an action are directly measurable by the agent.
 \item Rewards are a trade-able and divisible currency. This reduces complexity by preventing the need for a separate currency.
 \item The only flow of rewards into the system is that generated by agents' actions on the reinforcement-learning problem. For example, an \emph{analyst} cannot sell information elsewhere to generate rewards.
 \item Agents are working on the problem long-term, therefore we have repeated (inter)actions and thus can assume that agents are likely to be cooperative.
@@ -341,7 +341,7 @@ for the model to be valid: that some kind of reward can be measured. When a
 direct reward measurement is not possible, a reward can be derived implicitly
 from the agent's overall progress towards a goal. If it is not possible to
 measure a reward, then it is impossible to apply learning to the problem, and
-there is also no sensing which can be done. Therefore the problem \hl{is}\marginpar{would be} neither a
+there is also no sensing which can be done. Therefore the problem would be neither a
 reinforcement-learning problem, nor a participatory-sensing one.
 
 The second assumption is a simplifying assumption and enables frictionless
@@ -397,7 +397,7 @@ it may be:
 
 \begin{itemize}
 \item If predictions are specific to an individual consumer and the analyst has limited computational capacity to generate them, then additional analysts will increase the capacity of the system to handle consumers' requests.
-\item If analysts' knowledge is comparatively better in different areas of the solution space, then combined they will provide better knowledge than either would be able to individually.
+\item If each analyst's knowledge is comparatively better in a different area of the solution space, then combined they will provide better knowledge than either would be able to individually.
 \item If analysts provision knowledge in the form of their prediction algorithm, then the combination of multiple analysts' knowledge could lead to better knowledge as a result. 
 \end{itemize}
 
@@ -430,7 +430,7 @@ of how such actions should be allocated.
 If this allocation is done randomly, then an `unlucky' agent could end up with
 significantly lower accrued rewards purely through bad allocations. There are methods
 to make allocations fairly in such scenarios (cf.~\citet{Pitt2014}), however
-in this case the allocation may be at the discretion of the provider of \hl{prediction}\marginpar{predictions},
+in this case the allocation may be at the discretion of the provider of predictions,
 and outside the boundaries of the institution. This opens the door for
 corruption in this allocation method.
 
@@ -503,6 +503,13 @@ in performance that is too slow for real-time environments. Parallelisation of
 the Rete algorithm (which Drool's engine is based on) is something which could
 address this in the future.
 
+\paragraph{Rule Execution Order}
+
+The incremental execution of Drools rules can create issues of consistency
+when compared to the atomic transitions of the \ac{EC}. Drools does offer
+mechanisms to control the order of rule activation and execution which we
+discussed in \autoref{sec:translate}, however this represents possible source of inconsistency between \ac{EC} and Drools specifications.
+
 \paragraph{Correctness} We presented no proof of the correctness of the
 translation of \ac{EC} into Drools. However, we are able to use unit-testing
 to provide confidence in the correctness of a translation. As the translation
@@ -540,7 +547,7 @@ quality information to the pool, or as a reviewer, providing information about
 the quality of other information. These tasks are complementary, so could both
 be performed by the same process. Execution of these tasks will improve the
 quality of information in the pool and better inform agents about which
-information will be most beneficial to them. We would like to explore
+information will be most beneficial to them. We would like to explore,
 firstly, how to integrate this role into the model as a method of implementing
 monitoring, and secondly, how collective evaluation of information quality
 compares to individual methods which may use trust or social
@@ -554,7 +561,7 @@ simulation. This encompasses performing actions without having the institutional
 power and/or permission to do so, and not performing an action which one is
 obliged to perform.
 
-This non-compliance has been explored in previous work, and principles
+This non-compliance has been explored in previous work, and Principles
 4, 5 and 6 offer mechanisms to mitigate the effect of it. However, the
 improved institutional representation offered by Drools-EInst allows for more
 subtle non-compliance than has been previously tested. For example, by solving
@@ -570,7 +577,7 @@ We could test the effect of
 institutional non-compliance, by introducing a behaviour which ignores certain
 obligations. This can be non-intentional non-compliance where the agent
 breaks an institutional rule because of a fault or other problem. For example
-if there was a communication problem prevent the agent from being notified of
+if there was a communication problem preventing the agent from being notified of
 an obligation. Alternatively, malicious non-compliance is where an agent will
 selectively break rules in order to maximise rewards for himself. Previously,
 these kinds of compliance have been addressed with Ostrom's Principles 4, 5 and
@@ -687,7 +694,7 @@ We have recently been exploring the use of the Groovy programming language\footn
 the implementation of such simulation components. This is a loosely typed language
 which has full integration with Java, allowing for more accessible code with
 less boilerplate which, none-the-less, is able to integrate with all of
-Presage2's features. A simpler to write language should have the effect of
+Presage2's features. A language that is simpler to write should have the effect of
 making the platform less intimidating for inexperienced programmers, and more
 productive for experienced ones.
 
@@ -698,7 +705,7 @@ working simulation.
 
 Finally, we hope to expand the use of the tool for the deployment of agents.
 We have said that our modular approach and the abstraction layer between
-agents and environment state, allow for agent implementations to be taken out
+agents and environment state allow for agent implementations to be taken out
 of the simulation and into a real-world deployment without re-implementation.
 This is something we would like to explore and test in further work.
 
@@ -721,7 +728,7 @@ formalisation of the translation process, in the form of a transpiler (a
 source-to-source compiler) to take the \ac{EC} as an input, and generate
 Drools and Java source. However, as our method aims to have a readable
 specification in both languages, significant work would be required to produce
-machine generated code which is human-readable, and relateable to the original
+machine generated code which is human-readable, and which can be related to the original
 \ac{EC} source.
 
 %\section{Final Remarks}
