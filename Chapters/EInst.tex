@@ -240,9 +240,6 @@ framework, \citet{Vazquez-Salceda2003} go further, proposing four levels of
 translation, starting with high level abstractions of statutes and norms which
 eventually are translated into computationally efficient procedures.
 
-%\citet{Fornara2008} give a framework for the specification of electronic institutions directly as event-condition-action rules. 
-% + SWRL
-
 \citet{Chopra2006} use the action language \emph{C+}~\citep{Giunchiglia2004}
 to specify their \emph{commitment protocols}. \citet{Artikis2009} also use this
 language in their specification. This language allows the representation of
@@ -258,7 +255,20 @@ In addition to \emph{C+}, \citet{Artikis2009} employ the \ac{EC}. Like
 their effects in a logic programming framework. It has an implementation in
 Prolog which is capable of deduction, abduction and induction.
 
+\citet{Tampitsikas2011} execute electronic institutions using an extension 
+of \ac{EC} which allows for events and fluents to be complex objects, the 
+Object Event Calculus~\citep{Kesim1996}. This approach enables a more 
+object-orientated representation of institutional state.
+
 %There is also an extension, the Object Event Calculus, which has been used for EI
+
+
+\citet{Fornara2008} give a framework for the specification of electronic
+institutions directly as event-condition-action rules. They also show how
+specifications within this framework can be expressed using semantic web
+technologies, with the OWL ontology and SWRL rules~\citep{Fornara2010}. They claim significant
+performance improvements over an \ac{EC} implementation of the same
+specification, however no quantitative comparison is provided. % + SWRL
 
 Finally, \citet{Cliffe2006} use answer set programs~\citep{Baral2003} to model
 institutions, using a specification language semantically very similar to the
