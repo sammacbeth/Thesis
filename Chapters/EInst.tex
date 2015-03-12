@@ -1229,7 +1229,7 @@ end
 //		holdsAt( pow(C, open_session(C,S))=true, T ).
 rule "Open Session"
 	when
-		$open : OpenSession($a : actor, $i : inst, $name : name, $t : t, valid == false)
+		$open : OpenSession($a : actor, $i : inst, $name : name, valid == false)
 		Pow(actor == $a, this.matches($open))
 		not(exists(Session(inst == $i, name == $name, sitting == true)))
 	then
@@ -1237,7 +1237,7 @@ rule "Open Session"
 		modify($open) {
 			setValid(true);
 		}
-end//$
+end
 \end{drools}
 
 This approach is not ideal, as it could lead to an agent thinking it has power to do something when it does not. However, this is a limitation of the Drools rule language. For situations when such constructs are critical, it may be possible to assert a negated power, \ie\ that the agent explicitly does not have the power to do an action. Using a query, this could be given precedence over the original \emph{Pow}, such that $\mathtt{power(Ag,Act) \leftarrow \mathtt{Pow(Ag,Act)} \land \lnot \mathtt{NotPow(Ag,Act)}}$. However, we have not yet implemented or tested such a feature, and it is left for future work.
@@ -1288,7 +1288,7 @@ hard-coded implementation to a dynamic rule engine with forward and backward
 chaining. However, the performance hit is negligible when compared to the
 Prolog implementations, and for longer narratives the performance gap between it and the
 benchmark reduces. With 30 motions it is 350 times faster than the faster
-Prolog implementation, and with 100 motions it is already more than half the
+Prolog implementation (whose performance was shown in \autoref{fig:cec}), and with 100 motions it is already more than half the
 speed of the rule-based \ac{EC}.
 
 \begin{figure}

@@ -233,7 +233,9 @@ information and knowledge, following the framework we outlined in
 \autoref{sec:iad}, and using our rule engine for electronic institutions,
 Drools-EInst. In these simulations we focus on addressing the first three of
 Ostrom's principles in order to create an enduring, self-organising
-institution. These principles, and the requirements of participatory sensing as a provision and appropriation system, give the following tasks for the institution:
+institution. 
+These three deal with operational rules of an institution, and therefore represent the first step in institution implementation. Thus, at this preliminary investigation stage, we do not implement the other principles at this time.
+The first three principles, and the requirements of participatory sensing as a provision and appropriation system, give the following tasks for the institution:
 
 \begin{itemize}
 \item Clearly defined boundaries---The boundaries of the institution must be defined, not only who can contribute and withdraw resource units, but what resources are managed by the institution.
@@ -241,7 +243,8 @@ institution. These principles, and the requirements of participatory sensing as 
 \item Collective-choice arrangements---The rules should be able to be modified by those who they affect.
 \end{itemize}
 
-Note that as well as translating relevant axioms from the \ac{EC} specifications given previously, we also write some application specific rules directly into Drools.
+As the difference between institutionalised power and permission is subtle, and not used for the features we want to implement here, we will assume that power implies permission. This simplifies the specification both from an implementation and execution perspective.
+Note also that, as well as translating relevant axioms from the \ac{EC} specifications given previously, we also write some application specific rules directly into Drools.
 
 The Drools-EInst provision and appropriation system module provides the basis
 of the resource pools in the institution. This is a role-based implementation
@@ -308,7 +311,7 @@ rules calculate a total value due per agent and then create an obligation to
 \texttt{Transfer} the required amount. It is then up to the agent itself whether
 it fulfils the obligation.
 
-\begin{drools}[label=lst:instcosts,caption={[Paying for institution costs.]Paying for institution costs.}]
+\begin{drools}[label=lst:instcosts,caption={[Paying for institution costs.]Paying for institution costs. Note that the Drools \texttt{accumulate} clause enables the matching of a set of matching facts and uses a function create an aggregated value over the set. This clause is written with three semi-colon separated arguments: First a pattern to match to build the set of matches. Second an aggregation function which collects values matched internally in the clause, and binds them to a variable available in the outer rule scope. In this case \texttt{collectSet} collects bound variables into a set. Third is a constraint to check whether this pattern can activate the rule.}]
 rule "Share institution costs"
 	when
 		// match an institution and the roles which should pay costs
@@ -507,7 +510,7 @@ them.
 Our agents have two operating modes which are specified when the agent is created:
 
 \begin{itemize}
-\item \emph{Sustainable}---This mode pursues what it deems to be socially optimal decisions. It aims for sustainable outcomes over individual enrichment. However, this does not mean that the agent will sacrifice all his resources on this goal, he will leave the institution if there is no long-term benefit for himself.
+\item \emph{Sustainable}---This mode pursues what it deems to be sustainable decisions for the institution. It aims for sustainable outcomes over individual enrichment. However, this does not mean that the agent will sacrifice all his resources on this goal, he will leave the institution if there is no long-term benefit for himself.
 \item \emph{Greedy}---This mode pursues individually optimal decisions. It makes self-interested choices whenever possible, in order to maximise acrued rewards..
 \end{itemize}
 
