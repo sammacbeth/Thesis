@@ -39,7 +39,7 @@ Using raw sensor readings of, for example, temperature, and using them to
 predict future temperatures would be \emph{unsupervised} learning from sensing
 data. If these readings also had a user specified `comfort' level attached to
 them, then we could use \emph{supervised} learning to work out if comfort
-level is correlated with temperate and infer expected comfort levels from
+level is correlated with temperature and infer expected comfort levels from
 temperature data. \emph{Reinforcement learning} would be used when the output
 of the sensing process informs actions to be taking in the same environment
 that sensing is done.
@@ -203,7 +203,7 @@ measurements the algorithm which generated it has been trained with. Then we
 define the reward for a strategy (ignoring the state) as a
 function of this number of measurements. We include a time window on the
 usefulness of measurements, such that old measurements are eventually
-superceded by new.
+superseded by new.
 
 The reward function of this game $r_t$, given a chosen strategy $a$, can be specified as follows:
 
@@ -406,9 +406,9 @@ something which can be voted on, and how the voting is done in terms of:
 \begin{itemize}
 \item which agent roles are empowered to open and close a ballot on the issue,
 \item which agent roles are empowered to vote in a ballot on the issue,
-\item how votes should be cast (\eg single choice, preference list, rank order),
+\item how votes should be cast (\eg\ single choice, preference list, rank order),
 \item what the valid choices are,
-\item how the winner is determined from the set of votes (\eg plurality, borda count, instant runoff)
+\item how the winner is determined from the set of votes (\eg\ plurality, borda count, instant runoff)
 \end{itemize}
 
 The module provides the institutionalised powers based on this specification,
@@ -511,7 +511,7 @@ Our agents have two operating modes which are specified when the agent is create
 
 \begin{itemize}
 \item \emph{Sustainable}---This mode pursues what it deems to be sustainable decisions for the institution. It aims for sustainable outcomes over individual enrichment. However, this does not mean that the agent will sacrifice all his resources on this goal, he will leave the institution if there is no long-term benefit for himself.
-\item \emph{Greedy}---This mode pursues individually optimal decisions. It makes self-interested choices whenever possible, in order to maximise acrued rewards..
+\item \emph{Greedy}---This mode pursues individually optimal decisions. It makes self-interested choices whenever possible, in order to maximise acrued rewards.
 \end{itemize}
 
 Where applicable we note how a behaviour will be different in each operation mode.
@@ -520,7 +520,7 @@ Where applicable we note how a behaviour will be different in each operation mod
 
 This behaviour implements an agent's interaction with the reinforcement
 learning problem. This involves choosing a strategy and performing it, as well
-as decided whether to measure the reward gained from this strategy.
+as deciding whether to measure the reward gained from this strategy.
 
 There may be multiple \texttt{Prediction}s available, from different
 prediction algorithms, in pools which the agent can appropriate from. The
@@ -1020,7 +1020,7 @@ affect the system as a whole, and secondly, whether greed is beneficial for
 the individual, in terms of higher accrued rewards.
 
 In this experiment we aim to firstly determine the effect of the values of
-the fees charged for different arfifacts in the institution, and secondly, how
+the fees charged for different artifacts in the institution, and secondly, how
 these effects change under differing environmental conditions.
 
 % We also alter environmental conditions, to create different scenarios, as follows:

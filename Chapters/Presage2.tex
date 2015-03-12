@@ -16,7 +16,7 @@ It should be noted that neither principled operationalisation, \ac{ABM} nor \ac{
 Work in \ac{ABM} and \ac{MABS} has led to creation of many software packages and platforms to ease the development of simulation testbeds~\citep{CynthiaNikolaiandGregoryMadey2009}. These aim to reduce the engineering effort required to implement agent models, providing reusable components, user-interface based design and/or prescriptive frameworks. In particular, they aim to ensure simulation validity while maintaining usability and extendibility~\citep{Axelrod1997}.
 
 In this chapter we aim to determine a suitable platform for principled
-operationisation for the simulation of a Knowledge Commons. We derive a set of
+operationalisation for the simulation of a Knowledge Commons. We derive a set of
 requirements for a general-purpose software platform for simulation of 
 socio-technical systems, which is suitable for this principled operationalisation.
 We then review a selection of existing platforms with respect to these
@@ -617,7 +617,7 @@ The network simulation is achieved by three entities:
 	example in an ad-hoc network the user may wish to forward messages
 	via a specific forwarding algorithm. 
 	\item The message action handler---this takes messages which each agent
-	wished to send and determines whether to send them based on a set
+	wish\-ed to send and determines whether to send them based on a set
 	of constraints. These reflect environmental constraints on messaging
 	such as wireless range and/or random message loss.
 	\item The receiving agent's network interface---this takes messages delivered
@@ -714,7 +714,7 @@ subsequent matches of the same rule).
 \begin{drools}[caption={Drools rule example.},label=lst:ruleexample]
 rule "Move agent"
     when
-        $m : Move($a : agent, $dx : dx, $y : dy)
+        $m : Move($a : agent, $dx : dx, $dy : dy)
         $l : Location(agent == $a)
     then
         modify($l) {
@@ -739,7 +739,7 @@ simulation we must answer the following questions: How can we verify that the
 software is executing the model correctly, and secondly, what does the tool
 provide to aid verification and validation of models written with it?
 
-The first question requires a verification of our implementation of the Presage2
+The first question requires a verification of our implementation of the Pres\-age2
 framework. Using software testing we are able to guarantee, up to a high level of
 confidence, that the framework implementation is correct. Tests range from unit
 tests of individual classes or logical components, to full system integration
