@@ -3,13 +3,16 @@
 \chapter{Voting Protocol Specifications}
 
 Here we list the specifications of the voting protocol from \ac{RONR} used in
-the benchmarks in \autoref{ch:droolseinst}. We have firstly a Prolog
+the benchmarks in \autoref{ch:droolseinst}, as well as the voting protocol used 
+in the experiments presented in \autoref{ch:results}. We have firstly a Prolog
 implementation from the original paper of \citet{Pitt2005a}. Secondly, we have
 the translation of this specification into Drools. This specification only
 contains the Drools code, and is missing the associated Java classes required
 to execute it. These classes, along with associated code for testing the
 specification can be found in the Drools-EInst source
-repository\footnote{https://github.com/sammacbeth/electronic-institutions}.
+repository\footnote{https://github.com/sammacbeth/electronic-institutions}. Thirdly,
+the voting protocol for our experiments is described in terms of the actions and fluents used. 
+The full Drools specification is also available in the Drools-EInst repository.
 
 \section{RONR Voting Protocol Implementation in Prolog}\label{sec:ronrcode}
 
@@ -441,3 +444,40 @@ rule "Nay Vote"
 		}
 end
 \end{droolsinline}
+
+\section{Alternative Voting Protocol Specification}
+
+Here we state the actions and fluents of the voting specification used in \autoref{ch:results}.
+
+There are four actions in the protocol:
+\begin{itemize}
+\item \texttt{OpenBallot(actor, inst, issue)}: This action opens a ballot on an issue \texttt{issue} in the institution \texttt{inst}, provided the agent \texttt{actor} is empowered to do so.
+\item \texttt{CloseBallot(actor, inst, ballot)}: This action closes the open ballot \texttt{ballot} in the institution \texttt{inst}, provided the agent \texttt{actor} is empowered to do so.
+\item \texttt{Vote(actor, inst, ballot, vote)}: This action specifies a vote of \texttt{vote} for the agent \texttt{actor} on ballot \texttt{ballot} in the institution \texttt{inst}, provided the agent \texttt{actor} is empowered to vote on this ballot.
+\item \texttt{Declare(actor, inst, ballot, winner)}: This action declares the winning candidate of the ballot \texttt{ballot} in institution \texttt{inst}. The ballot must have been closed, and the agent \texttt{actor} must be empowered to declare the result of the ballot.
+\end{itemize}
+
+The state of votes and issues are represented by \texttt{Issue}s and \texttt{Ballot}s.
+
+An \texttt{Issue} represents a topic about which a ballot may be called. It contains the following attributes:
+\begin{itemize}
+\item The institution to which this issue belongs, \texttt{institution};
+\item the name of the issue, \texttt{name};
+\item a set of agent roles who are empowered to open, close and declare results of ballots on this issue, \texttt{cfvroles};
+\item a set of agent rules who are empowered to vote on this issue, \texttt{voteroles};
+\item the method with which voters should submit their votes (\eg\ single vote, preference list), \texttt{method};
+\item a set of allowable values or candidates which can be submitted in a vote, \texttt{votevalues};
+\item the winner determination method for votes on this issue (\eg\ plurality, borda count etc.), \texttt{wdm}.
+\end{itemize}
+
+A \texttt{Ballot} represents a collection of votes on an issue. It contrains the following attributes:
+\begin{itemize}
+\item The status of the ballot: open or closed, \texttt{status};
+\item the issue to which this ballot belongs, \texttt{issue};
+\item the timestep in which this ballot was opened, \texttt{started};
+\item the set of agent roles who are empowered to vote in this ballot, \texttt{voteRoles};
+\item the set of allowable values for agents to vote on, \texttt{options};
+\item the winner determination method for this vote, \texttt{wdm};
+\item the agent who closed the ballot (used to specify who is obliged to declare the result), \texttt{closedBy}.
+\end{itemize}
+
