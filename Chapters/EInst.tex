@@ -691,7 +691,7 @@ the set of \emph{HoldsAt} rules is checked to find a candidate rule to infer the
 with. If one is found, we use the \texttt{Binder} to return, or check the value
 of the fluent.
 
-We can translate the \ac{RONR} voting protocol specification to run with this implementation,
+We can rewrite the \ac{RONR} voting protocol specification to run with this implementation,
 and then again run our test suite to determine performance. As before, we
 perform 50 repeats of each narrative and allow for the Java Runtime
 Environment to `warm-up' before collecting results. The results are shown in \autoref{fig:rulec}.
@@ -713,7 +713,7 @@ rule-based approach to the \ac{EC}. It omits features such as forward chaining,
 which would be required to properly handle multiple actions per timestep. In
 particular this implementation requires a verbose manual translation of the Prolog
 specification, a process which is error-prone. The format of
-these translated rules is fairly structured and uniform, therefore it would be
+these manually translated rules is fairly structured and uniform, therefore it would be
 possible to write a compiler from \ac{EC} axioms to these programmatic rule
 implementations. However, there already exist Java rule engines which have
 declarative rule definitions, and employ much more robust and optimised 
@@ -735,7 +735,7 @@ Java one would have a single object with multiple attributes.
 In summary, this section has outlined the issues with using direct Prolog
 implementations of the \ac{EC} when dealing with primarily deductive tasks,
 and interfacing these with a Java runtime. Furthermore, by implementing a
-simple version of rule-based deduction of fluents from translated \ac{EC}
+simple version of rule-based deduction of fluents from manually translated \ac{EC}
 axioms we observe an improvement in performance of two orders of
 magnitude compared to the best Prolog implementation. Thus we propose that we can achieve a fast and robust deductive
 \ac{EC} engine using a standard rule engine.
@@ -746,7 +746,7 @@ example has been shown to achieve performance in event recognition tasks
 comparable to that of rule-based approaches, using a rolling time window to
 reduce the length of fluent history to store, and compiling axioms into
 optimised forms. However, this approach requires specifications to be
-translated into a special dialect of the \ac{EC}, and additional metadata to be
+rewritten into a special dialect of the \ac{EC}, and additional metadata to be
 specified for events and fluents for the compiler's optimisation algorithm. 
 This requires in depth knowledge of the optimisations and how to exploit them, 
 which is a significant hurdle to the implementation of specifications.
@@ -773,7 +773,7 @@ so the specifications will be consistent.
 In this section we present a method of rewriting \ac{EC} axioms in a
 declarative rule form, using the language of a \acl{PRS} system, JBoss Drools.
 We also present our implementation of a framework, and module library, 
-Drools-EInst, to enable the use of specifications translated with this method within
+Drools-EInst, to enable the use of specifications manually translated with this method within
 a Java program, and the current set of modules implemented from various
 \ac{EC} specifications. Finally, we give a runtime performance comparison
 using the same \ac{RONR} voting protocol example as in the previous section.
@@ -922,7 +922,7 @@ actual domain specification must be done in Java code.
 % achieve in the engine.
 
 For these reasons, we take a different approach. Rather than implementing \ac{EC}
-axioms in Drools, we instead follow a process to translate \ac{EC}
+axioms in Drools, we instead follow a process to manually translate \ac{EC}
 specifications to work within a Drools workflow. Therefore instead of \emph{initiaties}
 and \emph{holdsAt} axioms, we simply write Drools rules, and follow Drools
 conventions.
@@ -984,11 +984,11 @@ can be overridden to provide nested dynamic matching. In the above example the
 \texttt{Action} class has been modified to use this concept of equality with
 other objects, but also member fields of the class can do the same.
 
-\subsection{Translation of EC Electronic Institution Specifications}\label{sec:translate}
+\subsection{Manual Translation of EC Electronic Institution Specifications}\label{sec:translate}
 
 With the design groundwork in place we now demonstrate how \ac{EC}
-specifications can be translated into Drools. We present this translations as a
-set of steps to undertake, and illustrate these steps with examples of the
+specifications can be manually translated into Drools. We present these translations as a
+set of steps to undertake, and illustrate these steps with examples of the manual
 translation of the \ac{RONR} voting protocol specification.
 
 \subsubsection*{Declaration of events}
@@ -1027,7 +1027,7 @@ such as motions and sessions. In Java and Drools we can directly reference other
 objects, which is a much more robust form of linking, and prevents possible key
 clashes or ambiguities.
 
-\subsubsection*{Translation of Initiates clauses}
+\subsubsection*{Manual Translation of Initiates clauses}
 
 An \emph{initiates} clause is written in Prolog in the form:
 
@@ -1038,7 +1038,7 @@ initiates( event, fluent=value, T ) :-
 	holdsAt( conditionN, T ).
 \end{prologinline}
 
-This can be translated into Drools roughly as follows:
+This can be manually translated into Drools roughly as follows:
 \begin{droolsinline}
 rule "Initiates example"
 when
@@ -1105,7 +1105,7 @@ end
 \end{droolsinline}
 
 To illustrate this process in practice, we give two examples from the voting protocol.
-\autoref{lst:ronrinitiates} shows the original Prolog and the translated
+\autoref{lst:ronrinitiates} shows the original Prolog and the manually translated
 Drools rules. In this case, there are two rules to be triggered off the same
 action, so we cannot use the \emph{valid} attribute for both. As the second
 rule will trigger between zero and several times, depending on how many agents
@@ -1115,7 +1115,7 @@ power again, as it is implicitly true by virtue of the action being
 \emph{valid}. Note also the additional clause in this rule to retrieve the
 \texttt{RoleOf} fluent we wish to retract.
 
-\begin{drools}[label=lst:ronrinitiates,caption={[Example of translated initiates clauses.]Example of translated initiates clauses. The original Prolog specification is shown in the comment above each rule.}]
+\begin{drools}[label=lst:ronrinitiates,caption={[Example of manually translated initiates clauses.]Example of manually translated initiates clauses. The original Prolog specification is shown in the comment above each rule.}]
 //	initiates( second(B,M), status(M)=seconded, T ) :-
 //		holdsAt( pow(B, second(B,M))=true, T ).
 rule "Second"
@@ -1145,7 +1145,7 @@ rule "Unassign seconders"
 end
 \end{drools}
 
-\subsubsection*{Translation of HoldsAt clauses}
+\subsubsection*{Manual Translation of HoldsAt clauses}
 
 \emph{HoldsAt} clauses in the \ac{EC} state that a fluent is true when certain
 conditions are satisfied. They can be written in Prolog as follows:
@@ -1156,7 +1156,7 @@ holdsAt( fluent=value, T) :-
 	holdsAt( conditionN, T).
 \end{prologinline}
 
-These can also be simply implemented with rules in Drools. As the resulting fluent is only true when the conditions hold, we use the \texttt{insertLogical} feature of Drools. This ensures that if the conditions no longer hold, the fact will be automatically retracted. The translated clause is therefore as follows:
+These can also be simply implemented with rules in Drools. As the resulting fluent is only true when the conditions hold, we use the \texttt{insertLogical} feature of Drools. This ensures that if the conditions no longer hold, the fact will be automatically retracted. The manually translated clause is therefore as follows:
 
 \begin{droolsinline}
 rule "HoldsAt example"
@@ -1173,7 +1173,7 @@ end
 condition from Prolog becomes a Drools condition, and the bound variables are
 used to construct the relevant institutionalised power.
 
-\begin{drools}[label=lst:droolsholdsat,caption={[Example of a translated holdsAt clause.]Example of a translated holdsAt clause. The original Prolog specification is shown in the comment above the rule.}]
+\begin{drools}[label=lst:droolsholdsat,caption={[Example of a manually translated holdsAt clause.]Example of a manually translated holdsAt clause. The original Prolog specification is shown in the comment above the rule.}]
 //	holdsAt( pow(B, second(B,M))=true, T ) :-
 //		holdsAt( status(M)=proposed, T ),
 //		holdsAt( role_of(B,seconder)=true, T ).
@@ -1214,7 +1214,7 @@ role to open a session with any name by setting that field to null. The check
 for a conflicting session is then done in the second rule, once the action has
 been performed.
 
-\begin{drools}[label=lst:droolsanon,caption=Drools translation of RONR open session.]
+\begin{drools}[label=lst:droolsanon,caption=Drools manual translation of RONR open session.]
 //	holdsAt( pow(C, open_session(C,S))=true, T ) :-
 //		holdsAt( sitting(S)=false, T ),
 //		holdsAt( role_of(C,chair)=true, T ).
@@ -1297,7 +1297,7 @@ speed of the rule-based \ac{EC}.
 \caption{Execution time of voting protocol using Drools-EInst implementation.}\label{fig:droolsperf}
 \end{figure}
 
-\subsection{Correctness of Specification Translation}
+\subsection{Correctness of Manual Specification Translation}
 
 In this section we have presented a method of manually translating \ac{EC}
 specifications in to Drools ones. Having performed this translation we want to
@@ -1311,13 +1311,13 @@ the rule-engine and a set of actions to a new state. Therefore a proof of
 correctness must prove the equivalence of these two functions.
 However, there are significant hurdles to such a proof:
 
-Firstly, our translation process may cause some changes to the representation
+Firstly, our manual translation process may cause some changes to the representation
 of state and fluents. We change some fluents in order to take advantage of the
 richer state representations possible in Java, and to better match the Drools
 workflow. This means that we have an additional translation, from \ac{EC}
 state and action representations, to those for Drools.
 
-Secondly, the way we handle past values of fluents in the translation is
+Secondly, the way we handle past values of fluents in the manual translation is
 incompatible with the \ac{EC} method. The new state generated by the
 Drools implementation may only store a subset of past fluents, and therefore
 not be equivalent.
@@ -1332,10 +1332,26 @@ However, instead of attempting to prove equivalence for all possible inputs,
 we can instead test a subset thereof with unit testing. Using the same
 framework as we did for benchmarking, we can test a series of input state and
 narratives in both specifications, and compare the output states between
-\ac{EC} and with translated Drools rules. These input combinations can be
+\ac{EC} and with manually translated Drools rules. These input combinations can be
 chosen to test each rule in isolation, and combined, and thus give a high
-level of confidence in the correctness of the translation. This method is used
+level of confidence in the correctness of the manual translation. This method is used
 for all specifications implemented in Drools-EInst.
+
+We consider the our approach for deductive reasoning and temporal projection
+with Drools adequate for the following reasons. Firstly, there is a functional
+equivalence between an \emph{initiates} or \emph{terminates} statement in the
+\ac{EC} and a Drools rule. The former describes an event that, when an
+accompanying set of conditions are true, will cause a fluent to change. The
+latter describes simply a set of conditions which, when true, cause an
+operation to change fluents. With the manual translation method we have described,
+Drools rules are controlled so as to trigger only when a specified event
+happens. Secondly, the \ac{EC} assumes that fluents obey the law of inertia---
+that fluents persist unless there is reason to believe otherwise---as a method
+of addressing the Frame Problem~\citep{Shanahan1999}. As a \emph{stateful}
+rule engine, Drools has a similar concept that state will remain constant
+unless explicitly changed by a rule. These reasons, coupled with the empirical
+correctness shown through unit-testing of representative specifications, give
+as a high degree of confidence in the correctness of the temporal projection done by our approach.
 
 \section{Summary}
 
@@ -1345,9 +1361,9 @@ open agent systems. Existing methods, based on Logics and action languages,
 are rich in reasoning capabilities and expressive; however implementations
 suffer from poor performance and scalability. Therefore, we advocate an
 approach whereby such representations are still used for specification, but
-for operationalisation a translation to production rules is made, allowing for
+for operationalisation a manual translation to production rules is made, allowing for
 significantly faster event processing while maintaining expressiveness. We
-demonstrate this approach by describing the translation of \ac{EC} axioms into
+demonstrate this approach by describing the manual translation of \ac{EC} axioms into
 rules for the Drools rule engine, and the implementation of the Drools-EInst
 library for the processing of institutional actions. With this library we
 achieve a speed-up of two orders of magnitude over the Prolog baseline when
