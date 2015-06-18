@@ -226,14 +226,20 @@ function's sensitivity to keeping new information. Smaller values will reflect
 problems with fast-changing strategies which need a constantly updated model,
 while larger values model slow-changing systems. We use this pseudo reward function for the experiments presented in this chapter.
 
-To summarise, our model of an abstract reinforcement learning problem defines
-that increasing rewards are tied to increasing information about playing the
-game. The nature of this relationship is tied to the empirical results of a
-single player N-Armed Bandit game using a Q-Learning strategy. We parametrise
-this model to allow the validity interval of measurements to be controlled,
-and to enable multiple measurements per game round. The latter allows for the
-effect of multiple agents playing the same game simultaneously and sharing
-measurements to be modelled.
+To summarise, our model of an abstract reinforcement learning problem is based on the premise
+that increasing rewards are correlated with increasing information about playing the
+game. In this particular we base the relationship on the empirical results of a
+single player N-Armed Bandit game using a Q-Learning strategy. 
+Similar results, where rewards or prediction accuracy increase logarithmically with the number of collected data points or trials, have also been observed in more complex reinforcement
+learning problems. These include \citet{Sutton1996} who applies reinforcement learning to robot control, and \citet{Banko2001} whose work concerns Natural Language Processing.
+Therefore, we believe this model to be exemplar of a general participatory-sensing problem.
+
+% We parametrise
+% this model to allow the validity interval of measurements to be controlled,
+% and to enable multiple measurements per game round. The latter allows for the
+% effect of multiple agents playing the same game simultaneously and sharing
+% measurements to be modelled.
+
 
 \subsection{Institution Design and Implementation}
 
