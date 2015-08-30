@@ -620,7 +620,7 @@ interface ECSpecification {
 }
 \end{java}
 
-In order to simplify translation of \ac{EC} specifications written in Prolog
+In order to simplify the writing of \ac{EC} specifications written in Prolog
 we implement objects to represent predicates and tuples, including
 \texttt{Matcher} implementations in order to perform dynamic matching of these
 objects with anonymous and infered variables. For example we could match a
@@ -1340,7 +1340,7 @@ for all specifications implemented in Drools-EInst.
 We consider our approach for deductive reasoning and temporal projection
 with Drools adequate for the following reasons. Firstly, there is a functional
 equivalence between an \emph{initiates} or \emph{terminates} statement in the
-\ac{EC} we are using and a Drools rule. The former describes an event that, when an
+\ac{EC} dialect we are using and a Drools rule. The former describes an event that, when an
 accompanying set of conditions are true, will cause a fluent to change. The
 latter describes simply a set of conditions which, when true, cause an
 operation to change fluents. With the manual translation method we have described,

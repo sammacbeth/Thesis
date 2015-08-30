@@ -30,7 +30,7 @@ The problem of implementing the system and axioms described in
 \autoref{ch:presage}, we described a simulation platform for this purpose, Presage2.
 We then followed with a discussion of the specification and execution of
 electronic institutions in \autoref{ch:droolseinst}. We presented a method for
-translation of \ac{EC} axioms for use with the JBoss Drools rule engine to
+manual translation of \ac{EC} axioms for use with the JBoss Drools rule engine to
 enable fast runtime execution of \ac{EC} specifications, and a reference
 implementation with accompanying libraries, Drools-EInst.
 
@@ -60,7 +60,7 @@ participatory-sensing applications as a knowledge commons. From both our analysi
 and experimentation we derive rough guidelines for the application of Ostrom's
 principles to these applications. Second, we conclude the contributions of the
 Presage2 platform. Finally, we discuss the specification of electronic
-institutions, using our method of translating \ac{EC} into Drools rules, and
+institutions, using our method of manually translating \ac{EC} into Drools rules, and
 our specification library Drools-EInst.
 
 \subsection{Management of Participatory-sensing Applications}
@@ -248,7 +248,7 @@ of resource-allocation systems, which our work is built upon (cf.
 
 \subsection{Executable Specification of Electronic Institutions}
 
-We have shown the performance improvements available through the translation
+We have shown the performance improvements available through the manual translation
 of \ac{EC} specifications into business rules. This enables fast, real-time
 deductive reasoning with executable specifications, and we showed the
 application of this for electronic institutions.
@@ -511,8 +511,8 @@ mechanisms to control the order of rule activation and execution which we
 discussed in \autoref{sec:translate}, however this represents possible source of inconsistency between \ac{EC} and Drools specifications.
 
 \paragraph{Correctness} We presented no proof of the correctness of the
-translation of \ac{EC} into Drools. However, we are able to use unit-testing
-to provide confidence in the correctness of a translation. As the translation
+manual translation of \ac{EC} into Drools. However, we are able to use unit-testing
+to provide confidence in the correctness of a manual translation. As the manual translation
 process should make changes to the representation of state in the
 specification, a formal proof of correctness would be difficult to achieve,
 and require a more stringently prescribed process of rule and state
@@ -722,7 +722,7 @@ we would like to further test it in a real application. We see a good candidate 
 this deployment is the Open Mustard Seed project, for which the current
 libraries are appropriate as a governance tool.
 
-We identified possible future work being a proof of the translation process
+We identified possible future work being a proof of the manual translation process
 from \ac{EC} to Drools specifications. This could be complimented by a
 formalisation of the translation process, in the form of a transpiler (a
 source-to-source compiler) to take the \ac{EC} as an input, and generate
